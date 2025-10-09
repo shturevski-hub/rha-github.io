@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Types</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Visit Types Management</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="visitTypes.html">Visit Types</a>
+                <a href="selfPayPrices.html">Self Pay Prices</a>
+                <a href="providersTrenton.html">Providers Trenton</a>
+                <a href="additionalInfo.html">Additional Info</a>
+                <a href="controlPanel.html">Control Panel</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="centered-heading">
+            <h2>Current Visit Types</h2>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="visit-type-search" placeholder="Filter by type or description..." aria-label="Search Visit Types">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Visit Type</th>
+                    <th>Duration (mins)</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="visit-types-table-body">
+                <tr>
+                    <td>1 month F/U </td>
+                    <td>15</td>
+                    <td>Regular follow-up check-up.</td>
+                </tr>
+                <tr>
+                    <td>3 month F/U</td>
+                    <td>15</td>
+                    <td>Regular follow-up check-up.</td>
+                </tr>
+                <tr>
+                    <td>6 month F/U</td>
+                    <td>15</td>
+                    <td>Regular follow-up check-up.</td>
+                </tr>
+                <tr>
+                    <td>Adult Wellness</td>
+                    <td>30</td>
+                    <td>A comprehensive preventative health assessment for adults.</td>
+                </tr>
+                <tr>
+                    <td>Blood Pressure Check</td>
+                    <td>15</td>
+                    <td>Quick appointment to monitor blood pressure.</td>
+                </tr>
+                <tr>
+                    <td>Chronic Care Managment</td>
+                    <td>15</td>
+                    <td>Ongoing management of two or more long-term health conditions.</td>
+                </tr>
+                <tr>
+                    <td>Surgery Clearance</td>
+                    <td>15</td>
+                    <td>Pre-operative assessment to ensure patient is fit for surgery.</td>
+                </tr>
+                <tr>
+                    <td>Discuss Meds</td>
+                    <td>15</td>
+                    <td>Appointment to review and discuss patient medications.</td>
+                </tr>
+                <tr>
+                    <td>DOT Physical</td>
+                    <td>30</td>
+                    <td>Physical examination required for commercial drivers (Department of Transportation).</td>
+                </tr>
+                <tr>
+                    <td>Emergency Room F/U</td>
+                    <td>30</td>
+                    <td>Follow-up visit after a recent emergency room visit.</td>
+                </tr>
+                <tr>
+                    <td>Established Patient</td>
+                    <td>15</td>
+                    <td>A standard visit for a patient already established with the practice.</td>
+                </tr>
+                <tr>
+                    <td>Follow Up Visit</td>
+                    <td>15</td>
+                    <td>General follow-up appointment.</td>
+                </tr>
+                <tr>
+                    <td>Hospital F/U</td>
+                    <td>30</td>
+                    <td>Follow-up visit after a hospital stay or discharge.</td>
+                </tr>
+                <tr>
+                    <td>Injection only</td>
+                    <td>15</td>
+                    <td>A quick appointment for an injection or shot.</td>
+                </tr>
+                <tr>
+                    <td>Lab Draw</td>
+                    <td>15</td>
+                    <td>Appointment for phlebotomy/drawing blood for lab tests.</td>
+                </tr>
+                <tr>
+                    <td>Med Refill</td>
+                    <td>15</td>
+                    <td>A quick visit to authorize a prescription refill.</td>
+                </tr>
+                <tr>
+                    <td>New Patient</td>
+                    <td>30</td>
+                    <td>First-time visit for a patient new to the practice.</td>
+                </tr>
+                <tr>
+                    <td>Newborn</td>
+                    <td>30</td>
+                    <td>A well-child check or visit for a newborn patient.</td>
+                </tr>
+                <tr>
+                    <td>Radiology</td>
+                    <td>15</td>
+                    <td>Appointment for a specific radiology service (e.g., X-ray).</td>
+                </tr>
+                <tr>
+                    <td>Referral</td>
+                    <td>15</td>
+                    <td>Visit to discuss or coordinate a referral to a specialist.</td>
+                </tr>
+                <tr>
+                    <td>Same Day Appointment</td>
+                    <td>15</td>
+                    <td>Urgent appointment scheduled for the same day.</td>
+                </tr>
+                <tr>
+                    <td>Sports Physical</td>
+                    <td>30</td>
+                    <td>Physical exam required for participation in sports.</td>
+                </tr>
+                <tr>
+                    <td>Telehealth</td>
+                    <td>15</td>
+                    <td>Virtual appointment via phone or video conference.</td>
+                </tr>
+                <tr>
+                    <td>Ultrasound</td>
+                    <td>15</td>
+                    <td>Appointment for an ultrasound procedure.</td>
+                </tr>
+                <tr>
+                    <td>Vaccination</td>
+                    <td>15</td>
+                    <td>Appointment for administration of a vaccine/immunization.</td>
+                </tr>
+                <tr>
+                    <td>Walk in sick</td>
+                    <td>15</td>
+                    <td>Visit for a patient who walks in for acute illness care.</td>
+                </tr>
+                <tr>
+                    <td>Workmans Comp</td>
+                    <td>15</td>
+                    <td>Visit related to a workplace injury claim (Worker's Compensation).</td>
+                </tr>
+                <tr>
+                    <td>Well child exam</td>
+                    <td>30</td>
+                    <td>A comprehensive preventative health check for a child.</td>
+                </tr>
+                <tr>
+                    <td>Well Women exam</td>
+                    <td>30</td>
+                    <td>A comprehensive preventative health check for women, including a physical and necessary screenings.</td>
+                </tr>
+                <tr>
+                    <td>Sick Visit</td>
+                    <td>15</td>
+                    <td>An appointment for a patient experiencing acute illness symptoms.</td>
+                </tr>
+                <tr>
+                    <td>Establish Care/New</td>
+                    <td>30</td>
+                    <td>A comprehensive initial visit for a patient new to the practice to establish a patient-physician relationship.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 RHA Workbook, All content managed by Steven Shturevski</p>
+        </div>
+    </footer>
+
+    <script src="visitTypesScript.js"></script>
+    </body>
+</html>

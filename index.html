@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFM Internal Workbook | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="locked">
+    <div id="access-lock-screen">
+        <div class="lock-box">
+            <h2 class="lock-title">🔒 Access Restricted</h2>
+            <p>Please enter your Fastpace work code to view the <b>Workbook</b> content.</p>
+            <input type="password" id="access-password-input" placeholder="Enter work code..." autofocus>
+            <button onclick="checkAccessPassword()">Access Workbook</button>
+            <p id="lock-error-message" class="error-text"></p>
+        </div>
+    </div>
+    
+    <div id="main-content-wrapper">
+
+        <header>
+            <div class="container header-content">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Christian Family Medicine & Pediatrics Logo" class="logo">
+                    <h1 class="site-title">CFM & Pediatrics <b>Workbook</b></h1>
+                </div>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-item active">Home</a>
+                    <a href="visitTypes.html" class="nav-item">Visit Types</a>
+                    <a href="selfPayPrices.html" class="nav-item">Self Pay</a>
+		    <a href="additionalInfo.html" class="nav-item">Additional Info</a>
+		    <a href="controlPanel.html" class="nav-item">Control Panel</a>
+	            <a href="trentonProviders.html" class="nav-item">Trenton Providers</a>
+                </nav>
+                <div id="trenton-clock" class="header-clock"></div>
+            </div>
+        </header>
+
+        <main class="container">
+            <section id="hero" class="card hero-section">
+                <h2>Your Central Hub for Important Clinic Information</h2>
+                <p>Welcome to the Christian Family Medicine & Pediatrics Internal Workbook. Use the quick links or directory below to access scheduling protocols, current self-pay pricing, and provider-specific guidelines.</p>
+                <p class="note-important">⚠️ Static Site Notice: To update any information, please inform <b>Steven Shturevski</b>.</p>
+            </section>
+
+            <hr class="section-divider">
+
+            <section id="quick-links">
+                <h3>Quick Access Resources</h3>
+                <div class="link-grid">
+                    <a href="visitTypes.html" class="quick-link-card">
+                        <span class="card-icon">📝</span>
+                        <h4>Visit Types & Protocols</h4>
+                        <p>Details on all defined visit durations and required criteria.</p>
+                    </a>
+                    <a href="selfPayPrices.html" class="quick-link-card">
+                        <span class="card-icon">💰</span>
+                        <h4>Self Pay Prices</h4>
+                        <p>Current pricing structure for all self-pay services and labs.</p>
+                    </a>
+                    <a href="additionalInfo.html" class="quick-link-card">
+                        <span class="card-icon">📋</span>
+                        <h4>Provider Guidelines</h4>
+                        <p>Internal notes, scheduling rules, and resource lists.</p>
+                    </a>
+                    <a href="controlPanel.html" class="quick-link-card admin-card">
+                        <span class="card-icon">⚙️</span>
+                        <h4>Admin Control Panel</h4>
+                        <p>Instructions and documentation for manual content updates.</p>
+                    </a>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <section id="search-section">
+                <label for="provider-search" class="search-label">Quick Search Provider/Clinic:</label>
+                <input type="text" id="provider-search" placeholder="Type name (e.g., McKenzie or Sarah)..." onkeyup="filterDirectory()">
+            </section>
+            
+            <hr class="section-divider">
+
+            <section id="provider-directory" class="provider-directory-section">
+                <h3 class="directory-title">Comprehensive Provider Directory by Clinic</h3>
+                <p class="directory-description">Use this directory to quickly identify clinical staff assigned to each Christian Family Medicine location.</p>
+                
+                <div class="clinic-list-grid" id="clinic-list">
+                    
+                    <div class="clinic-card">
+                        <h4>CFM Of Weakley County / Martin TN</h4>
+                        <ul>
+                            <li>Sarah Huffstetler</li>
+                            <li>Clay Marvin</li>
+                            <li>Madison Northcutt</li>
+                            <li>Scillion Haley Riggs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>CFM Kids Are Special / Shelbyville TN</h4>
+                        <ul>
+                            <li>Abbie Byrom</li>
+                            <li>Mary Lamb</li>
+                            <li>Jean Tennant</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>CFM of Bolivar</h4>
+                        <ul>
+                            <li>Sara Hodge</li>
+                            <li>Lisa King</li>
+                            <li>Amanda Taylor</li>
+                            <li>Robert W. Dunavant</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>CFM of Henderson</h4>
+                        <ul>
+                            <li>Alexandra Brittain</li>
+                            <li>Lisa King</li>
+                            <li>Brittany Proudfit</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>CFM of McKenzie</h4>
+                        <ul>
+                            <li>Katie Johnson</li>
+                            <li>Kirsten Sass</li>
+                            <li>Angela Warren</li>
+                            <li>Tiffani White</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>CFM of Parsons</h4>
+                        <ul>
+                            <li>Kaylie Huddleston</li>
+                            <li>Katie Johnson</li>
+                            <li>Sara Palomino</li>
+                            <li>Tiffani White</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>Christian Family Medicine Inc / Ripley TN</h4>
+                        <ul>
+                            <li>Sarah Crawford</li>
+                            <li>Julia Frye</li>
+                            <li>Connie Reaves</li>
+                            <li>Coleman Virginia Smith</li>
+                            <li>James Tetleton</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>Covington TN Family First</h4>
+                        <ul>
+                            <li>Demetria Davis</li>
+                            <li>Sandra McNeill</li>
+                            <li>Connie Reaves</li>
+                            <li>James Tetleton</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card primary-location">
+                        <h4>**⭐ Trenton Primary Care Center**</h4>
+                        <ul>
+                            <li>Luis Anderson</li>
+                            <li>Wanda Graupman</li>
+                            <li>Kayla Morgan</li>
+                            <li>Kelly Pulley</li>
+                            <li>Natalie Sturgeon</li>
+                            <li>Sherry Rene Whitby</li>
+                            <li>James Williams</li>
+                            <li>Kayla Yates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clinic-card">
+                        <h4>Sunrise Pediatrics / Tullahoma TN</h4>
+                        <ul>
+                            <li>Rocio Espinoza</li>
+                            <li>Erica Rogers</li>
+                            <li>Lori Stevens</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Christian Family Medicine & Pediatrics Internal Workbook. Managed by Steven Shturevski</p>
+            </div>
+        </footer>
+
+        <div id="slide-out-sidebar" class="sidebar-container">
+            <div class="sidebar-trigger">Quick Tools 📌</div>
+            <div class="sidebar-content">
+                <h3>Staff Quick Links</h3>
+                <ul>
+                    <li><a href="#provider-directory">Provider Directory</a></li>
+                    <li><a href="controlPanel.html">Admin Instructions</a></li>
+                    <li class="separator"></li>
+                    <li><h4>External Resources</h4></li>
+                    <li><a href="https://fastpacehealth-my.sharepoint.com/personal/hannah_burke_fastpacehealth_com/_layouts/15/onedrive.aspx?ct=1759324548418&or=Teams%DHL&ga=1&id=%2Fpersonal%2Fhannah%5Fburke%5Ffastpacehealth%5Fcom%2FDocuments%2FRHA%2FCFM%20Registration%2Epdf&parent=%2Fpersonal%2Fhannah%5Fburke%5Ffastpacehealth%5Fcom%2FDocuments%2FRHA" target="_blank">RHA PDF</a></li>
+                    <li><a href="mailto:it-support@cfmp.org">IT Support Email</a></li>
+                    <li><a href="#">HR Policy Manual (PDF)</a></li>
+                </ul>
+
+                <h3 class="mt-20">Current Protocol Status</h3>
+                <p class="status-note status-alert">⚠️ Demo Protocol: Workbook is currently under review. Use with Caution</p>
+                <p class="status-note status-ok">✅ **Price List:** Last updated: 2025-10-1. 3:20PM E.E.T.</p>
+            </div>
+        </div>
+    
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="lock.js"></script> 
+</body>
+</html>

@@ -1,0 +1,743 @@
+/* style.css */
+
+/* --- Define brand colors for easy reference --- */
+:root {
+    --brand-blue: #0D47A1; /* Darker, rich Indigo Blue (Primary Brand Color) */
+    --brand-white: #ffffff;
+    --accent-light-blue: #1976D2; /* Strong, clear Medium Blue for accents/hover */
+    --text-dark: #263238; /* Very dark charcoal for excellent contrast on light backgrounds */
+    --background-light: #ECEFF1; /* Soft, light grey-blue for a clean but not stark background */
+}
+
+/* --- FIX: Header Layout Alignment & Clock Styling --- */
+.header-content {
+    /* Keep as column for stacking title/logo above other potential future elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative; /* ESSENTIAL: Defines the boundary for the clock */
+}
+
+/* FIX: Ensure the logo and title are centered as a group and allow clock positioning */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Optional: If you want the logo/title to span full width, uncomment: */
+    /* width: 100%; */
+    justify-content: center; /* Center the logo and title */
+    margin-bottom: 10px;
+}
+
+#trenton-clock {
+    position: absolute;
+    top: 50%; /* Center vertically within the header area */
+    transform: translateY(-50%); /* Fine-tune center alignment */
+    right: 20px; /* Position it on the right edge */
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #BBDEFB; /* Light blue for clock text, clear against accent blue */
+    background-color: var(--accent-light-blue);
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Responsive adjustment for small screens: move the clock below the title */
+@media (max-width: 900px) {
+    #trenton-clock {
+        position: static; /* Remove absolute positioning */
+        transform: none; /* Remove centering transform */
+        margin-top: 10px;
+        order: 4; /* Place it last in the flex column */
+        align-self: flex-end; /* Push it to the right edge of the content box */
+        font-size: 1.3em;
+    }
+}
+/* --- END FIX: Header Layout Alignment & Clock Styling --- */
+
+/* --- General Body & Container Styling --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background-color: var(--brand-blue); /* Darker Blue Header */
+    color: var(--brand-white);
+    padding: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Logo and Title Styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.logo {
+    /* Set a specific size for better visibility, and enforce scaling */
+    height: 50px;
+    width: auto;
+    /* Ensure the large image scales down cleanly */
+    object-fit: contain;
+    display: block;
+}
+
+/* For mobile, you can keep the height adjustment */
+@media (max-width: 768px) {
+    .logo {
+        height: 40px;
+    }
+}
+header h1.site-title {
+    margin: 0;
+    font-size: 2.2em;
+    color: var(--brand-white);
+}
+
+nav {
+    text-align: center;
+    width: 100%;
+}
+
+nav a {
+    color: var(--brand-white);
+    text-decoration: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover,
+nav a.active {
+    background-color: var(--accent-light-blue); /* Stronger accent blue on hover/active */
+}
+
+/* --- Main Content Area --- */
+main {
+    background-color: var(--brand-white);
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* FIX: New class to center the main heading */
+.centered-heading {
+    text-align: center;
+}
+
+main h2 {
+    color: var(--brand-blue);
+    font-size: 2em;
+    border-bottom: 2px solid var(--background-light);
+    padding-bottom: 10px;
+    margin-bottom: 25px; /* Keeps the spacing consistent after the title/divider */
+}
+
+main h3 {
+    color: var(--text-dark);
+    font-size: 1.6em;
+    margin-top: 30px;
+}
+
+.note-important {
+    font-weight: bold;
+    color: var(--brand-blue);
+    padding: 10px;
+    border: 1px solid var(--accent-light-blue);
+    background-color: #E3F2FD; /* Very light blue background, complementing the dark blues */
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+/* --- Quick Links Grid for Home Page --- */
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.quick-link-card {
+    display: block;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-top: 5px solid var(--brand-blue); /* Strong brand highlight */
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.quick-link-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-light-blue);
+}
+
+.quick-link-card h4 {
+    color: var(--brand-blue);
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.quick-link-card p {
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* --- Table Styling (for Self Pay Prices, etc.) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px; /* Reduced vertical space here */
+}
+
+table thead tr {
+    background-color: var(--background-light);
+    border-bottom: 2px solid var(--accent-light-blue);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+table th {
+    font-weight: bold;
+    color: var(--brand-blue);
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+table tbody tr:hover {
+    background-color: #eef1f6;
+}
+
+.price-column {
+    font-weight: bold;
+    color: var(--brand-blue);
+    text-align: right !important;
+}
+
+.price-note {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #6c757d;
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- Info Cards (for Additional Info/Control Panel pages) --- */
+.info-card {
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid var(--brand-blue); /* Blue highlight */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.info-card h3 {
+    color: var(--brand-blue);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.info-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-card ul li:before {
+    content: "• ";
+    color: var(--brand-blue);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* --- Control Panel Specific Styles --- */
+.warning {
+    background-color: #fff3cd; /* Yellow tint for caution */
+    border: 1px solid #ffeeba;
+    color: #856404;
+    border-left: 5px solid #ffc107; /* Orange/Yellow highlight */
+}
+.warning strong {
+    color: #856404;
+}
+
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--brand-white);
+    background-color: var(--brand-blue);
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+}
+
+/* --- Provider Directory Styling (New Section for Index.html) --- */
+.provider-directory-section {
+    margin-top: 40px;
+    padding: 20px 0;
+}
+
+.directory-title {
+    color: var(--brand-blue);
+    margin-bottom: 20px;
+}
+
+.clinic-list-grid {
+    display: grid;
+    /* Uses a repeating pattern for a clean, responsive three-column layout */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.clinic-card {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #fcfcfc;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.clinic-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-light-blue);
+}
+
+.clinic-card h4 {
+    color: var(--brand-blue);
+    font-size: 1.1em;
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--background-light);
+}
+
+.clinic-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    font-size: 0.95em;
+}
+
+.clinic-card ul li {
+    padding: 3px 0;
+    border-bottom: 1px dotted #e9ecef;
+}
+
+.clinic-card ul li:last-child {
+    border-bottom: none;
+}
+
+/* Optional: Highlight for a primary location */
+.primary-location {
+    border: 2px solid var(--brand-blue);
+    background-color: #E3F2FD; /* Changed to new vibrant light blue */
+}
+
+/* ------------------------------------------------ */
+/* --- Slide-Out Sidebar Styling (CORRECTED LOCATION) --- */
+/* ------------------------------------------------ */
+.sidebar-container {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    /* Move 80% of the sidebar width off-screen */
+    transform: translateY(-50%) translateX(80%);
+    width: 250px;
+    z-index: 1000;
+    transition: transform 0.4s ease-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px 0 0 8px;
+    font-size: 0.95em;
+}
+
+/* On hover, slide the sidebar fully into view */
+.sidebar-container:hover {
+    transform: translateY(-50%) translateX(0);
+}
+
+.sidebar-trigger {
+    position: absolute;
+    top: 0;
+    /* Adjusted from -60px to -30px and changing rotate value to simplify placement */
+    left: -30px;
+    background-color: var(--brand-blue);
+    color: var(--brand-white);
+    padding: 10px 15px;
+    cursor: pointer;
+    writing-mode: vertical-rl; /* Writes the text vertically */
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+    height: 150px; /* Control the size of the trigger tab */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-content {
+    background-color: var(--brand-white);
+    padding: 20px;
+    height: auto;
+    max-height: 450px; /* Limits the height */
+    overflow-y: auto; /* Adds a scrollbar if content overflows */
+    border: 1px solid var(--brand-blue);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+}
+
+.sidebar-content h3 {
+    color: var(--accent-light-blue);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 0;
+    font-size: 1.3em;
+}
+
+.sidebar-content h4 {
+    color: var(--text-dark);
+    margin: 10px 0 5px 0;
+    font-size: 1.1em;
+}
+
+.sidebar-content ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.sidebar-content ul li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    display: block;
+    padding: 5px 0;
+    transition: color 0.2s;
+}
+
+.sidebar-content ul li a:hover {
+    color: var(--brand-blue);
+    font-weight: 600;
+}
+
+.separator {
+    height: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+.status-note {
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-alert {
+    background-color: #fff3cd; /* Yellow tint for caution */
+    color: #856404; /* Darker text */
+    border: 1px solid #f9d8b7;
+}
+
+.status-ok {
+    background-color: #e6f7ee; /* Light green */
+    color: #387040; /* Darker text */
+    border: 1px solid #b8e6c4;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+/* ------------------------------------------------ */
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    /* The 900px query here is a clean spot to hide the sidebar for tablets/phones */
+    .sidebar-container {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header h1.site-title {
+        font-size: 1.6em;
+    }
+
+    .logo {
+        height: 40px; /* Adjusted height for mobile to be slightly larger */
+        /* Maintain aspect ratio */
+        width: auto;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    main {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .link-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .clinic-list-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Responsive table styles */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ddd; margin-bottom: 10px; }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+/* --- Search Bar Styling --- */
+#search-filter {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-label {
+    font-weight: 600;
+    color: var(--brand-blue);
+    font-size: 1.1em;
+}
+
+#provider-search {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--background-light);
+    border-radius: 6px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Important for padding/border inclusion in width */
+}
+
+#provider-search:focus {
+    border-color: var(--accent-light-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+}
+
+/* Ensure the HR element above the provider list doesn't cause extra space when search bar is filtered */
+#provider-directory + .hr {
+    margin-top: 10px;
+}
+
+/* --- Virtual Lock Screen Styles (for index.html) --- */
+
+/* 1. By default, the body is 'locked', and we hide the main content and show the lock screen */
+body.locked #main-content-wrapper {
+    display: none;
+}
+
+body.locked #access-lock-screen {
+    display: flex; /* Centers the content */
+}
+
+/* 2. When unlocked, reverse the visibility */
+body #main-content-wrapper {
+    display: block;
+}
+
+#access-lock-screen {
+    /* Full-screen overlay to block access */
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-light); /* Light background for the lock screen */
+    z-index: 9999; /* Ensure it's on top of everything */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.lock-box {
+    background-color: var(--brand-white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.lock-title {
+    color: var(--brand-blue);
+    font-size: 1.8em;
+    margin-top: 0;
+}
+
+#access-password-input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.lock-box button {
+    background-color: var(--brand-blue);
+    color: var(--brand-white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.lock-box button:hover {
+    background-color: var(--accent-light-blue);
+}
+
+.error-text {
+    color: #cc0000; /* Red color for error messages */
+    font-weight: bold;
+    margin-top: 15px;
+    min-height: 1.5em; /* Reserve space for the message */
+}
+
+/* --- Search Input Styling for Visit Types Page --- */
+
+.search-container {
+    margin-bottom: 25px; /* Adds space between the search box and the table */
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#visit-type-search {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--background-light);
+    border-radius: 6px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+#visit-type-search:focus {
+    border-color: var(--accent-light-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+}
+
+/* --- Search Input Styling for Visit Types & Self Pay Prices Pages --- */
+
+.search-container {
+    margin-bottom: 25px; /* Adds space between the search box and the table */
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Updated selectors to target BOTH search inputs */
+#visit-type-search,
+#price-search-filter {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--background-light);
+    border-radius: 6px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+#visit-type-search:focus,
+#price-search-filter:focus {
+    border-color: var(--accent-light-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+}

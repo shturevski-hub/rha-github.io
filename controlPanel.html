@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management System - Administration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Christian Family Medicine & Pediatrics Logo" class="logo">
+                <h1 class="site-title">Christian Family Medicine & Pediatrics</h1>
+            </div>
+            <nav>
+               <a href="index.html">Home</a>
+                <a href="visitTypes.html">Visit Types</a>
+                <a href="selfPayPrices.html">Self Pay Prices</a>
+                <a href="providersTrenton.html">Providers Trenton</a>
+                <a href="additionalInfo.html">Additional Info</a>
+                <a href="controlPanel.html">Control Panel</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section id="access-prompt">
+            <h2>🔒 Administrative Access Required</h2>
+            <p>Please enter the admin password to view the Workbook Content Administration Guidelines.</p>
+            <div style="margin: 20px 0; max-width: 400px;">
+                <input type="password" id="password-input" placeholder="Enter Password" style="padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
+                <button onclick="checkPassword()" style="padding: 10px 15px; background-color: #1952a8; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Access Panel
+                </button>
+                <p id="error-message" style="color: #c0392b; margin-top: 10px; font-weight: bold;"></p>
+            </div>
+        </section>
+        <div id="control-panel-content" style="display: none;">
+            
+            <h2>Workbook Content Administration Guidelines</h2>
+            <p>This resource provides instructions for authorized personnel to maintain and update the internal Workbook content. **All content is managed by directly editing the corresponding HTML files.**</p>
+
+            <section class="info-card warning">
+                <h3>❗ Important Policy on Updates</h3>
+                <p><strong>Content integrity is paramount.</strong> All changes must be reviewed and documented prior to implementation. Always work on a copy of the file before applying changes to the live version.</p>
+                <p>Verify that changes are displayed correctly by refreshing the browser after saving any file.</p>
+            </section>
+            
+            <hr>
+
+            <section class="info-card">
+                <h3>1. Managing Visit Types and Scheduling Data</h3>
+                <p>To modify appointment names, durations, or descriptions:</p>
+                <ol>
+                    <li>Open the file: <strong><code>visitTypes.html</code></strong> in a text editor.</li>
+                    <li>Locate the table body, typically marked with <code>&lt;tbody id="visit-types-table-body"&gt;</code>.</li>
+                    <li>**To Add/Delete:** Add or remove the full <code>&lt;tr&gt;...&lt;/tr&gt;</code> row structure.</li>
+                    <li>**To Edit:** Modify the content within the <code>&lt;td&gt;</code> tags of an existing row.</li>
+                    <li>Save the <code>visitTypes.html</code> file.</li>
+                </ol>
+            </section>
+
+            <section class="info-card">
+                <h3>2. Managing Self-Pay Prices</h3>
+                <p>To update prices, services, or lab codes (including Base Rates, Add-ons, and Vaccines):</p>
+                <ol>
+                    <li>Open the file: <strong><code>selfPayPrices.html</code></strong> in a text editor.</li>
+                    <li>Locate the appropriate table section (e.g., <code>id="base-rate-table-body"</code>, <code>id="addon-table-body"</code>).</li>
+                    <li>Prices are hardcoded directly into the HTML. Edit the content of the relevant <code>&lt;td class="price-column"&gt;</code> tags for price changes.</li>
+                    <li>Save the <code>selfPayPrices.html</code> file.</li>
+                </ol>
+            </section>
+
+            <section class="info-card">
+                <h3>3. Managing Internal Guidelines and Notes</h3>
+                <p>To update Provider Notes, Internal Guidelines, or resource lists:</p>
+                <ol>
+                    <li>Open the file: <strong><code>additionalInfo.html</code></strong> in a text editor.</li>
+                    <li>Locate the relevant content within the <code>&lt;main&gt;</code> section (organized by <code>&lt;section class="info-card"&gt;</code>).</li>
+                    <li>Directly edit the text content or adjust the structure of the lists (<code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code>).</li>
+                    <li>Save the <code>additionalInfo.html</code> file.</li>
+                </ol>
+            </section>
+
+            <section class="info-card">
+                <h3>4. Core Site Elements (Navigation, Branding)</h3>
+                <p>Changes to site title, navigation links, or the main welcome message (Home):</p>
+                <ol>
+                    <li>Open <strong><code>index.html</code></strong> (for Home page content) or all HTML files (for navigation changes).</li>
+                    <li>For Navigation: Edit the list of <code>&lt;a href="..."&gt;</code> links inside the <code>&lt;nav&gt;</code> tag in the header.</li>
+                    <li>For Branding/Style: Changes to the site's colors, fonts, or overall layout must be made in the <strong><code>style.css</code></strong> file.</li>
+                    <li>Save the updated file(s).</li>
+                </ol>
+            </section>
+
+        </div>
+        </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Christian Family Medicine & Pediatrics Internal Workbook. Content Administration. Managed by Стефан Штуревски</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

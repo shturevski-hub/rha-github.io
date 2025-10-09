@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Pay Prices</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Self Pay Prices</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="visitTypes.html">Visit Types</a>
+                <a href="selfPayPrices.html">Self Pay Prices</a>
+                <a href="providersTrenton.html">Providers Trenton</a>
+                <a href="additionalInfo.html">Additional Info</a>
+                <a href="controlPanel.html">Control Panel</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2>Current Self-Pay Service Prices</h2>
+        <p>This pricing information is manually managed and displayed below.</p>
+
+        <div class="search-container">
+            <input type="text" id="price-search-filter" placeholder="Filter by service name or price..." aria-label="Search Self-Pay Prices">
+        </div>
+        <section class="price-section base-rate-section">
+            <h3 class="section-title-base">Base Rate Visit Charge</h3>
+            <p class="note">One of the following charges **MUST** be applied to every Self-Pay Visit. Additional charges may apply depending upon the services provided and are in addition to the Base Rate Charge. See the list of Add-on Service Charges below.</p>
+            <table class="price-table">
+                <tbody class="price-table-body" id="base-rate-table-body">
+                    <tr>
+                        <td><strong>"Self-Pay" Office Visit:</strong> Includes basic in-house tests, injections, x-rays, and procedures.</td>
+                        <td class="price-column"><strong>$125</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Behavioral Health Initial Visit:</strong> Scheduled visit with a Behavioral Health Team. A separate drug screen fee applies if needed.</td>
+                        <td class="price-column"><strong>$150</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Behavioral Health Follow-up Visit:</strong> For subsequent visits with a Behavioral Health Team.</td>
+                        <td class="price-column"><strong>$90</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Telehealth Visit:</strong> Scheduled virtual visit. Additional testing is not included.</td>
+                        <td class="price-column"><strong>$85</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EPSDT, Well Visits, or DOT Physicals:</strong> This fee applies to all Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) visits, Well Visits, and Department of Transportation (DOT) physicals.</td>
+                        <td class="price-column"><strong>$125</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Simple Work Physical, Childcare, Sports, or Basic Student Physical:</strong> This applies to one-page physical forms. Additional testing fees may apply.</td>
+                        <td class="price-column"><strong>$25</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Forms Fees (e.g., FMLA paperwork)</strong></td>
+                        <td class="price-column"><strong>$25</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <div class="two-column-layout">
+            
+            <section class="price-section add-on-section">
+                <h3 class="section-title-addon">Add-on Service Charges</h3>
+                <p class="note">Services Listed below require a Base Rate Visit and additional fees collected for services rendered. **Base Rate Visit is a "Self-Pay" Office Visit of $125.00.**</p>
+                <table class="price-table">
+                    <tbody class="price-table-body" id="addon-table-body">
+                        <tr>
+                            <td>
+                                <strong>Drug Testing:</strong> This covers any testing panel.<br>
+                                <span class="price-note">Note: A separate fee of $65 is required to send a specimen to the lab for confirmatory testing. If not paid, the specimen cannot be sent, and results will not be available.</span>
+                            </td>
+                            <td class="price-column"><strong>$65</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rapid Testing COMBO Test (Flu + SARS Antigen)</strong></td>
+                            <td class="price-column"><strong>$35</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rapid Testing (Sofia COVID only and FLU A & B)</strong></td>
+                            <td class="price-column"><strong>$35</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>IV Hydration and/or Therapy (including medications)</strong></td>
+                            <td class="price-column"><strong>$150</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ultrasound</strong></td>
+                            <td class="price-column"><strong>Price varies</strong><br><span class="price-note">Refer to the price sheet.</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="price-section vaccines-section">
+                <h3 class="section-title-vaccine">Vaccines — Addition to the "Self-Pay" Office Visit</h3>
+                <p class="note">Services Listed below require a Base Rate Visit and additional fees collected for services rendered. **Base Rate Visit is a "Self-Pay" Office Visit of $125.00.**</p>
+                <table class="price-table two-column-table">
+                    <thead>
+                        <tr>
+                            <th>Vaccine</th>
+                            <th class="price-header">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody class="price-table-body" id="vaccines-table-body">
+                        <tr>
+                            <td>Tetanus (Td)</td>
+                            <td class="price-column">$36</td>
+                        </tr>
+                        <tr>
+                            <td>Tdap</td>
+                            <td class="price-column">$65</td>
+                        </tr>
+                        <tr>
+                            <td>MMR</td>
+                            <td class="price-column">$125</td>
+                        </tr>
+                        <tr>
+                            <td>Varicella</td>
+                            <td class="price-column">$220</td>
+                        </tr>
+                        <tr>
+                            <td>ProQuad (MMR + Varicella)</td>
+                            <td class="price-column">$360</td>
+                        </tr>
+                        <tr>
+                            <td>Trumenba (Meningococcal Group B)</td>
+                            <td class="price-column">$220</td>
+                        </tr>
+                        <tr>
+                            <td>Hepatitis B</td>
+                            <td class="price-column">$115</td>
+                        </tr>
+                        <tr>
+                            <td>Gardasil 9</td>
+                            <td class="price-column">$340</td>
+                        </tr>
+                        <tr>
+                            <td>Pevnar 13</td>
+                            <td class="price-column">$220</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        
+        <hr>
+        
+        <section class="price-section labs-section">
+            <h3 class="section-title-labs">Labs In House (CLIA MODERATE ONLY) - Addition to the "Self-Pay" Office Visit.</h3>
+            <p class="note">Must have the equipment to perform these services listed below — (Dyersburg, TN only)</p>
+            <table class="price-table labs-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Code</th>
+                        <th style="width: 65%;">Test Description</th>
+                        <th style="width: 20%;" class="price-header">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="price-table-body" id="labs-table-body">
+                    <tr>
+                        <td></td>
+                        <td>CBC w/ Differential</td>
+                        <td class="price-column">$30</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>CBC without Differential</td>
+                        <td class="price-column">$20</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Venipuncture Charge</td>
+                        <td class="price-column">$4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section class="price-section labs-sent-out-section">
+            <h3 class="section-title-labs-sent-out">Labs Sent Out – Addition to the "Self-Pay" Office Visit</h3>
+            <p class="note">Summary of Laboratory Services (Below are most commonly used)</p>
+            <table class="price-table labs-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Code</th>
+                        <th style="width: 65%;">Test Description</th>
+                        <th style="width: 20%;" class="price-header">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="price-table-body" id="labs-sent-out-table-body">
+                    <tr>
+                        <td></td>
+                        <td>CBC w/ Differential / Platelet</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Lipid Panel</td>
+                        <td class="price-column">$10</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Comp. Metabolic Panel (CMP)</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Hemoglobin A1c</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>TSH</td>
+                        <td class="price-column">$35</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Urine Culture, Routine<br>
+                            <span class="price-note">Additional fees may apply if more than two organisms are detected.</span>
+                        </td>
+                        <td class="price-column">$15</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Anaerobic and Aerobic Culture</td>
+                        <td class="price-column">$35</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Measles/Mumps/Rubella Immunity (MMR Titer)</td>
+                        <td class="price-column">$15</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Hepatitis B Surf AB Quant. (Titer)</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Varicella-Zoster V AB, IGG (Titer)</td>
+                        <td class="price-column">$10</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Hepatitis A AB, Total (Titer)</td>
+                        <td class="price-column">$10</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>QuantiFERON-TB Gold Plus</td>
+                        <td class="price-column">$60</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Testosterone, Serum</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Testosterone, Free and Total</td>
+                        <td class="price-column">$10</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>BMP</td>
+                        <td class="price-column">$5</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Thyroid Panel with TSH</td>
+                        <td class="price-column">$15</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Vitamin D 25-Hydroxy</td>
+                        <td class="price-column">$15</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Ct, Ng, Trich vag by NAA</td>
+                        <td class="price-column">$114</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Bacterial Vaginosis, NAA</td>
+                        <td class="price-column">$110</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>C albicans + C glabrata, NAA</td>
+                        <td class="price-column">$70</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Venipuncture Charge</td>
+                        <td class="price-column">$4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Workbook - Managed by Стефан Штуревски</p>
+        </div>
+    </footer>
+    
+    <script src="selfPayPricesScript.js"></script>
+    
+    </body>
+</html>
