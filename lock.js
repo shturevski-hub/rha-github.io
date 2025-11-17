@@ -7,7 +7,7 @@ const ACCEPTED_PASSWORDS = [
     "kristina.rha",
     "stefan.rha",
     "shanuel.rha",
-    "rebecca.rha",
+    "stefanija.rha",
     "kristen.rha",
     "hannah.rha",
     "krystal.rha",
@@ -85,4 +85,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
 });
