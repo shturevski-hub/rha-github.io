@@ -13,6 +13,7 @@ const ACCEPTED_PASSWORDS = [
     "krystal.rha",
     "anastazija.rha",
     "ivo.rha",
+    "gjorgji.rha",
 ];
 
 const UNLOCK_KEY = 'workbook_unlocked';
@@ -89,4 +90,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
