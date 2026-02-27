@@ -10,6 +10,48 @@
     --highlight-color: #FFEB3B;/* Soft, light greenish-grey for a clean background */
 }
 
+/* --- Status Badges --- */
+.badge { padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; text-transform: uppercase; }
+.badge-open { background-color: #C8E6C9; color: #2E7D32; }
+.badge-closed { background-color: #FFCDD2; color: #C62828; }
+
+body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--background-light); color: var(--text-dark); line-height: 1.6; }
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+header { background-color: var(--brand-primary); color: var(--brand-white); padding: 15px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+.header-content { display: flex; flex-direction: column; align-items: center; position: relative; }
+
+#trenton-clock {
+    position: absolute; top: 50%; transform: translateY(-50%); right: 20px;
+    font-size: 1.6em; font-weight: 700; color: #C8E6C9; background-color: var(--accent-primary);
+    padding: 5px 10px; border-radius: 4px; min-width: 120px; text-align: center;
+}
+
+nav a { color: var(--brand-white); text-decoration: none; padding: 8px 15px; margin: 0 5px; border-radius: 4px; transition: 0.3s; }
+nav a:hover, nav a.active { background-color: var(--accent-primary); }
+
+main { background-color: var(--brand-white); margin: 30px auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.centered-heading { text-align: center; }
+
+/* Dropdown Selector Styling */
+#clinic-selector {
+    width: 100%; padding: 12px; border: 2px solid var(--background-light);
+    border-radius: 6px; font-size: 1em; cursor: pointer; background-color: white;
+}
+#clinic-selector:focus { border-color: var(--accent-primary); outline: none; }
+.search-label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--brand-primary); }
+
+.info-card { border-left: 5px solid var(--brand-primary); background: #fdfdfd; padding: 20px; margin: 20px 0; border: 1px solid #eee; border-left: 5px solid var(--brand-primary); }
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+table th, table td { padding: 12px; border: 1px solid #eee; text-align: left; }
+table th { background: var(--background-light); color: var(--brand-primary); }
+
+.note-important { background: #E8F5E9; padding: 15px; border: 1px solid var(--accent-primary); border-radius: 4px; margin-top: 20px; }
+footer { text-align: center; padding: 20px; background: var(--brand-primary); color: white; margin-top: 40px; }
+
+@media (max-width: 900px) { #trenton-clock { position: static; transform: none; margin-top: 10px; } }
+
 /* --- Highlight Styling --- */
 .highlight {
     background-color: var(--highlight-color);
@@ -476,3 +518,4 @@ body.locked #access-lock-screen { display: flex; }
     margin-left: auto;
     margin-right: auto;
 }
+
