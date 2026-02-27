@@ -439,3 +439,5 @@ footer {
     border-radius: 3px;
     padding: 0 3px;
 }
+
+.show { display: block !important; }
