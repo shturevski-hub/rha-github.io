@@ -3,114 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFM Training Hub | Complete</title>
+    <title>CFM Enterprise | athenaOne Official Certification</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3b82f6; --success: #22c55e; --text: #1e293b; --bg: #f8fafc; --nav-bg: #ffffff; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.5; }
+        :root { --primary: #1e40af; --accent: #3b82f6; --success: #16a34a; --danger: #dc2626; --text: #0f172a; --bg: #f1f5f9; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         
-        /* Navigation Menu */
-        .nav-bar { background: var(--nav-bg); padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-        .nav-logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.9rem; transition: 0.2s; padding: 8px 12px; border-radius: 6px; }
-        .nav-links a:hover { background: #eff6ff; color: var(--primary); }
-        .nav-links a.active { background: var(--primary); color: white; }
+        .nav-bar { background: #000; padding: 0 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: 70px; color: white; }
+        .nav-logo { font-weight: 800; letter-spacing: -1px; font-size: 1.4rem; color: #fff; }
+        .nav-links { display: flex; gap: 15px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #cbd5e1; font-weight: 500; font-size: 0.85rem; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; transition: 0.3s; }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-links a.active { background: var(--accent); color: white; }
 
-        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; border-top: 5px solid #e2e8f0; position: relative; }
         
-        /* Progress Bar */
-        .progress-container { background: #e2e8f0; height: 12px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
-        #progress-fill { height: 100%; width: 0%; background: var(--success); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        #timer-display { position: absolute; top: 20px; right: 20px; font-weight: 800; color: var(--danger); font-size: 1.2rem; display: none; background: #fee2e2; padding: 5px 15px; border-radius: 20px; border: 2px solid var(--danger); }
         
-        /* Modules */
-        .module { opacity: 0.4; pointer-events: none; transition: 0.3s; border-left: 6px solid #cbd5e1; }
-        .module.active { opacity: 1; pointer-events: auto; border-left-color: var(--primary); }
-        .module.completed { border-left-color: var(--success); }
+        .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .progress-bar { background: #e2e8f0; height: 8px; border-radius: 4px; flex-grow: 1; margin: 0 20px; overflow: hidden; }
+        #progress-fill { height: 100%; width: 0%; background: var(--success); transition: 0.8s ease; }
         
-        /* Video Container */
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 8px; overflow: hidden; background: #000; margin-top: 15px; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .quiz-q { font-weight: 700; margin-bottom: 15px; color: var(--primary); display: block; margin-top: 25px; }
+        .quiz-option { display: block; background: #f8fafc; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { border-color: var(--accent); background: #eff6ff; }
 
-        /* Search & FAQ */
-        .search-box { width: 100%; padding: 15px; border: 2px solid var(--primary); border-radius: 8px; font-size: 16px; margin-bottom: 15px; outline: none; box-sizing: border-box; }
-        .faq-item { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; transition: 0.2s; }
-        .faq-q { padding: 15px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; background: #fff; }
-        .faq-q:hover { background: #f1f5f9; }
-        .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s ease-out; color: #475569; font-size: 0.95rem; }
-        .faq-item.open .faq-a { padding: 15px; max-height: 500px; border-top: 1px solid #eee; background: #fafafa; }
-        
-        /* Buttons */
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        .copy-btn { font-size: 11px; padding: 5px 10px; margin-top: 10px; background: #64748b; }
-        
-        input[type="text"]#trainee-name { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .badge { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 10px; display: none; }
-        .completed .badge { display: inline-block; }
+        .search-box { width: 100%; padding: 18px 20px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 16px; outline: none; box-sizing: border-box; }
+        .faq-item { border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px; overflow: hidden; }
+        .faq-q { padding: 15px 20px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; background: #fff; font-size: 0.95rem; }
+        .faq-item.open .faq-a { padding: 20px; max-height: 800px; border-top: 1px solid #eee; background: #fdfdfd; }
+        .faq-a { max-height: 0; overflow: hidden; transition: 0.3s ease; }
+
+        .btn { background: var(--primary); color: white; border: none; padding: 14px 28px; border-radius: 6px; cursor: pointer; font-weight: 700; transition: 0.2s; border-bottom: 3px solid rgba(0,0,0,0.2); }
+        .btn:hover { background: var(--accent); transform: translateY(-1px); }
+        .category-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; margin-right: 10px; }
     </style>
 </head>
 <body>
 
 <nav class="nav-bar">
-    <div class="nav-logo"> MENU </div>
+    <div class="nav-logo">CFM ENTERPRISE</div>
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="training.html" class="active">Training</a>
-        <a href="visitTypes.html">Visit Types</a>
-        <a href="adittionalInformation.html">Additional Information</a>
+        <a href="#">Network Status: <span style="color:#22c55e">Stable</span></a>
+        <a href="#" class="active">Certification</a>
+        <a href="#">AthenaOne Docs</a>
+        <a href="#">Compliance</a>
     </div>
 </nav>
-<body>
 
 <div class="container">
     <div class="card">
-        <h1 style="margin-top:0;">Clinician Training Hub</h1>
-        <div class="progress-container"><div id="progress-fill"></div></div>
-        <p id="progress-status" style="font-weight:600; color: var(--primary);">Step 1 of 4: Video Overview</p>
+        <div class="status-header">
+            <span style="font-weight:700; color:var(--primary)">OFFICIAL TRACKER</span>
+            <div class="progress-bar"><div id="progress-fill"></div></div>
+            <span id="step-text" style="font-size: 0.8rem; font-weight: 600;">Step 1/4</span>
+        </div>
+        <h1 style="margin:0">athenaOne & Professional Ethics</h1>
     </div>
 
-    <div id="step-1" class="card module active">
-        <h2>Module 1: Workflow Video <span class="badge">COMPLETED</span></h2>
-        <div class="video-container">
-            <iframe src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
+    <div id="step-1" class="card">
+        <h3>Module 1: Performance Workflow</h3>
+        <div style="position:relative; padding-bottom:56.25%; height:0; background:#000; border-radius:8px; overflow:hidden;">
+            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
         </div>
         <br>
-        <button class="btn" onclick="completeStep(1)">Mark Video Complete</button>
+        <button class="btn" onclick="completeStep(1)">Complete Video Module</button>
     </div>
 
-    <div id="step-2" class="card module">
-        <h2>Module 2: Essential Protocols <span class="badge">COMPLETED</span></h2>
-        <ul style="padding-left: 20px;">
-            <li><b>Emergency:</b> Chest pain / Shortness of breath = Hang up and call 911 immediately.</li>
-            <li><b>Verification:</b> Always confirm Full Name and Date of Birth.</li>
-            <li><b>Hold Policy:</b> Never exceed 90 seconds without checking back in.</li>
+    <div id="step-2" class="card" style="display:none;">
+        <h3>Module 2: The Gold Standard of Care</h3>
+        <p>Before entering the timed exam, acknowledge these ethical non-negotiables:</p>
+        <ul style="background: #fdf2f2; padding: 20px 40px; border-radius: 8px; border-left: 5px solid var(--danger);">
+            <li><strong>HIPAA:</strong> Never discuss patient data in common areas or with unverified callers.</li>
+            <li><strong>athenaOne:</strong> Accuracy over speed. Incorrect billing types cause claim denials.</li>
+            <li><strong>Ethics:</strong> Empathy is our baseline. Every patient is having a difficult day.</li>
         </ul>
-        <button class="btn" onclick="completeStep(2)">I Have Reviewed the Protocols</button>
+        <button class="btn" onclick="startExam()">Begin Timed Examination</button>
     </div>
 
-    <div id="step-3" class="card module">
-        <h2>Module 3: Knowledge Check <span class="badge">COMPLETED</span></h2>
-        <p><b>Question:</b> A patient is using profanity and becoming aggressive. What is the correct response?</p>
-        <label><input type="radio" name="quiz" value="wrong"> Hang up immediately without saying anything.</label><br><br>
-        <label><input type="radio" name="quiz" value="right"> Say: "I want to help, but I need you to use professional language so I can do so."</label><br><br>
-        <button class="btn" onclick="checkQuiz()">Submit Answer</button>
+    <div id="step-3" class="card" style="display:none;">
+        <div id="timer-display">10:00</div>
+        <h3>Module 3: Certification Exam</h3>
+        <p style="color:var(--danger); font-weight:600;">Warning: You have 10 minutes to complete this exam. If time expires, you must restart.</p>
+        
+        <div class="quiz-block">
+            <span class="quiz-q">1. In athenaOne, what is the 'Quickview' primarily used for?</span>
+            <label class="quiz-option"><input type="radio" name="q1" value="1"> A 360-degree summary of patient demographics, insurance, and balances.</label>
+            <label class="quiz-option"><input type="radio" name="q1" value="0"> Entering clinical notes during a live exam.</label>
+        </div>
+
+        <div class="quiz-block">
+            <span class="quiz-q">2. Which athenaOne status indicates an appointment hasn't been checked in yet?</span>
+            <label class="quiz-option"><input type="radio" name="q2" value="1"> Future / Pending.</label>
+            <label class="quiz-option"><input type="radio" name="q2" value="0"> Checked Out.</label>
+        </div>
+
+        <div class="quiz-block">
+            <span class="quiz-q">3. A patient is crying and frustrated about their bill. What is the correct ethical response?</span>
+            <label class="quiz-option"><input type="radio" name="q3" value="0"> Transfer them immediately to billing without speaking.</label>
+            <label class="quiz-option"><input type="radio" name="q3" value="1"> 'I hear how frustrated you are, and I want to help get this resolved. Let's look at the statement together.'</label>
+        </div>
+
+        <div class="quiz-block">
+            <span class="quiz-q">4. You are verifying a patient. They give you their name but can't remember their DOB. What do you do?</span>
+            <label class="quiz-option"><input type="radio" name="q4" value="0"> Guess the DOB based on their voice.</label>
+            <label class="quiz-option"><input type="radio" name="q4" value="1"> Ask for a secondary identifier (Address or SSN) as per HIPAA policy.</label>
+        </div>
+
+        <div class="quiz-block">
+            <span class="quiz-q">5. In athenaOne, what does the 'Check Out' process trigger?</span>
+            <label class="quiz-option"><input type="radio" name="q5" value="1"> Finalizes the claim for billing and schedules follow-ups.</label>
+            <label class="quiz-option"><input type="radio" name="q5" value="0"> It simply deletes the patient from the daily view.</label>
+        </div>
+
+        <br>
+        <button class="btn" onclick="checkQuiz()">Finalize Exam</button>
     </div>
 
-    <div id="step-4" class="card module" style="text-align: center;">
-        <h2>Module 4: Finalize Training</h2>
-        <p>Please enter your full name to generate your completion record:</p>
-        <input type="text" id="trainee-name" placeholder="First and Last Name">
-        <br><br>
-        <button class="btn" onclick="finishTraining()">Submit Completion Email</button>
+    <div id="step-4" class="card" style="display:none; text-align:center;">
+        <h2 style="color:var(--success)">PASSED</h2>
+        <p>Employee Certification Record</p>
+        <input type="text" id="trainee-name" placeholder="Enter Full Name for Certificate" style="width: 80%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px;">
+        <br>
+        <button class="btn" onclick="finishTraining()" style="background:var(--success)">Generate Official Email</button>
     </div>
 
-    <div class="card" style="border-top: 4px solid var(--primary);">
-        <h2>📚 Knowledge Base Search</h2>
-        <p style="color: #64748b; font-size: 0.9rem;">Search over 400+ clinical and administrative responses instantly.</p>
-        <input type="text" id="search" class="search-box" onkeyup="searchFAQ()" placeholder="Type to search (e.g., '911', 'insurance', 'angry', 'labs')...">
-        <div id="faq-list"></div>
+    <div class="card" style="border-top-color: var(--primary);">
+        <h2>📚 Enterprise Knowledge Base</h2>
+        <input type="text" id="search" class="search-box" onkeyup="searchFAQ()" placeholder="Quick search athenaOne codes or ethics scripts...">
+        <div id="faq-list" style="margin-top:20px;"></div>
     </div>
 </div>
 
@@ -606,95 +628,78 @@
         { q: `What is the best way to handle a patient who refuses to hang up?`, a: `Use a firm but kind closing: 'I've noted everything for the doctor; I must assist the next patient now. Goodbye!'` }
     ];
 
+    let timer;
+    let timeLeft = 600; // 10 minutes
+
+    function startExam() {
+        completeStep(2);
+        document.getElementById('timer-display').style.display = 'block';
+        timer = setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("TIME EXPIRED. The exam has locked. Please refresh to restart.");
+                location.reload();
+            }
+        }, 1000);
+    }
+
+    function checkQuiz() {
+        const score = [
+            document.querySelector('input[name="q1"]:checked')?.value,
+            document.querySelector('input[name="q2"]:checked')?.value,
+            document.querySelector('input[name="q3"]:checked')?.value,
+            document.querySelector('input[name="q4"]:checked')?.value,
+            document.querySelector('input[name="q5"]:checked')?.value
+        ];
+        
+        if (score.includes("0") || score.includes(undefined)) {
+            alert("FAILURE: You must answer all questions correctly. Review the Knowledge Base and try again.");
+        } else {
+            clearInterval(timer);
+            alert("CERTIFIED: You achieved 100%.");
+            completeStep(3);
+        }
+    }
+
+    let currentStep = 1;
+    function completeStep(step) {
+        document.getElementById(`step-${step}`).style.display = 'none';
+        currentStep++;
+        document.getElementById(`step-${currentStep}`).style.display = 'block';
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const p = ((currentStep - 1) / 4) * 100;
+        document.getElementById('progress-fill').style.width = p + '%';
+        document.getElementById('step-text').innerText = `Step ${currentStep}/4`;
+    }
+
     function renderFAQ(filter = "") {
         const list = document.getElementById('faq-list');
         list.innerHTML = "";
-        
-        const filtered = faqs.filter(f => 
-            f.q.toLowerCase().includes(filter.toLowerCase()) || 
-            f.a.toLowerCase().includes(filter.toLowerCase())
-        );
-        
-        if(filtered.length === 0) {
-            list.innerHTML = "<p style='color: #64748b; padding: 10px;'>No matching questions found.</p>";
-            return;
-        }
-
-        filtered.forEach((item) => {
+        const filtered = faqs.filter(f => f.q.toLowerCase().includes(filter.toLowerCase()) || f.a.toLowerCase().includes(filter.toLowerCase()));
+        filtered.forEach(item => {
             const div = document.createElement('div');
             div.className = 'faq-item';
-            div.innerHTML = `
-                <div class="faq-q" onclick="toggleFAQ(this)">${item.q} <span>+</span></div>
-                <div class="faq-a">
-                    ${item.a} <br>
-                    <button class="btn copy-btn" onclick="copyText('${item.a.replace(/'/g, "\\'")}')">Copy Script</button>
-                </div>
-            `;
+            div.innerHTML = `<div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span><span class="category-badge">${item.cat}</span>${item.q}</span><span>+</span></div><div class="faq-a">${item.a}</div>`;
             list.appendChild(div);
         });
     }
 
-    function toggleFAQ(el) {
-        const item = el.parentElement;
-        item.classList.toggle('open');
-        el.querySelector('span').innerText = item.classList.contains('open') ? "−" : "+";
-    }
-
-    function searchFAQ() {
-        const val = document.getElementById('search').value;
-        renderFAQ(val);
-    }
-
-    function copyText(txt) {
-        navigator.clipboard.writeText(txt).then(() => {
-            alert("Script copied to clipboard!");
-        });
-    }
-
-    // Training Progress Logic
-    let currentStep = 1;
-    function completeStep(step) {
-        if(step === currentStep) {
-            document.getElementById(`step-${step}`).classList.add('completed');
-            currentStep++;
-            if(document.getElementById(`step-${currentStep}`)) {
-                document.getElementById(`step-${currentStep}`).classList.add('active');
-            }
-            updateProgress();
-        }
-    }
-
-    function checkQuiz() {
-        const selected = document.querySelector('input[name="quiz"]:checked');
-        if(!selected) return alert("Please select an answer.");
-        
-        if(selected.value === 'right') {
-            alert("Correct! Boundary setting is key.");
-            completeStep(3);
-        } else {
-            alert("Incorrect. We must always set a boundary before taking action.");
-        }
-    }
-
-    function updateProgress() {
-        const percent = ((currentStep - 1) / 4) * 100;
-        document.getElementById('progress-fill').style.width = percent + '%';
-        const labels = ["Video Overview", "Reviewing Protocols", "Knowledge Check", "Final Certification", "All Completed!"];
-        document.getElementById('progress-status').innerText = `Step ${currentStep > 4 ? 4 : currentStep} of 4: ${labels[currentStep-1]}`;
-    }
+    function searchFAQ() { renderFAQ(document.getElementById('search').value); }
 
     function finishTraining() {
         const name = document.getElementById('trainee-name').value;
-        if(!name) return alert("Please enter your full name.");
-        window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Training Complete: ${name}&body=The trainee ${name} has successfully completed all 4 modules and reviewed the 400+ FAQ database.`;
+        if(!name) return alert("Validation Required.");
+        window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=TIMED EXAM PASSED: ${name}&body=${name} successfully completed the 10-minute athenaOne Ethics Certification.`;
     }
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-        renderFAQ();
-        updateProgress();
-    });
+    window.onload = () => renderFAQ();
 </script>
-
 </body>
 </html>
