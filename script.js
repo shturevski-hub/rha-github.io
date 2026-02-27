@@ -142,15 +142,22 @@ function displaySelfPayPrices() {
 }
 
 function renderHours() {
+    console.log("Attempting to render hours..."); // Check if this shows in Console
     const selector = document.getElementById('clinic-selector');
     const tableBody = document.getElementById('hours-table-body');
     const badge = document.getElementById('current-status-badge');
-    const nameHeading = document.getElementById('selected-clinic-name');
 
-    if (!selector || !tableBody) return;
+    if (!selector || !tableBody) {
+        console.error("Missing HTML elements! Check your IDs.");
+        return;
+    }
 
-    const clinic = clinicData[selector.value];
-    if (nameHeading) nameHeading.textContent = clinic.name;
+    const clinicKey = selector.value;
+    const clinic = clinicData[clinicKey];
+    console.log("Selected Clinic:", clinic.name);
+
+    // ... (rest of the logic remains the same)
+}
 
     const now = new Date();
     // Get numeric Central Time components
@@ -227,3 +234,4 @@ document.addEventListener('DOMContentLoaded', () => {
         renderHours(); 
     }
 });
+
