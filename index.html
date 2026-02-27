@@ -14,89 +14,58 @@
             <p>Please enter your Fastpace work code to view the <b>Workbook</b> content.</p>
             <input type="password" id="access-password-input" placeholder="Enter work code..." autofocus>
             <button onclick="checkAccessPassword()">Access Workbook</button>
-            <p id="lock-error-message" class="error-text"></p>
+            <p id="lock-error-message"></p>
         </div>
     </div>
     
     <div id="main-content-wrapper">
-
         <header>
-            <div class="container header-content">
+            <div class="header-content">
                 <div class="logo-container">
                     <img src="logo.png" alt="Christian Family Medicine & Pediatrics Logo" class="logo">
                     <h1 class="site-title">CFM & Pediatrics <b>Workbook</b></h1>
                 </div>
-               <nav class="dropdown-nav">
-    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
-    <div id="dropdown-content" class="dropdown-content">
-        <a href="index.html">Home</a>
-        <a href="selfPayPrices.html">Self-Pay</a>
-        <a href="hours.html">Clinic Hours</a>
-		 <a href="providersTrenton.html">Trenton internal</a>
-		 <a href="visitTypes.html">Visit Types</a>
-		 <a href="additionalInfo.html">Additional Info</a>
-		 <a href="controlPanel.html">Admin Control</a>
-        </div>
-</nav>
-                <div id="trenton-clock" class="header-clock"></div>
+                
+                <div id="trenton-clock">00:00:00</div>
+
+                <nav class="dropdown-nav">
+                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html" class="active">Home</a>
+                        <a href="selfPayPrices.html">Self-Pay</a>
+                        <a href="hours.html">Clinic Hours</a>
+                        <a href="providersTrenton.html">Trenton Internal</a>
+                        <a href="visitTypes.html">Visit Types</a>
+                        <a href="additionalInfo.html">Additional Info</a>
+                        <a href="controlPanel.html">Admin Control</a>
+                    </div>
+                </nav>
             </div>
         </header>
 
         <main class="container">
-            <section id="hero" class="card hero-section">
+            <section id="hero" class="info-card centered-heading">
                 <h2>Your Central Hub for Important Clinic Information</h2>
-                <p>Welcome to the Christian Family Medicine & Pediatrics Internal Workbook. Use the quick links or directory below to access scheduling protocols, current self-pay pricing, and provider-specific guidelines.</p>
-                <p class="note-important">⚠️ Static Site Notice: To update any information, please inform <b>Stefan Shturevski</b>.</p>
-            </section>
-
-            <hr class="section-divider">
-
-            <section id="quick-links">
-                <h3>Quick Access Resources</h3>
-                <div class="link-grid">
-                    <a href="visitTypes.html" class="quick-link-card">
-                        <span class="card-icon">📝</span>
-                        <h4>Visit Types & Protocols</h4>
-                        <p>Details on all defined visit durations and required criteria.</p>
-                    </a>
-                    <a href="selfPayPrices.html" class="quick-link-card">
-                        <span class="card-icon">💰</span>
-                        <h4>Self Pay Prices</h4>
-                        <p>Current pricing structure for all self-pay services and labs.</p>
-                    </a>
-                    <a href="additionalInfo.html" class="quick-link-card">
-                        <span class="card-icon">📋</span>
-                        <h4>Provider Guidelines</h4>
-                        <p>Internal notes, scheduling rules, and resource lists.</p>
-                    </a>
-                    <a href="controlPanel.html" class="quick-link-card admin-card">
-                        <span class="card-icon">⚙️</span>
-                        <h4>Admin Control Panel</h4>
-                        <p>Instructions and documentation for manual content updates.</p>
-                    </a>
+                <p>Welcome to the Christian Family Medicine & Pediatrics Internal Workbook. Use the <b>Menu</b> above to access scheduling protocols, current self-pay pricing, and provider-specific guidelines.</p>
+                <div class="note-important">
+                    ⚠️ Static Site Notice: To update any information, please inform <b>Stefan Shturevski</b>.
                 </div>
             </section>
 
-            <hr class="section-divider">
-
-            <section id="search-section">
-                <label for="provider-search" class="search-label">Quick Search Provider/Clinic:</label>
+            <section id="search-section" class="search-container">
+                <label for="provider-search" style="display:block; margin-bottom:10px; font-weight:bold;">Quick Search Provider/Clinic:</label>
                 <input type="text" id="provider-search" placeholder="Type name (e.g., McKenzie or Sarah)..." onkeyup="filterDirectory()">
             </section>
             
-            <hr class="section-divider">
-
-            <section id="provider-directory" class="provider-directory-section">
-                <h3 class="directory-title">Comprehensive Provider Directory by Clinic</h3>
-                <p class="directory-description">Use this directory to quickly identify clinical staff assigned to each Christian Family Medicine location.</p>
+            <section id="provider-directory">
+                <h3 class="centered-heading">Comprehensive Provider Directory by Clinic</h3>
+                <p class="centered-heading" style="margin-bottom: 30px;">Use this directory to quickly identify clinical staff assigned to each location.</p>
                 
                 <div class="clinic-list-grid" id="clinic-list">
-
-
-						 <div class="clinic-card primary-location">
-                        <h4>**⭐ Trenton Primary Care Center**</h4>
+                    <div class="clinic-card">
+                        <h4>⭐ Trenton Primary Care</h4>
                         <ul>
-							<li>Closest FPH - Humboldt TN</li>
+                            <li>Closest FPH - Humboldt TN</li>
                             <li>Luis Anderson 113| Ped/MD</li>
                             <li>Wanda Graupman 103| NP</li>
                             <li>Kayla Morgan 116| NP</li>
@@ -107,10 +76,8 @@
                         </ul>
                     </div>
 
-
-					
                     <div class="clinic-card">
-                        <h4>CFM Of Weakley County / Martin TN</h4>
+                        <h4>CFM Weakley / Martin TN</h4>
                         <ul>
                             <li>Sarah Huffstetler</li>
                             <li>Clay Marvin</li>
@@ -120,7 +87,7 @@
                     </div>
                     
                     <div class="clinic-card">
-                        <h4>CFM Kids Are Special / Shelbyville TN</h4>
+                        <h4>CFM Kids / Shelbyville TN</h4>
                         <ul>
                             <li>Abbie Byrom</li>
                             <li>Mary Lamb</li>
@@ -168,7 +135,7 @@
                     </div>
                     
                     <div class="clinic-card">
-                        <h4>Christian Family Medicine Inc / Ripley TN</h4>
+                        <h4>CFM Inc / Ripley TN</h4>
                         <ul>
                             <li>Sarah Crawford</li>
                             <li>Julia Frye</li>
@@ -186,10 +153,10 @@
                             <li>Connie Reaves</li>
                             <li>James Tetleton</li>
                         </ul>
-					</div>
+                    </div>
                     
                     <div class="clinic-card">
-                        <h4>Sunrise Pediatrics / Tullahoma TN</h4>
+                        <h4>Sunrise Ped / Tullahoma TN</h4>
                         <ul>
                             <li>Rocio Espinoza</li>
                             <li>Erica Rogers</li>
@@ -198,7 +165,6 @@
                     </div>
                 </div>
             </section>
-            
         </main>
 
         <footer>
@@ -214,29 +180,20 @@
                 <ul>
                     <li><a href="#provider-directory">Provider Directory</a></li>
                     <li><a href="controlPanel.html">Admin Instructions</a></li>
-                    <li class="separator"></li>
-                    <li><h4>External Resources</h4></li>
-                    <li><a href="https://fastpacehealth-my.sharepoint.com/personal/hannah_burke_fastpacehealth_com/_layouts/15/onedrive.aspx?ct=1759324548418&or=Teams%DHL&ga=1&id=%2Fpersonal%2Fhannah%5Fburke%5Ffastpacehealth%5Fcom%2FDocuments%2FRHA%2FCFM%20Registration%2Epdf&parent=%2Fpersonal%2Fhannah%5Fburke%5Ffastpacehealth%5Fcom%2FDocuments%2FRHA" target="_blank">RHA PDF</a></li>
+                    <li style="border-bottom: 1px solid #e2e8f0; margin: 10px 0;"></li>
+                    <li><strong>External Resources</strong></li>
+                    <li><a href="https://fastpacehealth-my.sharepoint.com/..." target="_blank">RHA PDF</a></li>
                     <li><a href="mailto:stefan.shturevski@fastpacehealth.com">IT Support Email</a></li>
                 </ul>
 
-                <h3 class="mt-20">Current Status</h3>
-                <p class="status-note status-alert">⚠️ Demo Protocol: Workbook is currently under review. Use with Caution, always consult with higher up.</p>
-                <p class="status-note status-ok">✅ **Price List:** Last updated: 2026-2-25. 6:42PM (GMT+1)</p>
+                <h3 style="margin-top:20px;">Current Status</h3>
+                <p class="note-important" style="font-size: 0.85em;">⚠️ Demo Protocol: Workbook under review. Consult with leadership.</p>
+                <div class="status-ok">✅ Price List: 2026-2-25</div>
             </div>
         </div>
-    
     </div>
     
     <script src="script.js"></script>
     <script src="lock.js"></script> 
 </body>
-
 </html>
-
-
-
-
-
-
-
