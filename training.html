@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        .course-section { opacity: 0.5; transition: 0.4s; pointer-events: none; border-left: 6px solid #e2e8f0; }
+        .course-section { opacity: 0.5; transition: 0.4s; pointer-events: none; border-left: 6px solid #e2e8f0; padding: 20px; margin-bottom: 20px; }
         .course-section.active { opacity: 1; pointer-events: auto; }
         .completed-badge { display: none; color: #166534; background: #dcfce7; padding: 5px 10px; border-radius: 4px; font-weight: bold; margin-left: 10px; }
         .is-done .completed-badge { display: inline-block; }
@@ -18,140 +18,354 @@
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000; margin: 15px 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* FAQ Upgrades */
+        /* FAQ Styling */
         .faq-search-box { width: 100%; padding: 15px; margin: 20px 0; border-radius: 8px; border: 2px solid #3b82f6; font-size: 1rem; }
-        .faq-category-title { background: #f1f5f9; padding: 10px; border-radius: 5px; margin-top: 20px; font-weight: bold; color: #1e293b; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
-        .faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; }
-        .faq-q { padding: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; display: flex; justify-content: space-between; }
+        .faq-category-title { background: #f1f5f9; padding: 10px; border-radius: 5px; margin-top: 20px; font-weight: bold; color: #1e293b; text-transform: uppercase; font-size: 0.8rem; }
+        .faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+        .faq-q { padding: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; display: flex; justify-content: space-between; background: #fff; }
         .faq-a { padding: 0 12px; max-height: 0; overflow: hidden; transition: 0.3s; color: #475569; border-top: 0 solid #eee; position: relative; }
-        .faq-item.open .faq-a { max-height: 200px; padding: 12px; border-top-width: 1px; }
-        .copy-btn { position: absolute; right: 10px; bottom: 10px; font-size: 0.7rem; background: #3b82f6; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
-        .copy-btn:active { background: #1e40af; }
+        .faq-item.open .faq-a { max-height: 300px; padding: 12px; border-top-width: 1px; }
+        .copy-btn { margin-top: 10px; font-size: 0.7rem; background: #3b82f6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
-<body class="locked">
-    <div id="access-lock-screen">
-        <div class="lock-box">
-            <h2 class="lock-title">🔒 Training Access</h2>
-            <input type="password" id="access-password-input" placeholder="Enter work code..." autofocus>
-            <button onclick="checkAccessPassword()">Enter Course</button>
-        </div>
-    </div>
-    
-    <div id="main-content-wrapper">
+<body>
+    <div id="main-content-wrapper" class="container">
         <header>
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Logo" class="logo">
-                    <h1 class="site-title">Clinician <b>Training Hub</b></h1>
-                </div>
-                <nav class="dropdown-nav">
-                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
-                    <div id="dropdown-content" class="dropdown-content">
-                        <a href="index.html">Home</a>
-                        <a href="training.html" class="active">Training Center</a>
-                        <a href="selfPayPrices.html">Self-Pay</a>
-                        <a href="visitTypes.html">Visit Types</a>
-                    </div>
-                </nav>
-            </div>
+            <h1>Clinician <b>Training Hub</b></h1>
         </header>
 
-        <main class="container">
-            <section class="info-card">
-                <h2>Course Progress</h2>
-                <div class="progress-bar-container"><div id="progress-fill"></div></div>
-                <p id="progress-text">0 of 4 steps completed</p>
-            </section>
+        <section class="info-card">
+            <h2>Course Progress</h2>
+            <div class="progress-bar-container"><div id="progress-fill"></div></div>
+            <p id="progress-text">0 of 4 steps completed</p>
+        </section>
 
-            <section id="mod-1" class="info-card course-section active">
-                <h3>Module 1: Workflow Overview <span class="completed-badge">✓</span></h3>
-                <div class="video-wrapper">
-                    <iframe src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
-                </div>
-                <button class="menu-button" onclick="completeModule(1)">Mark Module 1 Complete</button>
-            </section>
+        <section id="mod-1" class="info-card course-section active">
+            <h3>Module 1: Workflow Overview <span class="completed-badge">✓</span></h3>
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
+            </div>
+            <button class="menu-button" onclick="completeModule(1)">Mark Module 1 Complete</button>
+        </section>
 
-            <section id="mod-2" class="info-card course-section">
-                <h3>Module 2: Scheduling Logic <span class="completed-badge">✓</span></h3>
-                <p>Verify identity, check slot types, and repeat date/time.</p>
-                <button class="menu-button" onclick="completeModule(2)">Mark Module 2 Complete</button>
-            </section>
+        <section id="mod-2" class="info-card course-section">
+            <h3>Module 2: Scheduling Logic <span class="completed-badge">✓</span></h3>
+            <p>Review the protocol for identity verification and emergency triage.</p>
+            <button class="menu-button" onclick="completeModule(2)">Mark Module 2 Complete</button>
+        </section>
 
-            <section id="mod-3" class="info-card course-section">
-                <h3>Module 3: Knowledge Check</h3>
-                <div class="quiz-question">
-                    <p>How do you handle a medical emergency on the phone?</p>
-                    <label><input type="radio" name="q1" value="b"> Instruct to dial 911 immediately</label>
-                </div>
-                <button class="menu-button" onclick="checkQuiz()">Submit Quiz</button>
-            </section>
+        <section id="mod-3" class="info-card course-section">
+            <h3>Module 3: Knowledge Check</h3>
+            <p>How do you handle chest pain?</p>
+            <label><input type="radio" name="q1" value="b"> Call 911</label><br><br>
+            <button class="menu-button" onclick="checkQuiz()">Submit Quiz</button>
+        </section>
 
-            <section id="mod-4" class="info-card course-section" style="text-align:center;">
-                <h3>🎉 Finish Training</h3>
-                <input type="text" id="trainee-name" placeholder="Full Name..." style="padding:15px; width:300px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;"><br>
-                <button class="menu-button finish-btn" id="submit-btn" onclick="submitCourse()">Send Completion Email</button>
-            </section>
+        <section id="mod-4" class="info-card course-section" style="text-align:center;">
+            <h3>🎉 Finish Training</h3>
+            <input type="text" id="trainee-name" placeholder="Full Name..." style="padding:10px;"><br><br>
+            <button class="menu-button" id="submit-btn" style="display:none;" onclick="submitCourse()">Send Completion Email</button>
+        </section>
 
-            <section class="info-card">
-                <h3>📚 Knowledge Base (275+ Scenarios)</h3>
-                <input type="text" id="faq-search" class="faq-search-box" onkeyup="renderFAQ()" placeholder="Search by keyword (e.g., 'angry', 'insurance', 'telehealth')...">
-                <div id="faq-container"></div>
-            </section>
-        </main>
+        <section class="info-card">
+            <h3>📚 Knowledge Base (Search 275+ Items)</h3>
+            <input type="text" id="faq-search" class="faq-search-box" onkeyup="renderFAQ()" placeholder="Type to search (e.g. 'screaming', 'insurance')...">
+            <div id="faq-container"></div>
+        </section>
     </div>
-    
-    <script src="faq-data.js"></script>
-    <script src="script.js"></script>
-    <script src="lock.js"></script>
+
     <script>
-        let completed = JSON.parse(localStorage.getItem('cfm_training_progress')) || [];
+        // DATA INTEGRATED DIRECTLY TO PREVENT 404 ERRORS
+        const faqData = [
+           [
+    { cat: "General Conduct", q: "How should I greet a patient?", a: "Use a professional greeting: 'Thank you for calling [Clinic Name], this is [Your Name], how may I assist you today?'" },
+    { cat: "General Conduct", q: "What if I can’t understand the patient?", a: "Politely ask them to repeat or clarify: 'I’m sorry, I want to make sure I have this right. Could you please repeat that?'" },
+    { cat: "General Conduct", q: "How do I verify identity?", a: "Always ask for at least two identifiers, usually full name and date of birth." },
+    { cat: "General Conduct", q: "How do I handle a long silence?", a: "Provide 'verbal nods': 'I am still here, just looking for the best available slot for you.'" },
+    { cat: "General Conduct", q: "How do I put a patient on hold?", a: "Always ask permission first: 'May I place you on a brief hold while I check that schedule?'" },
+    { cat: "General Conduct", q: "How long can I leave someone on hold?", a: "Try not to exceed 60–90 seconds without checking back in." },
+    { cat: "General Conduct", q: "What if the patient is using a speakerphone?", a: "Politely ask: 'I’m having a little trouble hearing you; would you mind taking me off speakerphone?'" },
+    { cat: "General Conduct", q: "Can I use medical jargon?", a: "No. Use plain language (e.g., 'fasting' vs. 'not eating before the test')." },
+    { cat: "General Conduct", q: "What do I do if the line disconnects?", a: "Call them back immediately if you have their number on file." },
+    { cat: "General Conduct", q: "How do I end the call?", a: "Confirm the appointment details and ask: 'Is there anything else I can help you with today?'" },
+    { cat: "Scheduling", q: "What if the requested time is unavailable?", a: "Offer the two closest alternatives: 'That time is taken, but I have 9:00 AM or 1:15 PM available.'" },
+    { cat: "Scheduling", q: "How do I handle a 'work-in' or urgent request?", a: "Follow your clinic’s triage protocol or consult a lead/nurse before squeezing them in." },
+    { cat: "Scheduling", q: "What if the patient insists on a specific doctor who is booked?", a: "Offer another provider in the same department or the next available date for their preferred doctor." },
+    { cat: "Scheduling", q: "How do I schedule a new patient?", a: "Collect full demographics, insurance info, and the reason for the visit." },
+    { cat: "Scheduling", q: "What if the patient doesn't know why they are calling?", a: "Ask clarifying questions: 'Are you experiencing new symptoms or is this for a yearly follow-up?'" },
+    { cat: "Scheduling", q: "How do I handle multiple family members?", a: "Schedule them back-to-back if possible, but verify identity for each individual separately." },
+    { cat: "Scheduling", q: "What do I do for a 'No Show' patient?", a: "Follow the policy for rescheduling—some clinics require a fee or manager approval." },
+    { cat: "Scheduling", q: "How do I handle a cancellation?", a: "Ask if they’d like to reschedule immediately to keep them in the system." },
+    { cat: "Scheduling", q: "What if the patient needs an interpreter?", a: "Note the language needed in the appointment notes and follow your facility's interpreter booking process." },
+    { cat: "Scheduling", q: "Can I schedule an appointment for a minor?", a: "Yes, but you must speak with the legal guardian to confirm details." },
+    { cat: "Triage", q: "What if the patient says they have chest pain?", a: "Immediately follow emergency protocol: 'Please hang up and dial 911 or go to the nearest ER.'" },
+    { cat: "Triage", q: "What if the patient sounds very ill?", a: "Escalate to a nurse or supervisor immediately; do not attempt to give medical advice." },
+    { cat: "Triage", q: "Can I tell a patient which medication to take?", a: "No. Refer all medical/dosage questions to the clinical staff." },
+    { cat: "Triage", q: "How do I handle a patient mentioning self-harm?", a: "Keep them on the line and follow your center’s immediate crisis escalation procedure." },
+    { cat: "Triage", q: "What if the patient asks for a diagnosis?", a: "Explain: 'I am a scheduler and not clinically trained, but the doctor will discuss that with you during your visit.'" },
+    { cat: "Insurance", q: "What if their insurance is inactive?", a: "Inform them politely and ask if they have a new card or if they would like to pay out-of-pocket." },
+    { cat: "Insurance", q: "Should I quote exact prices?", a: "No, give estimated ranges or refer them to the billing department." },
+    { cat: "Insurance", q: "What if the patient refuses to give insurance info?", a: "Explain it is required to verify coverage and prevent unexpected bills." },
+    { cat: "Insurance", q: "How do I handle a referral requirement?", a: "Remind the patient: 'Your insurance requires a referral from your primary doctor before this visit.'" },
+    { cat: "Insurance", q: "What if the patient complains about a bill?", a: "Transfer them to the billing department or provide their direct number." },
+    { cat: "Conflict Resolution", q: "What if the patient is angry about wait times?", a: "Acknowledge the frustration: 'I understand it’s frustrating; I’m looking for the soonest opening.'" },
+    { cat: "Conflict Resolution", q: "How do I handle a patient using profanity?", a: "Set a boundary: 'I want to help you, but I must ask you to use professional language so I can do so.'" },
+    { cat: "Conflict Resolution", q: "What if a patient demands to speak to a manager?", a: "Try to assist first, but if they persist, follow your escalation path." },
+    { cat: "Conflict Resolution", q: "How do I handle 'Doctor Shopping' (seeking meds)?", a: "Follow the clinic’s policy on new patient screenings and narcotics." },
+    { cat: "Conflict Resolution", q: "What if the patient blames me for a mistake?", a: "Don't take it personally. Apologize for the inconvenience and focus on the solution." },
+    { cat: "HIPAA", q: "Can I leave a voicemail with medical details?", a: "No. Only leave your name, clinic name, and a call-back number unless authorized." },
+    { cat: "HIPAA", q: "What if a spouse calls for a patient’s records?", a: "Do not release info unless there is a signed HIPAA waiver on file." },
+    { cat: "HIPAA", q: "Can I look up my own records or a friend's?", a: "No. This is a HIPAA violation and grounds for termination." },
+    { cat: "HIPAA", q: "What if a patient asks to be removed from a call list?", a: "Mark them as 'Do Not Call' in the system immediately." },
+    { cat: "HIPAA", q: "How do I verify a third-party caller (e.g., law firm)?", a: "Transfer them to the Medical Records or Legal department." },
+    { cat: "Technical", q: "What if the system crashes during a call?", a: "Take the patient's name and number on paper and promise to call them back." },
+    { cat: "Technical", q: "How do I handle a patient who talks too much?", a: "Use 'closed-ended' questions (Yes/No) to gently steer the conversation back." },
+    { cat: "Technical", q: "What if the patient asks for the doctor's personal cell?", a: "Never give it out. Offer to take a message for the office staff." },
+    { cat: "Technical", q: "How do I confirm a Telehealth visit?", a: "Ensure the patient has the correct link and knows how to log in." },
+    { cat: "Technical", q: "What do I do if a patient asks for a different location?", a: "Check the provider's schedule for other clinic branches." },
+    { cat: "Technical", q: "How do I note a 'Special Request' (e.g., wheelchair)?", a: "Add it prominently in the appointment notes for the front desk." },
+    { cat: "Technical", q: "What if the patient is confused about prep (e.g., fasting)?", a: "Read the standardized instructions from your script exactly." },
+    { cat: "Technical", q: "How do I handle a 'Waitlist' request?", a: "Add them to the electronic waitlist and explain the notification process." },
+    { cat: "Technical", q: "Can I give out a doctor’s email?", a: "Generally no, unless it is a public-facing office email." },
+    { cat: "General Conduct", q: "What is the most important part of the call?", a: "Accuracy. Double-check the date, time, and location before hanging up." },
+    { cat: "Scheduling", q: "What if a patient asks for a 'same-day' appointment?", a: "Check urgent blocks; if full, suggest triage nurse for emergency assessment." },
+    { cat: "Scheduling", q: "How do I handle a request for a second opinion?", a: "Ask patient to ensure records are sent over before the appointment date." },
+    { cat: "Scheduling", q: "What if the patient is late for their call?", a: "For Telehealth, call to assist; for in-office, inform them of grace period policy." },
+    { cat: "Scheduling", q: "How do I schedule a procedure (e.g., MRI/Surgery)?", a: "Follow specific pre-auth checklist and confirm fasting rules." },
+    { cat: "Scheduling", q: "What if a patient asks for a 'quiet' time?", a: "Suggest first morning appointment or first slot after lunch." },
+    { cat: "Scheduling", q: "How do I handle a 'Referral Out'?", a: "Provide specialist contact info and confirm records were sent." },
+    { cat: "Scheduling", q: "Can I schedule a 'Follow-up' without an order?", a: "Only if the previous visit note states a timeframe (e.g., 'return in 2 weeks')." },
+    { cat: "Scheduling", q: "What if a patient asks to be moved up on the waitlist?", a: "Explain list is chronological but note any urgent symptom changes." },
+    { cat: "Scheduling", q: "How do I handle a patient who wants to 'interview' the doctor?", a: "Explain we don't offer interviews, but they can book a Consultation." },
+    { cat: "Scheduling", q: "What if the patient is out of state/country?", a: "Verify provider licensing for that location before booking Telehealth." },
+    { cat: "Communication", q: "What if a patient is crying?", a: "Slow down. Say: 'I hear you're going through a lot; let's get you scheduled for help.'" },
+    { cat: "Communication", q: "How do I handle an 'Over-sharer'?", a: "Gently interrupt: 'I want to make sure I save enough time to get you scheduled.'" },
+    { cat: "Communication", q: "What if the patient has a hearing impairment?", a: "Speak clearly and use TTY/Relay service if available." },
+    { cat: "Communication", q: "Can I use 'Honey' or 'Dear'?", a: "No. Stick to professional titles (Mr., Ms.) or the name provided." },
+    { cat: "Communication", q: "How do I handle 'Doctor Shopping' for meds?", a: "Follow Controlled Substance policy; do not promise specific prescriptions." },
+    { cat: "Communication", q: "What if the patient is unhappy with the doctor recommended?", a: "Offer a different provider or location within the group." },
+    { cat: "Communication", q: "How do I confirm the address?", a: "Ask: 'Could you please verify your current mailing address for me?'" },
+    { cat: "Communication", q: "What if a patient asks for a 'Call Back' from the doctor?", a: "Set expectations: 'I'll message the team; they usually respond in 24-48 hours.'" },
+    { cat: "Communication", q: "How do I handle a patient with a strong accent?", a: "Focus on key numbers/dates; repeat back slowly to ensure understanding." },
+    { cat: "Communication", q: "What if the patient is using a 'Proxy'?", a: "Ensure legal Power of Attorney or Consent is on file before discussing schedule." },
+    { cat: "Admin", q: "How do I document a 'Difficult Call'?", a: "Use objective language: 'Patient used profanity and hung up,' not personal opinions." },
+    { cat: "Admin", q: "What if I make a scheduling error?", a: "Call patient immediately, apologize, and prioritize finding a new slot." },
+    { cat: "Admin", q: "How do I handle 'No-Show' fees?", a: "State policy clearly: 'We require 24 hours notice to avoid a fee.'" },
+    { cat: "Admin", q: "What if the patient asks about doctor credentials?", a: "Have Provider Bio sheet ready with education and board certifications." },
+    { cat: "Admin", q: "How do I handle a 'Double Booking'?", a: "Avoid unless a supervisor or doctor specifically approves for an emergency." },
+    { cat: "Technical", q: "What if the patient can't find the email link?", a: "Verify email, check spam, and offer to resend while they are on the line." },
+    { cat: "Technical", q: "How do I handle a patient with no internet?", a: "Offer in-person visit or check for phone-only consultation options." },
+    { cat: "Technical", q: "What if the patient’s portal account is locked?", a: "Provide password reset steps or transfer to Tech Support." },
+    { cat: "Technical", q: "How do I explain 'Checking In' online?", a: "Tell them: 'Click the link in your reminder text to confirm your info.'" },
+    { cat: "Technical", q: "What if the patient’s phone number is disconnected?", a: "Search system for emergency contact or Next of Kin." },
+    { cat: "Technical", q: "How do I handle a browser compatibility issue?", a: "Suggest using Chrome or Safari for best results with medical software." },
+    { cat: "Technical", q: "What if the patient asks about 'Data Privacy'?", a: "Assure them: 'Our platform is fully encrypted and HIPAA-compliant.'" },
+    { cat: "Technical", q: "Can I help a patient set up their webcam?", a: "Give basic instructions but limit to 2 minutes; refer to tech support if needed." },
+    { cat: "Technical", q: "How do I handle a patient who prefers 'Texting'?", a: "Opt them into SMS notifications if your system allows it." },
+    { cat: "Technical", q: "What if the scheduling software is lagging?", a: "Apologize: 'System is slow today; thanks for your patience while this loads.'" },
+    { cat: "Complexity", q: "How do I handle a patient with dementia?", a: "Speak slowly; ask if a caregiver is available to confirm details." },
+    { cat: "Complexity", q: "What if a patient needs a bariatric/low-light room?", a: "Note 'Room Requirement' in appointment notes and alert clinical staff." },
+    { cat: "Complexity", q: "How do I schedule a 'Work Comp' visit?", a: "Request claim number, date of injury, and adjuster info before booking." },
+    { cat: "Complexity", q: "What if the patient is 'Homebound'?", a: "Check for home health options or refer to a mobile provider." },
+    { cat: "Complexity", q: "How do I handle a patient with a service animal?", a: "Service animals are welcome; ask if they need specific accommodations." },
+    { cat: "Complexity", q: "What if the patient is a 'VIP'?", a: "Follow high-privacy protocol—often using pseudonym or restricted file." },
+    { cat: "Complexity", q: "How do I handle a different time zone?", a: "Confirm: 'That is 2:00 PM your time and 4:00 PM our time.'" },
+    { cat: "Complexity", q: "What if a patient needs a long-form physical (FAA/DOT)?", a: "Ensure provider is certified for that specific exam before booking." },
+    { cat: "Complexity", q: "How do I handle Transgender/Non-binary patients?", a: "Use preferred name and pronouns as noted in the chart." },
+    { cat: "Complexity", q: "What if the patient asks for a specific gender provider?", a: "Respect preference and schedule with requested gender if available." },
+    { cat: "Logistics", q: "How do I handle a 'Provider Outage' (sick day)?", a: "Call scheduled patients immediately to offer next available or different doctor." },
+    { cat: "Logistics", q: "What if a doctor wants to 'Close their schedule'?", a: "Route request to Practice Manager before blocking calendar." },
+    { cat: "Logistics", q: "How do I handle a 'Transition of Care'?", a: "Ensure discharge summary is available before the first follow-up." },
+    { cat: "Logistics", q: "What if the patient needs 'Stat' lab results?", a: "Schedule follow-up for day after labs to ensure results are ready." },
+    { cat: "Logistics", q: "How do I schedule a 'Lunch and Learn'?", a: "Refer to Office Manager; do not put on clinical calendar yourself." },
+    { cat: "Logistics", q: "What if a provider is running late?", a: "Call upcoming patients to offer late arrival or rescheduling." },
+    { cat: "Logistics", q: "How do I handle 'Representative' calls (Pharma)?", a: "Do not put on patient schedule; refer to manager’s line." },
+    { cat: "Logistics", q: "What if the clinic is closing for weather?", a: "Call all patients and move them to a 'Priority Reschedule' list." },
+    { cat: "Logistics", q: "How do I handle 'New Patient Paperwork'?", a: "Email forms or ask them to arrive 15 minutes early." },
+    { cat: "Logistics", q: "What if I see a 'Warning Flag' on a chart?", a: "Read the note carefully (e.g., Collections/Behavior) before offering time." },
+    { cat: "Clinical Scenarios", q: "Will the doctor give me [Specific Medication]?", a: "Explain: 'The doctor will evaluate your needs during the visit.'" },
+    { cat: "Clinical Scenarios", q: "How do I handle a 'Self-Referral'?", a: "Check if insurance requires a PCP referral first to avoid denial." },
+    { cat: "Clinical Scenarios", q: "What if the patient is 'Self-Pay'?", a: "Provide standard discount rate and mention payment is due at visit." },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Needs to be seen now' (non-emergency)?", a: "Offer Cancellation List and promise to call if a slot opens." },
+    { cat: "Clinical Scenarios", q: "What if a patient complains about Check-in?", a: "Empathize: 'Paperwork helps the doctor provide better care.'" },
+    { cat: "Clinical Scenarios", q: "How do I handle a 'Direct Transfer' from hospital?", a: "Get Ordering Physician name and Referring Facility info immediately." },
+    { cat: "Clinical Scenarios", q: "What if a patient asks 'Who is the best doctor?'", a: "Say: 'All providers are excellent; Dr. X is popular for [Specialty].'" },
+    { cat: "Clinical Scenarios", q: "How do I handle a 'Wrong Number'?", a: "Inform them and provide correct number if it's a sister clinic." },
+    { cat: "Clinical Scenarios", q: "What if the patient is a 'Frequent Caller'?", a: "Remain professional and focused; do not show impatience." },
+    { cat: "Clinical Scenarios", q: "How do I handle a 'Second-hand' cancellation?", a: "Verify patient DOB and name before accepting the change." },
+    { cat: "Clinical Scenarios", q: "What if a patient wants to 'Verify a script'?", a: "Transfer to Pharmacy Line or Nurse’s Station." },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Medical Record' requests?", a: "Explain signed release is required; give fax or portal link." },
+    { cat: "Clinical Scenarios", q: "What if the patient asks about 'Co-pays'?", a: "Say: 'Co-pay is set by insurance; please bring your card to verify.'" },
+    { cat: "Clinical Scenarios", q: "How do I handle refusal to give reason for visit?", a: "Explain: 'Doctor needs a reason to book the correct amount of time.'" },
+    { cat: "Clinical Scenarios", q: "What if the patient says another agent lied?", a: "Don't argue: 'Sorry for confusion; let me check current policy.'" },
+    { cat: "Professionalism", q: "How do I handle 'High Call Volume'?", a: "Stay calm, keep greetings concise, and focus on one patient at a time." },
+    { cat: "Professionalism", q: "What if I get a 'Hate Speech' call?", a: "Stay silent, document, and follow Immediate Termination policy." },
+    { cat: "Professionalism", q: "How do I handle 'Burnout' during a shift?", a: "Take scheduled breaks and step away from the screen to reset." },
+    { cat: "Professionalism", q: "Can I eat while on a call?", a: "No. It is audible and unprofessional." },
+    { cat: "Professionalism", q: "What if I am 'Not Sure' of the answer?", a: "Never guess. Say: 'Let me check with my supervisor for the right info.'" },
+    { cat: "Professionalism", q: "How do I handle 'Muffled' audio?", a: "Say: 'I'm sorry, you sound distant. Could you move closer to the mic?'" },
+    { cat: "Professionalism", q: "What if a patient asks 'How are you?'", a: "Keep it brief: 'Doing well, thanks! How can I help you today?'" },
+    { cat: "Professionalism", q: "How do I manage 'Wrap-up' time?", a: "Complete notes immediately after the call to stay ready for next one." },
+    { cat: "Professionalism", q: "What if a patient offers a 'Tip'?", a: "Decline: 'That's kind, but we aren't allowed to accept gifts.'" },
+    { cat: "Professionalism", q: "How do I handle 'Dead Air'?", a: "Narrate actions: 'I’m searching the provider's schedule now...'" },
+    { cat: "Billing", q: "What is a 'Prior Auth'?", a: "Approval from insurance that they will cover the procedure." },
+    { cat: "Billing", q: "What if insurance isn't in network?", a: "Inform them: 'We are out-of-network; costs may be higher. Proceed?'" },
+    { cat: "Billing", q: "How do I handle 'Coordination of Benefits'?", a: "Tell patient to call insurance to clarify which plan is Primary." },
+    { cat: "Billing", q: "What if a patient asks to 'Split' a payment?", a: "Refer to billing office to set up a formal payment plan." },
+    { cat: "Billing", q: "How do I handle 'Deductible' questions?", a: "Say: 'Deductible is what you pay before insurance kicks in. Contact insurer for totals.'" },
+    { cat: "Closing", q: "How do I handle 'No appointments for 3 months'?", a: "Check Waitlist and offer nearby clinic locations." },
+    { cat: "Closing", q: "What if it's an emergency but they won't call 911?", a: "Explain: 'By policy, I must recommend ER for those symptoms.'" },
+    { cat: "Closing", q: "How do I handle 'Lab-only' appointments?", a: "Ensure Lab Order is in system before patient arrives." },
+    { cat: "Closing", q: "What if the patient asks for 'Directions'?", a: "Have script ready with landmarks and parking instructions." },
+    { cat: "Closing", q: "How do I handle 'Multiple Providers' in one day?", a: "Cluster appointments to minimize patient travel time." },
+    { cat: "Closing", q: "What if the patient asks for Doctor Credentials?", a: "Provide school and experience info from your directory." },
+    { cat: "Closing", q: "How do I handle 'Last Minute' changes?", a: "Be patient and re-verify all new details before hanging up." },
+    { cat: "Closing", q: "What if the patient is distracted/driving?", a: "Ask: 'Would you prefer I call back when you aren't driving?'" },
+    { cat: "Closing", q: "How do I handle 'Aggressive' questioning?", a: "Stay neutral and repeat clinic policy firmly but kindly." },
+    { cat: "Closing", q: "What if the patient asks 'What would you do?'", a: "Say: 'I can't make medical decisions, but a consultation is helpful.'" },
+    { cat: "Closing", q: "How do I handle 'Language Line' delays?", a: "Say: 'Connecting to interpreter; please stay on the line for one moment.'" },
+    { cat: "Closing", q: "What if patient asks for a Manager Callback?", a: "Verify contact number and give estimated callback window." },
+    { cat: "Closing", q: "How do I handle 'Schedule Blocks'?", a: "Respect doctor admin time; do not book over without permission." },
+    { cat: "Closing", q: "What if a patient wants to 'Record the call'?", a: "Follow state/company policy; usually must be noted." },
+    { cat: "Closing", q: "What is the 'Golden Rule' of scheduling?", a: "Treat every patient’s time as if it were your own." },
+    { cat: "Advanced Interaction", q: "How do I handle a patient who wants to 'skip' a required intake?", a: "Explain: 'This step ensures the doctor has your full history to provide safe care.'" },
+    { cat: "Advanced Interaction", q: "What if a patient asks for a 'proxy' to book for them?", a: "Verify legal authorization or a 'Consent to Release' form on file first." },
+    { cat: "Advanced Interaction", q: "How do I handle a patient who is 'Doctor-Shopping' for a second opinion?", a: "Note it as a 'Consultation' and request the previous doctor's records." },
+    { cat: "Advanced Interaction", q: "What if the patient mentions a 'Legal Case' (e.g., car accident)?", a: "Flag the account for 'Third-Party Billing' or 'PIP' insurance protocols." },
+    { cat: "Advanced Interaction", q: "How do I handle an 'Out-of-Country' patient?", a: "Confirm 'Self-Pay' status and explain international insurance may not be accepted." },
+    { cat: "Advanced Interaction", q: "What if the patient asks for a 'Guaranteed' result?", a: "Clarify: 'The doctor will discuss potential outcomes, but results vary.'" },
+    { cat: "Advanced Interaction", q: "How do I handle a 'VIP/Public Figure'?", a: "Use an 'Alias' if allowed by HIPAA protocol to ensure maximum privacy." },
+    { cat: "Advanced Interaction", q: "What if the patient refuses to give a Social Security Number?", a: "Explain it's for identity/billing, but offer internal ID alternative if allowed." },
+    { cat: "Advanced Interaction", q: "How do I handle a patient who is 'Hyper-Anxious'?", a: "Lower your pitch, speak slowly, and confirm each step to reassure them." },
+    { cat: "Advanced Interaction", q: "What if a patient asks 'Will this hurt?'", a: "Say: 'Clinical team will explain procedure and comfort options at visit.'" },
+    { cat: "Complex Insurance", q: "What is a 'COB' (Coordination of Benefits)?", a: "It determines which insurance pays first when a patient has two plans." },
+    { cat: "Complex Insurance", q: "How do I handle 'Medicare Secondary'?", a: "Ask for 'Primary' coverage details to ensure correct billing order." },
+    { cat: "Complex Insurance", q: "What if the patient’s 'Referral' is expired?", a: "Advise: 'You'll need a new referral from your PCP before the visit.'" },
+    { cat: "Complex Insurance", q: "How do I handle 'Pre-Certification' vs 'Pre-Authorization'?", a: "Treat both as 'Insurance Approval' required before the service." },
+    { cat: "Complex Insurance", q: "What if the patient asks about 'Balance Billing'?", a: "Refer to billing department or Surprise Billing policy notice." },
+    { cat: "Complex Insurance", q: "How do I handle 'Workers' Comp' denials?", a: "Direct patient to their 'Adjuster' or 'Case Manager' to resolve status." },
+    { cat: "Complex Insurance", q: "What if a patient wants to 'Negotiate' a price?", a: "Transfer them to a 'Financial Counselor' or billing supervisor." },
+    { cat: "Complex Insurance", q: "How do I handle 'HSA/FSA' card questions?", a: "Confirm: 'We accept most health spending cards for co-pay or balance.'" },
+    { cat: "Complex Insurance", q: "What if the patient's 'Plan' isn't listed?", a: "Search by the 'Payer ID' on the back of the card rather than name." },
+    { cat: "Complex Insurance", q: "How do I explain a 'Facility Fee'?", a: "Say: 'This covers clinic equipment and staff, separate from doctor's fee.'" },
+    { cat: "Technical", q: "What if the 'EMR' is down?", a: "Use 'Manual Downtime Form' to record patient data on paper." },
+    { cat: "Technical", q: "How do I handle 'Duplicate' charts?", a: "Flag both accounts for Medical Records department to merge." },
+    { cat: "Technical", q: "What if the patient’s 'Phone Number' won't save?", a: "Check for special characters or extra spaces in the field." },
+    { cat: "Technical", q: "How do I handle 'Automatic Reminders'?", a: "Confirm: 'You'll get a text 48 hours before. Want to opt-out?'" },
+    { cat: "Technical", q: "What if 'Provider Schedule' is blocked for Admin?", a: "Do not book over it without direct order from manager." },
+    { cat: "Technical", q: "How do I handle 'Telehealth Audio' lag?", a: "Suggest hanging up and reconnecting or using phone for audio." },
+    { cat: "Technical", q: "What if the 'Patient Portal' won't show appointment?", a: "Verify 'Sync' status in your scheduling software." },
+    { cat: "Technical", q: "How do I handle 'Multi-Resource' booking?", a: "Ensure Room and Provider are both available before confirming." },
+    { cat: "Technical", q: "What if the patient’s 'Email' is bouncing?", a: "Ask them to spell it using the Phonetic Alphabet (A as in Apple)." },
+    { cat: "Technical", q: "How do I handle 'Time Zone' shifts for Telehealth?", a: "Book in Clinic Local Time and notify patient of difference." },
+    { cat: "Conflict Resolution", q: "What if a patient is 'Screaming'?", a: "Say: 'I want to help, but I need to be able to hear you clearly. Can we lower our voices?'" },
+    { cat: "Conflict Resolution", q: "How do I handle a 'Passive-Aggressive' caller?", a: "Stay strictly professional and focused on the scheduling task." },
+    { cat: "Conflict Resolution", q: "What if a patient 'Threatens' a lawsuit?", a: "Stop conversation and transfer to Risk Management or Legal." },
+    { cat: "Conflict Resolution", q: "How do I handle a patient 'Refusing' to hang up?", a: "Final Summary: 'Since we're set, I must move to next caller. Have a great day!'" },
+    { cat: "Conflict Resolution", q: "What if the patient 'Complains' about the doctor?", a: "Document 'Grievance' and provide Patient Advocate contact info." },
+    { cat: "Conflict Resolution", q: "How do I handle 'Family Feud' over a patient?", a: "Only speak with Legal Guardian or Authorized Rep on file." },
+    { cat: "Conflict Resolution", q: "What if the patient 'Accuses' you of being rude?", a: "Apologize: 'Sorry if I came across that way; let’s focus on the schedule.'" },
+    { cat: "Conflict Resolution", q: "How do I handle a 'Language Barrier' conflict?", a: "Immediately bring in a Professional Interpreter." },
+    { cat: "Conflict Resolution", q: "What if a patient 'Demands' a callback in an hour?", a: "Set expectations: 'Manager will call back in one business day.'" },
+    { cat: "Conflict Resolution", q: "How do I handle a 'Drunk or Impaired' caller?", a: "Keep call brief, prioritize safety, and notify supervisor." },
+    { cat: "Logistics", q: "What is a 'Late Arrival' policy?", a: "Usually: 'If more than 15 mins late, we may need to reschedule.'" },
+    { cat: "Logistics", q: "How do I handle 'Walk-in' inquiries?", a: "Say: 'We are by appointment only; I can check for openings later today.'" },
+    { cat: "Logistics", q: "What if the patient needs Handicap Parking?", a: "Provide specific instructions on ramps and elevator locations." },
+    { cat: "Logistics", q: "Service Animal vs Emotional Support?", a: "Service animals permitted by ADA; ESAs subject to different rules." },
+    { cat: "Logistics", q: "What if patient asks for Medical Records immediately?", a: "Requests take [X] days; I can send the release form now." },
+    { cat: "Logistics", q: "How do I handle 'Lab-Only' visits?", a: "Ensure patient knows if they need to be 'Fasting'." },
+    { cat: "Logistics", q: "What if the patient asks about 'Parking Fees'?", a: "Be honest: 'We do not validate' or 'Parking is free in rear lot.'" },
+    { cat: "Logistics", q: "How do I handle 'Same-Day' cancellations?", a: "Mark as 'Late Cancel' and inform of any potential fee." },
+    { cat: "Logistics", q: "What if patient needs 'Special' test equipment?", a: "Check if Equipment is available, not just the doctor." },
+    { cat: "Logistics", q: "How do I handle 'Pre-Op' clearances?", a: "Must be scheduled within specific window (usually 30 days) before surgery." },
+    { cat: "Clinical Scenarios", q: "What if a patient 'Self-Diagnoses'?", a: "Say: 'The doctor will perform a thorough evaluation to find the cause of your symptoms.'" },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Post-Op' complication call?", a: "Transfer to Surgical Nurse or On-Call Doctor immediately." },
+    { cat: "Clinical Scenarios", q: "What if patient 'Asks for script refill'?", a: "Transfer to Refill Line or Medical Assistant." },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Pregnancy' scheduling?", a: "Ask for 'LMP' (Last Period) to determine correct week for first visit." },
+    { cat: "Clinical Scenarios", q: "What if the patient doesn't speak English?", a: "Use Language Line before gathering any medical data." },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Stat' imaging?", a: "Ensure Radiology has order before patient leaves house." },
+    { cat: "Clinical Scenarios", q: "What if patient mentions an allergy?", a: "Immediately Flag allergy in Clinical Warnings section of chart." },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Pediatric' vaccinations?", a: "Remind parent to bring Immunization Record to visit." },
+    { cat: "Clinical Scenarios", q: "What if the patient asks about Side Effects?", a: "Say: 'Doctor or pharmacist is best person to discuss that.'" },
+    { cat: "Clinical Scenarios", q: "How do I handle 'Work/School Notes'?", a: "Say: 'Front desk can provide excuse at end of appointment.'" },
+    { cat: "Etiquette", q: "How do I handle 'Call Waiting' while on a line?", a: "Stay with current patient; let system route call to next agent." },
+    { cat: "Etiquette", q: "What if I need to update my status to 'Away'?", a: "Only during Scheduled Breaks to maintain coverage." },
+    { cat: "Etiquette", q: "What if I notice an Error in a colleague's work?", a: "Message them privately or follow Peer Review protocol." },
+    { cat: "Etiquette", q: "Can I take personal calls on my headset?", a: "Never. Keep personal devices away from workstation." },
+    { cat: "Etiquette", q: "What if patient asks 'Are you a nurse?'", a: "Say: 'I am a scheduling specialist; I can get a nurse to call back.'" },
+    { cat: "Etiquette", q: "How do I handle 'Background Noise' (sirens)?", a: "Wait for it to pass; say 'Sorry, could you repeat that?'" },
+    { cat: "Etiquette", q: "What if the patient is recording me?", a: "Be extra professional; assume every call is monitored." },
+    { cat: "Etiquette", q: "How do I handle Holiday scheduling?", a: "Remind patient of closures: 'Next available is Tuesday.'" },
+    { cat: "Etiquette", q: "What if the patient praises me?", a: "Thank them: 'Happy I could help you get this sorted today!'" },
+    { cat: "Etiquette", q: "How do I handle 'Ghost calls' (silence)?", a: "Identify yourself; say 'I can't hear you, please call back' before hanging up." },
+    { cat: "Logistics", q: "How do I handle New Patient Transfers?", a: "Collect previous doctor info to request records." },
+    { cat: "Logistics", q: "What if patient refuses a specific doctor?", a: "Say: 'I understand; let’s find another provider who meets your needs.'" },
+    { cat: "Logistics", q: "How do I handle sensitive info (HIV/Mental Health)?", a: "Use Discretion; do not repeat terms loudly in open office." },
+    { cat: "Logistics", q: "What if patient changes mind mid-call?", a: "Restart Search patiently; accuracy is better than speed." },
+    { cat: "Logistics", q: "How do I handle outdated insurance?", a: "Say: 'Plan ended in Dec; do you have a new card I can see?'" },
+    { cat: "Logistics", q: "What if patient wants to talk to doctor NOW?", a: "Say: 'Doctor is with patients; I can leave message for their team.'" },
+    { cat: "Logistics", q: "How do I handle multiple symptoms for one visit?", a: "Advise: 'Doctor may focus on most urgent issue first today.'" },
+    { cat: "Logistics", q: "What if patient missed Telehealth link?", a: "Resend it and stay on line until they confirm receipt." },
+    { cat: "Logistics", q: "How do I handle Medicare Enrollment questions?", a: "Refer to Social Security Office or Patient Counselor." },
+    { cat: "Logistics", q: "What if the patient asks for a discount?", a: "Mention 'Prompt Pay' discount if paid in full on day of service." },
+    { cat: "Logistics", q: "How do I handle Divorced Parents scheduling?", a: "Follow Primary Guarantor rules for billing and consent." },
+    { cat: "Logistics", q: "What if the patient asks for your name again?", a: "Provide it clearly with your extension number." },
+    { cat: "Logistics", q: "How do I handle Provider Preferences?", a: "Say: 'Dr. Smith is a specialist; want his first available?'" },
+    { cat: "Logistics", q: "What if the patient doesn't have a ride?", a: "Suggest Medical Transport services via their insurance." },
+    { cat: "Logistics", q: "How do I handle rebooking canceled appts?", a: "Treat as High Priority to get them back on track." },
+    { cat: "Logistics", q: "What if patient asks about COVID policy?", a: "Provide current masking and screening rules." },
+    { cat: "Logistics", q: "How do I handle waitlist notifications?", a: "Call patient: 'Slot opened for tomorrow; would you like it?'" },
+    { cat: "Logistics", q: "What if patient wants specialist without PCP?", a: "Policy requires PCP referral to ensure you see the right person." },
+    { cat: "Logistics", q: "How do I handle Overbooked days?", a: "Consult Flow Manager before adding anyone to the list." },
+    { cat: "Logistics", q: "What if patient hangs up before I'm done?", a: "Finish entry if you have data; call back once if not." },
+    { cat: "Logistics", q: "How do I handle Direct Admissions?", a: "These go through Hospitalist or Charge Nurse line." },
+    { cat: "Logistics", q: "What if patient asks for Office Manager?", a: "Say: 'I can see if they are available; what is this regarding?'" },
+    { cat: "Logistics", q: "How do I handle High-Risk reports?", a: "Use Red Flag script and escalate to clinical professional." },
+    { cat: "Logistics", q: "What if patient asks about Clinical Trials?", a: "Refer to Research Coordinator or clinic website." },
+    { cat: "Logistics", q: "How do I handle Billing Disputes?", a: "Transfer to Billing Resolution team." },
+    { cat: "Logistics", q: "What if patient is confused about meds?", a: "Transfer to Nursing Triage line." },
+    { cat: "Logistics", q: "How do I handle Translation Software?", a: "Avoid it. Use official Language Line for accuracy." },
+    { cat: "Logistics", q: "What if patient asks for Wi-Fi password?", a: "Say: 'Not available here; usually posted in waiting room.'" },
+    { cat: "Logistics", q: "How do I handle Feedback calls?", a: "Thank them and route to Quality Improvement team." },
+    { cat: "Closing", q: "What is the best way to close a successful call?", a: "Confirm date, time, and location; say 'See you then!'" }
+]
+        ];
 
         function renderFAQ() {
             const container = document.getElementById('faq-container');
             const search = document.getElementById('faq-search').value.toLowerCase();
             container.innerHTML = "";
 
-            // Group by category
-            const grouped = faqData.reduce((acc, item) => {
-                if (item.q.toLowerCase().includes(search) || item.a.toLowerCase().includes(search)) {
-                    if (!acc[item.cat]) acc[item.cat] = [];
-                    acc[item.cat].push(item);
-                }
-                return acc;
-            }, {});
+            const filtered = faqData.filter(item => 
+                item.q.toLowerCase().includes(search) || item.a.toLowerCase().includes(search)
+            );
 
-            for (const cat in grouped) {
-                const catDiv = document.createElement('div');
-                catDiv.innerHTML = `<div class="faq-category-title">${cat}</div>`;
-                grouped[cat].forEach(item => {
-                    const faqDiv = document.createElement('div');
-                    faqDiv.className = 'faq-item';
-                    faqDiv.innerHTML = `
-                        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">${item.q} <span>+</span></div>
-                        <div class="faq-a">
-                            ${item.a}
-                            <button class="copy-btn" onclick="copyText('${item.a.replace(/'/g, "\\'")}')">Copy Script</button>
-                        </div>
-                    `;
-                    catDiv.appendChild(faqDiv);
-                });
-                container.appendChild(catDiv);
-            }
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'faq-item';
+                div.innerHTML = `
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">${item.q} <span>+</span></div>
+                    <div class="faq-a">${item.a}<br><button class="copy-btn" onclick="copyText('${item.a.replace(/'/g, "\\'")}')">Copy Script</button></div>
+                `;
+                container.appendChild(div);
+            });
         }
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Script copied to clipboard!");
+            alert("Copied!");
         }
+
+        let completed = JSON.parse(localStorage.getItem('cfm_training_progress')) || [];
 
         function updateUI() {
             const totalSteps = 4;
             const progressPercent = (completed.length / totalSteps) * 100;
             document.getElementById('progress-fill').style.width = progressPercent + '%';
-            for(let i = 1; i <= totalSteps; i++) {
+            document.getElementById('progress-text').innerText = `${completed.length} of 4 steps completed`;
+            
+            for(let i = 1; i <= 4; i++) {
                 const section = document.getElementById(`mod-${i}`);
-                if (!section) continue;
                 if (completed.includes(i)) section.classList.add('is-done');
                 if (i === 1 || completed.includes(i-1)) section.classList.add('active');
             }
@@ -167,22 +381,16 @@
         }
 
         function checkQuiz() {
-            const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-            if (q1 === 'b') { completeModule(3); alert("Passed!"); }
-            else { alert("Incorrect."); }
+            const val = document.querySelector('input[name="q1"]:checked')?.value;
+            if (val === 'b') { completeModule(3); alert("Correct!"); } else { alert("Try again."); }
         }
 
         function submitCourse() {
             const name = document.getElementById('trainee-name').value;
-            if (!name) return alert("Enter name");
-            window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Complete: ${name}&body=${name} finished on ${new Date().toLocaleString()}`;
-            completeModule(4);
+            window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Training Complete: ${name}`;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderFAQ();
-            updateUI();
-        });
+        document.addEventListener('DOMContentLoaded', () => { renderFAQ(); updateUI(); });
     </script>
 </body>
 </html>
