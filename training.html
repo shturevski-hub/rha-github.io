@@ -3,586 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFM Training Hub</title>
+    <title>CFM Training Hub | Complete</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #3b82f6; --success: #22c55e; --text: #1e293b; --bg: #f8fafc; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
         .container { max-width: 900px; margin: 0 auto; }
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
         /* Progress Bar */
-        .progress-container { background: #e2e8f0; height: 10px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
-        #progress-fill { height: 100%; width: 0%; background: var(--success); transition: 0.5s; }
+        .progress-container { background: #e2e8f0; height: 12px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
+        #progress-fill { height: 100%; width: 0%; background: var(--success); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         
         /* Modules */
-        .module { opacity: 0.4; pointer-events: none; transition: 0.3s; border-left: 5px solid #cbd5e1; }
+        .module { opacity: 0.4; pointer-events: none; transition: 0.3s; border-left: 6px solid #cbd5e1; }
         .module.active { opacity: 1; pointer-events: auto; border-left-color: var(--primary); }
         .module.completed { border-left-color: var(--success); }
         
-        /* Video */
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 8px; overflow: hidden; background: #000; }
+        /* Video Container */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 8px; overflow: hidden; background: #000; margin-top: 15px; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* FAQ */
-        .search-box { width: 100%; padding: 15px; border: 2px solid var(--primary); border-radius: 8px; font-size: 16px; margin-bottom: 20px; box-sizing: border-box; }
-        .faq-item { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; }
-        .faq-q { padding: 15px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; background: #fff; }
+        /* Search & FAQ */
+        .search-box { width: 100%; padding: 15px; border: 2px solid var(--primary); border-radius: 8px; font-size: 16px; margin-bottom: 15px; outline: none; box-sizing: border-box; }
+        .faq-item { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; transition: 0.2s; }
+        .faq-q { padding: 15px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .faq-q:hover { background: #f1f5f9; }
-        .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s; color: #475569; font-size: 0.95rem; line-height: 1.5; }
-        .faq-item.open .faq-a { padding: 15px; max-height: 500px; border-top: 1px solid #eee; }
+        .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s ease-out; color: #475569; font-size: 0.95rem; }
+        .faq-item.open .faq-a { padding: 15px; max-height: 500px; border-top: 1px solid #eee; background: #fafafa; }
         
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-        .btn:hover { opacity: 0.9; }
-        .copy-btn { font-size: 11px; padding: 4px 8px; margin-top: 8px; background: #64748b; }
+        /* Buttons */
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .copy-btn { font-size: 11px; padding: 5px 10px; margin-top: 10px; background: #64748b; }
         
-        input[type="text"]#trainee-name { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; }
+        input[type="text"]#trainee-name { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .badge { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 10px; display: none; }
+        .completed .badge { display: inline-block; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="card">
-        <h1>Clinician Training Hub</h1>
+        <h1 style="margin-top:0;">Clinician Training Hub</h1>
         <div class="progress-container"><div id="progress-fill"></div></div>
-        <p id="progress-status">Step 1 of 4</p>
+        <p id="progress-status" style="font-weight:600; color: var(--primary);">Step 1 of 4: Video Overview</p>
     </div>
 
     <div id="step-1" class="card module active">
-        <h2>Module 1: Workflow Video</h2>
+        <h2>Module 1: Workflow Video <span class="badge">COMPLETED</span></h2>
         <div class="video-container">
             <iframe src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
         </div>
         <br>
-        <button class="btn" onclick="completeStep(1)">Complete Video Module</button>
+        <button class="btn" onclick="completeStep(1)">Mark Video Complete</button>
     </div>
 
     <div id="step-2" class="card module">
-        <h2>Module 2: Quick Protocols</h2>
-        <ul>
-            <li><b>Identity:</b> Name + DOB required.</li>
-            <li><b>Emergencies:</b> Chest pain/SOB = 911 immediately.</li>
-            <li><b>Hold:</b> Max 90 seconds.</li>
+        <h2>Module 2: Essential Protocols <span class="badge">COMPLETED</span></h2>
+        <ul style="padding-left: 20px;">
+            <li><b>Emergency:</b> Chest pain / Shortness of breath = Hang up and call 911 immediately.</li>
+            <li><b>Verification:</b> Always confirm Full Name and Date of Birth.</li>
+            <li><b>Hold Policy:</b> Never exceed 90 seconds without checking back in.</li>
         </ul>
-        <button class="btn" onclick="completeStep(2)">I Understand the Protocols</button>
+        <button class="btn" onclick="completeStep(2)">I Have Reviewed the Protocols</button>
     </div>
 
     <div id="step-3" class="card module">
-        <h2>Module 3: Knowledge Check</h2>
-        <p>A patient is screaming and using profanity. What do you do?</p>
-        <label><input type="radio" name="quiz" value="0"> Scream back</label><br>
-        <label><input type="radio" name="quiz" value="1"> Say: "I want to help, but I need you to use professional language."</label><br><br>
-        <button class="btn" onclick="checkQuiz()">Submit Quiz</button>
+        <h2>Module 3: Knowledge Check <span class="badge">COMPLETED</span></h2>
+        <p><b>Question:</b> A patient is using profanity and becoming aggressive. What is the correct response?</p>
+        <label><input type="radio" name="quiz" value="wrong"> Hang up immediately without saying anything.</label><br><br>
+        <label><input type="radio" name="quiz" value="right"> Say: "I want to help, but I need you to use professional language so I can do so."</label><br><br>
+        <button class="btn" onclick="checkQuiz()">Submit Answer</button>
     </div>
 
-    <div id="step-4" class="card module">
-        <h2>Module 4: Certification</h2>
-        <p>Enter your name to finish:</p>
-        <input type="text" id="trainee-name" placeholder="Full Name">
-        <button class="btn" onclick="finishTraining()">Submit Completion</button>
+    <div id="step-4" class="card module" style="text-align: center;">
+        <h2>Module 4: Finalize Training</h2>
+        <p>Please enter your full name to generate your completion record:</p>
+        <input type="text" id="trainee-name" placeholder="First and Last Name">
+        <br><br>
+        <button class="btn" onclick="finishTraining()">Submit Completion Email</button>
     </div>
 
-    <div class="card">
-        <h2>🔍 Knowledge Base</h2>
-        <input type="text" id="search" class="search-box" onkeyup="searchFAQ()" placeholder="Search 275+ answers (e.g. 'insurance', 'angry', '911')...">
+    <div class="card" style="border-top: 4px solid var(--primary);">
+        <h2>📚 Knowledge Base Search</h2>
+        <p style="color: #64748b; font-size: 0.9rem;">Search over 400+ clinical and administrative responses instantly.</p>
+        <input type="text" id="search" class="search-box" onkeyup="searchFAQ()" placeholder="Type to search (e.g., '911', 'insurance', 'angry', 'labs')...">
         <div id="faq-list"></div>
     </div>
 </div>
 
 <script>
-    // THE COMPLETE DATASET
+    // THE ULTIMATE DATASET (Combined 410+ Items)
     const faqs = [
-       
-    { q: "How should I greet a patient?", a: "Use a professional greeting: 'Thank you for calling [Clinic Name], this is [Your Name], how may I assist you today?'" },
-    { q: "What if I can’t understand the patient?", a: "Politely ask them to repeat or clarify: 'I’m sorry, I want to make sure I have this right. Could you please repeat that?'" },
-    { q: "How do I verify identity?", a: "Always ask for at least two identifiers, usually full name and date of birth." },
-    { q: "How do I handle a long silence?", a: "Provide 'verbal nods' or check-in: 'I am still here, just looking for the best available slot for you.'" },
-    { q: "How do I put a patient on hold?", a: "Always ask permission first: 'May I place you on a brief hold while I check that schedule?'" },
-    { q: "How long can I leave someone on hold?", a: "Try not to exceed 60–90 seconds without checking back in." },
-    { q: "What if the patient is using a speakerphone?", a: "If the quality is poor, politely ask: 'I’m having a little trouble hearing you; would you mind taking me off speakerphone?'" },
-    { q: "Can I use medical jargon?", a: "No. Use plain language (e.g., 'fasting' vs. 'not eating before the test')." },
-    { q: "What do I do if the line disconnects?", a: "Call them back immediately if you have their number on file." },
-    { q: "How do I end the call?", a: "Confirm the appointment details and ask: 'Is there anything else I can help you with today?'" },
-    { q: "What if the requested time is unavailable?", a: "Offer the two closest alternatives: 'That time is taken, but I have 9:00 AM or 1:15 PM available.'" },
-    { q: "How do I handle a 'work-in' or urgent request?", a: "Follow your clinic’s triage protocol or consult a lead/nurse before squeezing them in." },
-    { q: "What if the patient insists on a specific doctor who is booked?", a: "Offer another provider in the same department or the next available date for their preferred doctor." },
-    { q: "How do I schedule a new patient?", a: "Collect full demographics, insurance info, and the reason for the visit." },
-    { q: "What if the patient doesn't know why they are calling?", a: "Ask clarifying questions: 'Are you experiencing new symptoms or is this for a yearly follow-up?'" },
-    { q: "How do I handle multiple family members?", a: "Schedule them back-to-back if possible, but verify identity for each individual separately." },
-    { q: "What do I do for a 'No Show' patient?", a: "Follow the policy for rescheduling—some clinics require a fee or manager approval." },
-    { q: "How do I handle a cancellation?", a: "Ask if they’d like to reschedule immediately to keep them in the system." },
-    { q: "What if the patient needs an interpreter?", a: "Note the language needed in the appointment notes and follow your facility's interpreter booking process." },
-    { q: "Can I schedule an appointment for a minor?", a: "Yes, but you must speak with the legal guardian to confirm details." },
-    { q: "What if the patient says they have chest pain?", a: "Immediately follow emergency protocol: 'Please hang up and dial 911 or go to the nearest ER.'" },
-    { q: "What if the patient sounds very ill?", a: "Escalate to a nurse or supervisor immediately; do not attempt to give medical advice." },
-    { q: "Can I tell a patient which medication to take?", a: "No. Refer all medical/dosage questions to the clinical staff." },
-    { q: "How do I handle a patient mentioning self-harm?", a: "Keep them on the line and follow your center’s immediate crisis escalation procedure." },
-    { q: "What if the patient asks for a diagnosis?", a: "Explain: 'I am a scheduler and not clinically trained, but the doctor will discuss that with you during your visit.'" },
-    { q: "What if their insurance is inactive?", a: "Inform them politely and ask if they have a new card or if they would like to pay out-of-pocket." },
-    { q: "Should I quote exact prices?", a: "No, give estimated ranges or refer them to the billing department." },
-    { q: "What if the patient refuses to give insurance info?", a: "Explain it is required to verify coverage and prevent unexpected bills." },
-    { q: "How do I handle a referral requirement?", a: "Remind the patient: 'Your insurance requires a referral from your primary doctor before this visit.'" },
-    { q: "What if the patient complains about a bill?", a: "Transfer them to the billing department or provide their direct number." },
-    { q: "What if the patient is angry about wait times?", a: "Acknowledge the frustration: 'I understand it’s frustrating; I’m looking for the soonest opening.'" },
-    { q: "How do I handle a patient using profanity?", a: "Set a boundary: 'I want to help you, but I must ask you to use professional language so I can do so.'" },
-    { q: "What if a patient demands to speak to a manager?", a: "Try to assist first, but if they persist, follow your escalation path." },
-    { q: "How do I handle 'Doctor Shopping'?", a: "Follow the clinic’s policy on new patient screenings and narcotics." },
-    { q: "What if the patient blames me for a mistake?", a: "Don't take it personally. Apologize for the inconvenience and focus on the solution." },
-    { q: "Can I leave a voicemail with medical details?", a: "No. Only leave your name, clinic name, and a call-back number unless authorized otherwise." },
-    { q: "What if a spouse calls for a patient’s records?", a: "Do not release info unless there is a signed HIPAA waiver on file." },
-    { q: "Can I look up my own records or a friend's?", a: "No. This is a HIPAA violation and grounds for termination." },
-    { q: "What if a patient asks to be removed from a call list?", a: "Mark them as 'Do Not Call' in the system immediately." },
-    { q: "How do I verify a third-party caller (e.g., law firm)?", a: "Transfer them to the Medical Records or Legal department." },
-    { q: "What if the system crashes during a call?", a: "Take the patient's name and number on paper and promise to call them back once it's resolved." },
-    { q: "How do I handle a patient who talks too much?", a: "Use 'closed-ended' questions (Yes/No) to gently steer the conversation back to scheduling." },
-    { q: "What if the patient asks for the doctor's personal cell?", a: "Never give it out. Offer to take a message for the office staff." },
-    { q: "How do I confirm a Telehealth visit?", a: "Ensure the patient has the correct link and knows how to log in." },
-    { q: "What do I do if a patient asks for a different location?", a: "Check the provider's schedule for other clinic branches." },
-    { q: "How do I note a 'Special Request' (e.g., wheelchair)?", a: "Add it prominently in the appointment notes for the front desk." },
-    { q: "What if the patient is confused about prep (e.g., fasting)?", a: "Read the standardized instructions from your script exactly." },
-    { q: "How do I handle a 'Waitlist' request?", a: "Add them to the electronic waitlist and explain how they will be notified of openings." },
-    { q: "Can I give out a doctor’s email?", a: "Generally no, unless it is a public-facing office email." },
-    { q: "What is the most important part of the call?", a: "Accuracy. Double-check the date, time, and location before hanging up." },
-    { q: "What if a patient asks for a 'same-day' appointment?", a: "Check urgent blocks; if full, suggest triage nurse for emergency assessment." },
-    { q: "How do I handle a request for a second opinion?", a: "Ask patient to ensure records are sent over before the appointment date." },
-    { q: "What if the patient is late for their call?", a: "For Telehealth, call to assist; for in-office, inform them of grace period policy." },
-    { q: "How do I schedule a procedure (e.g., MRI/Surgery)?", a: "Follow specific pre-auth checklist and confirm fasting rules." },
-    { q: "What if a patient asks for a 'quiet' time?", a: "Suggest first morning appointment or first slot after lunch." },
-    { q: "How do I handle a 'Referral Out'?", a: "Provide specialist contact info and confirm records were sent." },
-    { q: "Can I schedule a 'Follow-up' without an order?", a: "Only if the previous visit note states a timeframe (e.g., 'return in 2 weeks')." },
-    { q: "What if a patient asks to be moved up on the waitlist?", a: "Explain list is chronological but note any urgent symptom changes." },
-    { q: "How do I handle a patient who wants to 'interview' the doctor?", a: "Explain we don't offer interviews, but they can book a Consultation." },
-    { q: "What if the patient is out of state/country?", a: "Verify provider licensing for that location before booking Telehealth." },
-    { q: "What if a patient is crying?", a: "Slow down. Say: 'I hear you're going through a lot; let's get you scheduled for help.'" },
-    { q: "How do I handle an 'Over-sharer'?", a: "Gently interrupt: 'I want to make sure I save enough time to get you scheduled.'" },
-    { q: "What if the patient has a hearing impairment?", a: "Speak clearly and use TTY/Relay service if available." },
-    { q: "Can I use 'Honey' or 'Dear'?", a: "No. Stick to professional titles (Mr., Ms.) or the name provided." },
-    { q: "How do I handle 'Doctor Shopping' for meds?", a: "Follow Controlled Substance policy; do not promise specific prescriptions." },
-    { q: "What if the patient is unhappy with the doctor recommended?", a: "Offer a different provider or location within the group." },
-    { q: "How do I confirm the address?", a: "Ask: 'Could you please verify your current mailing address for me?'" },
-    { q: "What if a patient asks for a 'Call Back' from the doctor?", a: "Set expectations: 'I'll message the team; they usually respond in 24-48 hours.'" },
-    { q: "How do I handle a patient with a strong accent?", a: "Focus on key numbers/dates; repeat back slowly to ensure understanding." },
-    { q: "What if the patient is using a 'Proxy'?", a: "Ensure legal Power of Attorney or Consent is on file before discussing schedule." },
-    { q: "How do I document a 'Difficult Call'?", a: "Use objective language: 'Patient used profanity and hung up,' not personal opinions." },
-    { q: "What if I make a scheduling error?", a: "Call patient immediately, apologize, and prioritize finding a new slot." },
-    { q: "How do I handle 'No-Show' fees?", a: "State policy clearly: 'We require 24 hours notice to avoid a fee.'" },
-    { q: "What if the patient asks about doctor credentials?", a: "Have Provider Bio sheet ready with education and board certifications." },
-    { q: "How do I handle a 'Double Booking'?", a: "Avoid unless a supervisor or doctor specifically approves for an emergency." },
-    { q: "What if the patient can't find the email link?", a: "Verify email, check spam, and offer to resend while they are on the line." },
-    { q: "How do I handle a patient with no internet?", a: "Offer in-person visit or check for phone-only consultation options." },
-    { q: "What if the patient’s portal account is locked?", a: "Provide password reset steps or transfer to Tech Support." },
-    { q: "How do I explain 'Checking In' online?", a: "Tell them: 'Click the link in your reminder text to confirm your info.'" },
-    { q: "What if the patient’s phone number is disconnected?", a: "Search system for emergency contact or Next of Kin." },
-    { q: "How do I handle a browser compatibility issue?", a: "Suggest using Chrome or Safari for best results with medical software." },
-    { q: "What if the patient asks about 'Data Privacy'?", a: "Assure them: 'Our platform is fully encrypted and HIPAA-compliant.'" },
-    { q: "Can I help a patient set up their webcam?", a: "Give basic instructions but limit to 2 minutes; refer to tech support if needed." },
-    { q: "How do I handle a patient who prefers 'Texting'?", a: "Opt them into SMS notifications if your system allows it." },
-    { q: "What if the scheduling software is lagging?", a: "Apologize: 'System is slow today; thanks for your patience while this loads.'" },
-    { q: "How do I handle a patient with dementia?", a: "Speak slowly; ask if a caregiver is available to confirm details." },
-    { q: "What if a patient needs a bariatric/low-light room?", a: "Note 'Room Requirement' in appointment notes and alert clinical staff." },
-    { q: "How do I schedule a 'Work Comp' visit?", a: "Request claim number, date of injury, and adjuster info before booking." },
-    { q: "What if the patient is 'Homebound'?", a: "Check for home health options or refer to a mobile provider." },
-    { q: "How do I handle a patient with a service animal?", a: "Service animals are welcome; ask if they need specific accommodations." },
-    { q: "What if the patient is a 'VIP'?", a: "Follow high-privacy protocol—often using pseudonym or restricted file." },
-    { q: "How do I handle a different time zone?", a: "Confirm: 'That is 2:00 PM your time and 4:00 PM our time.'" },
-    { q: "What if a patient needs a long-form physical (FAA/DOT)?", a: "Ensure provider is certified for that specific exam before booking." },
-    { q: "How do I handle Transgender/Non-binary patients?", a: "Use preferred name and pronouns as noted in the chart." },
-    { q: "What if the patient asks for a specific gender provider?", a: "Respect preference and schedule with requested gender if available." },
-    { q: "How do I handle a 'Provider Outage' (sick day)?", a: "Call scheduled patients immediately to offer next available or different doctor." },
-    { q: "What if a doctor wants to 'Close their schedule'?", a: "Route request to Practice Manager before blocking calendar." },
-    { q: "How do I handle a 'Transition of Care'?", a: "Ensure discharge summary is available before the first follow-up." },
-    { q: "What if the patient needs 'Stat' lab results?", a: "Schedule follow-up for day after labs to ensure results are ready." },
-    { q: "How do I schedule a 'Lunch and Learn'?", a: "Refer to Office Manager; do not put on clinical calendar yourself." },
-    { q: "What if a provider is running late?", a: "Call upcoming patients to offer late arrival or rescheduling." },
-    { q: "How do I handle 'Representative' calls (Pharma)?", a: "Do not put on patient schedule; refer to manager’s line." },
-    { q: "What if the clinic is closing for weather?", a: "Call all patients and move them to a 'Priority Reschedule' list." },
-    { q: "How do I handle 'New Patient Paperwork'?", a: "Email forms or ask them to arrive 15 minutes early." },
-    { q: "What if I see a 'Warning Flag' on a chart?", a: "Read the note carefully (e.g., Collections/Behavior) before offering time." },
-    { q: "Will the doctor give me [Specific Medication]?", a: "Explain: 'The doctor will evaluate your needs during the visit.'" },
-    { q: "How do I handle a 'Self-Referral'?", a: "Check if insurance requires a PCP referral first to avoid denial." },
-    { q: "What if the patient is 'Self-Pay'?", a: "Provide standard discount rate and mention payment is due at visit." },
-    { q: "How do I handle 'Needs to be seen now' (non-emergency)?", a: "Offer Cancellation List and promise to call if a slot opens." },
-    { q: "What if a patient complains about Check-in?", a: "Empathize: 'Paperwork helps the doctor provide better care.'" },
-    { q: "How do I handle a 'Direct Transfer' from hospital?", a: "Get Ordering Physician name and Referring Facility info immediately." },
-    { q: "What if a patient asks 'Who is the best doctor?'", a: "Say: 'All providers are excellent; Dr. X is popular for [Specialty].'" },
-    { q: "How do I handle a 'Wrong Number'?", a: "Inform them and provide correct number if it's a sister clinic." },
-    { q: "What if the patient is a 'Frequent Caller'?", a: "Remain professional and focused; do not show impatience." },
-    { q: "How do I handle a 'Second-hand' cancellation?", a: "Verify patient DOB and name before accepting the change." },
-    { q: "What if a patient wants to 'Verify a script'?", a: "Transfer to Pharmacy Line or Nurse’s Station." },
-    { q: "How do I handle 'Medical Record' requests?", a: "Explain signed release is required; give fax or portal link." },
-    { q: "What if the patient asks about 'Co-pays'?", a: "Say: 'Co-pay is set by insurance; please bring your card to verify.'" },
-    { q: "How do I handle refusal to give reason for visit?", a: "Explain: 'Doctor needs a reason to book the correct amount of time.'" },
-    { q: "What if the patient says another agent lied?", a: "Don't argue: 'Sorry for confusion; let me check current policy.'" },
-    { q: "How do I handle 'High Call Volume'?", a: "Stay calm, keep greetings concise, and focus on one patient at a time." },
-    { q: "What if I get a 'Hate Speech' call?", a: "Stay silent, document, and follow Immediate Termination policy." },
-    { q: "How do I handle 'Burnout' during a shift?", a: "Take scheduled breaks and step away from the screen to reset." },
-    { q: "Can I eat while on a call?", a: "No. It is audible and unprofessional." },
-    { q: "What if I am 'Not Sure' of the answer?", a: "Never guess. Say: 'Let me check with my supervisor for the right info.'" },
-    { q: "How do I handle 'Muffled' audio?", a: "Say: 'I'm sorry, you sound distant. Could you move closer to the mic?'" },
-    { q: "What if a patient asks 'How are you?'", a: "Keep it brief: 'Doing well, thanks! How can I help you today?'" },
-    { q: "How do I manage 'Wrap-up' time?", a: "Complete notes immediately after the call to stay ready for next one." },
-    { q: "What if a patient offers a 'Tip'?", a: "Decline: 'That's kind, but we aren't allowed to accept gifts.'" },
-    { q: "How do I handle 'Dead Air'?", a: "Narrate actions: 'I’m searching the provider's schedule now...'" },
-    { q: "What is a 'Prior Auth'?", a: "Approval from insurance that they will cover the procedure." },
-    { q: "What if insurance isn't in network?", a: "Inform them: 'We are out-of-network; costs may be higher. Proceed?'" },
-    { q: "How do I handle 'Coordination of Benefits'?", a: "Tell patient to call insurance to clarify which plan is Primary." },
-    { q: "What if a patient asks to 'Split' a payment?", a: "Refer to billing office to set up a formal payment plan." },
-    { q: "How do I handle 'Deductible' questions?", a: "Say: 'Deductible is what you pay before insurance kicks in. Contact insurer for totals.'" },
-    { q: "How do I handle 'No appointments for 3 months'?", a: "Check Waitlist and offer nearby clinic locations." },
-    { q: "What if it's an emergency but they won't call 911?", a: "Explain: 'By policy, I must recommend ER for those symptoms.'" },
-    { q: "How do I handle 'Lab-only' appointments?", a: "Ensure Lab Order is in system before patient arrives." },
-    { q: "What if the patient asks for 'Directions'?", a: "Have script ready with landmarks and parking instructions." },
-    { q: "How do I handle 'Multiple Providers' in one day?", a: "Cluster appointments to minimize patient travel time." },
-    { q: "What if the patient asks for Doctor Credentials?", a: "Provide school and experience info from your directory." },
-    { q: "How do I handle 'Last Minute' changes?", a: "Be patient and re-verify all new details before hanging up." },
-    { q: "What if the patient is distracted/driving?", a: "Ask: 'Would you prefer I call back when you aren't driving?'" },
-    { q: "How do I handle 'Aggressive' questioning?", a: "Stay neutral and repeat clinic policy firmly but kindly." },
-    { q: "What if the patient asks 'What would you do?'", a: "Say: 'I can't make medical decisions, but a consultation is helpful.'" },
-    { q: "How do I handle 'Language Line' delays?", a: "Say: 'Connecting to interpreter; please stay on the line for one moment.'" },
-    { q: "What if patient asks for a Manager Callback?", a: "Verify contact number and give estimated callback window." },
-    { q: "How do I handle 'Schedule Blocks'?", a: "Respect doctor admin time; do not book over without permission." },
-    { q: "What if a patient wants to 'Record the call'?", a: "Follow state/company policy; usually must be noted." },
-    { q: "What is the 'Golden Rule' of scheduling?", a: "Treat every patient’s time as if it were your own." },
-    { q: "How do I handle a patient who wants to 'skip' a required intake?", a: "Explain: 'This step ensures the doctor has your full history to provide safe care.'" },
-    { q: "What if a patient asks for a 'proxy' to book for them?", a: "Verify legal authorization or a 'Consent to Release' form on file first." },
-    { q: "How do I handle a patient who is 'Doctor-Shopping' for a second opinion?", a: "Note it as a 'Consultation' and request the previous doctor's records." },
-    { q: "What if the patient mentions a 'Legal Case'?", a: "Flag the account for 'Third-Party Billing' or 'PIP' insurance protocols." },
-    { q: "How do I handle an 'Out-of-Country' patient?", a: "Confirm 'Self-Pay' status and explain international insurance may not be accepted." },
-    { q: "What if the patient asks for a 'Guaranteed' result?", a: "Clarify: 'The doctor will discuss potential outcomes, but results vary.'" },
-    { q: "How do I handle a 'VIP/Public Figure'?", a: "Use an 'Alias' if allowed by HIPAA protocol to ensure maximum privacy." },
-    { q: "What if the patient refuses to give a Social Security Number?", a: "Explain it's for identity/billing, but offer internal ID alternative if allowed." },
-    { q: "How do I handle a patient who is 'Hyper-Anxious'?", a: "Lower your pitch, speak slowly, and confirm each step to reassure them." },
-    { q: "What if a patient asks 'Will this hurt?'", a: "Say: 'Clinical team will explain procedure and comfort options at visit.'" },
-    { q: "What is a 'COB' (Coordination of Benefits)?", a: "It determines which insurance pays first when a patient has two plans." },
-    { q: "How do I handle 'Medicare Secondary'?", a: "Ask for 'Primary' coverage details to ensure correct billing order." },
-    { q: "What if the patient’s 'Referral' is expired?", a: "Advise: 'You'll need a new referral from your PCP before the visit.'" },
-    { q: "How do I handle 'Pre-Certification' vs 'Pre-Authorization'?", a: "Treat both as 'Insurance Approval' required before the service." },
-    { q: "What if the patient asks about 'Balance Billing'?", a: "Refer to billing department or Surprise Billing policy notice." },
-    { q: "How do I handle 'Workers' Comp' denials?", a: "Direct patient to their 'Adjuster' or 'Case Manager' to resolve status." },
-    { q: "What if a patient wants to 'Negotiate' a price?", a: "Transfer them to a 'Financial Counselor' or billing supervisor." },
-    { q: "How do I handle 'HSA/FSA' card questions?", a: "Confirm: 'We accept most health spending cards for co-pay or balance.'" },
-    { q: "What if the patient's 'Plan' isn't listed?", a: "Search by the 'Payer ID' on the back of the card rather than name." },
-    { q: "How do I explain a 'Facility Fee'?", a: "Say: 'This covers clinic equipment and staff, separate from doctor's fee.'" },
-    { q: "What if the 'EMR' is down?", a: "Use 'Manual Downtime Form' to record patient data on paper." },
-    { q: "How do I handle 'Duplicate' charts?", a: "Flag both accounts for Medical Records department to merge." },
-    { q: "What if the patient’s 'Phone Number' won't save?", a: "Check for special characters or extra spaces in the field." },
-    { q: "How do I handle 'Automatic Reminders'?", a: "Confirm: 'You'll get a text 48 hours before. Want to opt-out?'" },
-    { q: "What if 'Provider Schedule' is blocked for Admin?", a: "Do not book over it without direct order from manager." },
-    { q: "How do I handle 'Telehealth Audio' lag?", a: "Suggest hanging up and reconnecting or using phone for audio." },
-    { q: "What if the 'Patient Portal' won't show appointment?", a: "Verify 'Sync' status in your scheduling software." },
-    { q: "How do I handle 'Multi-Resource' booking?", a: "Ensure Room and Provider are both available before confirming." },
-    { q: "What if the patient’s 'Email' is bouncing?", a: "Ask them to spell it using the Phonetic Alphabet (A as in Apple)." },
-    { q: "How do I handle 'Time Zone' shifts for Telehealth?", a: "Book in Clinic Local Time and notify patient of difference." },
-    { q: "What if a patient is 'Screaming'?", a: "Say: 'I want to help, but I need to be able to hear you clearly. Can we lower our voices?'" },
-    { q: "How do I handle a 'Passive-Aggressive' caller?", a: "Stay strictly professional and focused on the scheduling task." },
-    { q: "What if a patient 'Threatens' a lawsuit?", a: "Stop conversation and transfer to Risk Management or Legal." },
-    { q: "How do I handle a patient 'Refusing' to hang up?", a: "Final Summary: 'Since we're set, I must move to next caller. Have a great day!'" },
-    { q: "What if the patient 'Complains' about the doctor?", a: "Document 'Grievance' and provide Patient Advocate contact info." },
-    { q: "How do I handle 'Family Feud' over a patient?", a: "Only speak with Legal Guardian or Authorized Rep on file." },
-    { q: "What if the patient 'Accuses' you of being rude?", a: "Apologize: 'Sorry if I came across that way; let’s focus on the schedule.'" },
-    { q: "How do I handle a 'Language Barrier' conflict?", a: "Immediately bring in a Professional Interpreter." },
-    { q: "What if a patient 'Demands' a callback in an hour?", a: "Set expectations: 'Manager will call back in one business day.'" },
-    { q: "How do I handle a 'Drunk or Impaired' caller?", a: "Keep call brief, prioritize safety, and notify supervisor." },
-    { q: "What is a 'Late Arrival' policy?", a: "Usually: 'If more than 15 mins late, we may need to reschedule.'" },
-    { q: "How do I handle 'Walk-in' inquiries?", a: "Say: 'We are by appointment only; I can check for openings later today.'" },
-    { q: "What if the patient needs Handicap Parking?", a: "Provide specific instructions on ramps and elevator locations." },
-    { q: "Service Animal vs Emotional Support?", a: "Service animals permitted by ADA; ESAs subject to different rules." },
-    { q: "What if patient asks for Medical Records immediately?", a: "Requests take [X] days; I can send the release form now." },
-    { q: "How do I handle 'Lab-Only' visits?", a: "Ensure patient knows if they need to be 'Fasting'." },
-    { q: "What if the patient asks about 'Parking Fees'?", a: "Be honest: 'We do not validate' or 'Parking is free in rear lot.'" },
-    { q: "How do I handle 'Same-Day' cancellations?", a: "Mark as 'Late Cancel' and inform of any potential fee." },
-    { q: "What if patient needs 'Special' test equipment?", a: "Check if Equipment is available, not just the doctor." },
-    { q: "How do I handle 'Pre-Op' clearances?", a: "Must be scheduled within specific window (usually 30 days) before surgery." },
-    { q: "What if a patient 'Self-Diagnoses'?", a: "Say: 'The doctor will perform a thorough evaluation to find the cause of your symptoms.'" },
-    { q: "How do I handle 'Post-Op' complication call?", a: "Transfer to Surgical Nurse or On-Call Doctor immediately." },
-    { q: "What if patient 'Asks for script refill'?", a: "Transfer to Refill Line or Medical Assistant." },
-    { q: "How do I handle 'Pregnancy' scheduling?", a: "Ask for 'LMP' (Last Period) to determine correct week for first visit." },
-    { q: "What if the patient doesn't speak English?", a: "Use Language Line before gathering any medical data." },
-    { q: "How do I handle 'Stat' imaging?", a: "Ensure Radiology has order before patient leaves house." },
-    { q: "What if patient mentions an allergy?", a: "Immediately Flag allergy in Clinical Warnings section of chart." },
-    { q: "How do I handle 'Pediatric' vaccinations?", a: "Remind parent to bring Immunization Record to visit." },
-    { q: "What if the patient asks about Side Effects?", a: "Say: 'Doctor or pharmacist is best person to discuss that.'" },
-    { q: "How do I handle 'Work/School Notes'?", a: "Say: 'Front desk can provide excuse at end of appointment.'" },
-    { q: "How do I handle 'Call Waiting' while on a line?", a: "Stay with current patient; let system route call to next agent." },
-    { q: "What if I need to update my status to 'Away'?", a: "Only during Scheduled Breaks to maintain coverage." },
-    { q: "What if I notice an Error in a colleague's work?", a: "Message them privately or follow Peer Review protocol." },
-    { q: "Can I take personal calls on my headset?", a: "Never. Keep personal devices away from workstation." },
-    { q: "What if patient asks 'Are you a nurse?'", a: "Say: 'I am a scheduling specialist; I can get a nurse to call back.'" },
-    { q: "How do I handle 'Background Noise' (sirens)?", a: "Wait for it to pass; say 'Sorry, could you repeat that?'" },
-    { q: "What if the patient is recording me?", a: "Be extra professional; assume every call is monitored." },
-    { q: "How do I handle Holiday scheduling?", a: "Remind patient of closures: 'Next available is Tuesday.'" },
-    { q: "What if the patient praises me?", a: "Thank them: 'Happy I could help you get this sorted today!'" },
-    { q: "How do I handle 'Ghost calls' (silence)?", a: "Identify yourself; say 'I can't hear you, please call back' before hanging up." },
-    { q: "How do I handle New Patient Transfers?", a: "Collect previous doctor info to request records." },
-    { q: "What if patient refuses a specific doctor?", a: "Say: 'I understand; let’s find another provider who meets your needs.'" },
-    { q: "How do I handle sensitive info (HIV/Mental Health)?", a: "Use Discretion; do not repeat terms loudly in open office." },
-    { q: "What if patient changes mind mid-call?", a: "Restart Search patiently; accuracy is better than speed." },
-    { q: "How do I handle outdated insurance?", a: "Say: 'Plan ended in Dec; do you have a new card I can see?'" },
-    { q: "What if patient wants to talk to doctor NOW?", a: "Say: 'Doctor is with patients; I can leave message for their team.'" },
-    { q: "How do I handle multiple symptoms for one visit?", a: "Advise: 'Doctor may focus on most urgent issue first today.'" },
-    { q: "What if patient missed Telehealth link?", a: "Resend it and stay on line until they confirm receipt." },
-    { q: "How do I handle Medicare Enrollment questions?", a: "Refer to Social Security Office or Patient Counselor." },
-    { q: "What if the patient asks for a discount?", a: "Mention 'Prompt Pay' discount if paid in full on day of service." },
-    { q: "How do I handle Divorced Parents scheduling?", a: "Follow Primary Guarantor rules for billing and consent." },
-    { q: "What if the patient asks for your name again?", a: "Provide it clearly with your extension number." },
-    { q: "How do I handle Provider Preferences?", a: "Say: 'Dr. Smith is a specialist; want his first available?'" },
-    { q: "What if the patient doesn't have a ride?", a: "Suggest Medical Transport services via their insurance." },
-    { q: "How do I handle rebooking canceled appts?", a: "Treat as High Priority to get them back on track." },
-    { q: "What if patient asks about COVID policy?", a: "Provide current masking and screening rules." },
-    { q: "How do I handle waitlist notifications?", a: "Call patient: 'Slot opened for tomorrow; would you like it?'" },
-    { q: "What if patient wants specialist without PCP?", a: "Policy requires PCP referral to ensure you see the right person." },
-    { q: "How do I handle Overbooked days?", a: "Consult Flow Manager before adding anyone to the list." },
-    { q: "What if patient hangs up before I'm done?", a: "Finish entry if you have data; call back once if not." },
-    { q: "How do I handle Direct Admissions?", a: "These go through Hospitalist or Charge Nurse line." },
-    { q: "What if patient asks for Office Manager?", a: "Say: 'I can see if they are available; what is this regarding?'" },
-    { q: "How do I handle High-Risk reports?", a: "Use Red Flag script and escalate to clinical professional." },
-    { q: "What if patient asks about Clinical Trials?", a: "Refer to Research Coordinator or clinic website." },
-    { q: "How do I handle Billing Disputes?", a: "Transfer to Billing Resolution team." },
-    { q: "What if patient is confused about meds?", a: "Transfer to Nursing Triage line." },
-    { q: "How do I handle Translation Software?", a: "Avoid it. Use official Language Line for accuracy." },
-    { q: "What if patient asks for Wi-Fi password?", a: "Say: 'Not available here; usually posted in waiting room.'" },
-    { q: "How do I handle Feedback calls?", a: "Thank them and route to Quality Improvement team." },
-    { q: "What is the best way to close a successful call?", a: "Confirm date, time, and location; say 'See you then!'" }
-    { q: "What if the patient asks for the doctor’s medical license number?", a: "Provide it if available in your directory or offer to have the office manager send it via email." },
-    { q: "How do I handle a patient who wants to 'walk-in' for a flu shot?", a: "Check if your clinic has a dedicated nurse-led flu clinic or if an appointment is strictly required." },
-    { q: "What if the patient asks about the clinic’s 'No-Weapon' policy?", a: "Confirm: 'For the safety of all patients, we maintain a weapon-free facility.'" },
-    { q: "How do I handle a patient asking for a specific room number in advance?", a: "Explain that rooms are assigned at check-in based on clinical needs." },
-    { q: "What if the patient asks for a 'Telehealth' visit but is driving?", a: "Say: 'For your safety, please pull over or reschedule; the doctor cannot conduct the visit while you are driving.'" },
-    { q: "How do I handle a request for a 'Home Sleep Study' kit?", a: "Schedule a consultation first; the doctor must order the kit after an evaluation." },
-    { q: "What if the patient asks for 'Free Samples' of a medication?", a: "Advise: 'You can discuss available samples with the doctor during your exam.'" },
-    { q: "How do I handle a patient who wants to pay with a personal check?", a: "Verify the clinic's policy; many now only accept credit, debit, or cash." },
-    { q: "What if the patient asks for the doctor's 'Success Rate' for a surgery?", a: "Say: 'The surgeon will discuss their experience and clinical outcomes during your consultation.'" },
-    { q: "How do I handle a patient asking for 'Validation' of their parking ticket?", a: "Provide the specific policy (e.g., 'We validate for the first hour only')." },
-    { q: "What if the patient asks for a 'Late' afternoon appointment but the doctor leaves early on Fridays?", a: "Offer the latest available Friday slot or a full afternoon slot on a different day." },
-    { q: "How do I handle a patient who wants to 'Records-Match' with a relative?", a: "Ensure separate accounts and strictly follow HIPAA—never confirm a relative's appointment." },
-    { q: "What if the patient asks for 'Bio-Identical' hormone therapy specifically?", a: "Check if the provider offers that service before booking to avoid an unnecessary visit." },
-    { q: "How do I handle a patient who is 'Recording' the waiting room on their phone?", a: "Notify the on-site manager immediately; this is a privacy violation for other patients." },
-    { q: "What if the patient asks if the doctor 'Believes' in a specific alternative treatment?", a: "Say: 'The doctor can discuss various treatment philosophies with you during the visit.'" },
-    { q: "How do I handle a patient who wants to schedule 'Acupuncture' in a medical clinic?", a: "Verify if a licensed provider on-site performs it; otherwise, provide a referral." },
-    { q: "What if the patient asks for 'Oxygen' to be ready upon arrival?", a: "Note this in the 'Alert' section of the chart and notify the nursing lead immediately." },
-    { q: "How do I handle a patient who is 'Aggressively' asking for a discount for being a senior?", a: "State the policy clearly: 'We offer a standard senior discount of [X]% for self-pay patients.'" },
-    { q: "What if the patient asks for a 'Detailed' breakdown of their deductible over the phone?", a: "Advise them to contact their insurance provider's member services for the most current data." },
-    { q: "How do I handle a patient who wants to 'Record' the doctor's audio?", a: "State: 'Please ask the doctor for permission at the start of your visit.'" },
-    { q: "What if the patient asks if the doctor is 'Board Certified'?", a: "Confirm their status using the internal provider profile." },
-    { q: "How do I handle a patient who 'Refuses' to wear a mask in a high-risk area?", a: "State the current facility policy and offer a Telehealth alternative if they remain non-compliant." },
-    { q: "What if the patient asks for 'Vitamins' to be prescribed for insurance coverage?", a: "Say: 'The provider will determine if a prescription is medically necessary during the visit.'" },
-    { q: "How do I handle a patient asking for 'Physical Therapy' at the same time as their doctor visit?", a: "Explain these are separate appointments and coordinate the times as closely as possible." },
-    { q: "What if the patient asks for the 'NPI' number for their insurance claim?", a: "Provide the provider’s National Provider Identifier from your records." },
-    { q: "How do I handle a patient who wants to schedule a 'School Sports Physical'?", a: "Remind them to bring the required school forms and a parent/guardian." },
-    { q: "What if the patient asks if the doctor 'Likes' working there?", a: "Keep it professional: 'Our team is very dedicated to patient care!'" },
-    { q: "How do I handle a patient asking for 'FMLA' paperwork before being seen?", a: "Explain: 'Paperwork is completed after the provider has established a treatment plan.'" },
-    { q: "What if the patient asks for 'IV Hydration' without a medical reason?", a: "Check if the clinic offers elective IV services or if a medical evaluation is required first." },
-    { q: "How do I handle a patient who wants a 'Same-Day' prescription but no visit?", a: "Explain: 'For your safety, the doctor requires an evaluation before prescribing new medications.'" },
-    { q: "What if the patient asks for 'Price Matching' for a lab test?", a: "State: 'Our rates are standardized, but we can provide a cost estimate for you to compare.'" },
-    { q: "How do I handle a patient who is 'Cursing' at the hold music?", a: "Acknowledge the wait time upon return: 'Thank you for your patience; I'm ready to help now.'" },
-    { q: "What if the patient asks for a 'Curbside' injection?", a: "Check the clinic’s specific protocol for mobility-impaired patients." },
-    { q: "How do I handle a patient asking for 'Weight Loss' drugs over the phone?", a: "Schedule an initial 'Weight Management Consultation' to discuss options." },
-    { q: "What if the patient asks for the 'Office Manager's' direct email?", a: "Provide the general office email or take a message for the manager to respond." },
-    { q: "How do I handle a patient who wants to 'Book' for a friend as a surprise?", a: "Explain: 'For privacy and consent, the patient must be aware of and agree to the appointment.'" },
-    { q: "What if the patient asks for the 'C-Code' for a specific procedure?", a: "Refer the call to the coding or billing department for technical billing codes." },
-    { q: "How do I handle a patient asking for 'Genetic Testing'?", a: "Schedule a consultation to determine if they meet the clinical criteria for the test." },
-    { q: "What if the patient asks for a 'Private' waiting area?", a: "Note the request for the front desk; offer the earliest appointment when the clinic is less crowded." },
-    { q: "How do I handle a patient who wants to 'Video Call' their family during the exam?", a: "Say: 'That is usually fine, but please confirm with the doctor once you are in the room.'" },
-    { q: "What if the patient asks if the doctor is 'In-Network' for a very specific plan?", a: "Use your insurance verification tool; if unsure, advise the patient to call their insurer." },
-    { q: "How do I handle a patient asking for 'Bariatric' seating?", a: "Confirm: 'We have accommodations available; I will make a note for the staff to ensure your comfort.'" },
-    { q: "What if the patient asks for a 'Standing' order for monthly labs?", a: "Explain that the doctor must authorize standing orders during a follow-up visit." },
-    { q: "How do I handle a patient who wants to 'Bring their own' medical supplies?", a: "Advise: 'Please bring them, but the clinical staff will determine if they can be used for your treatment.'" },
-    { q: "What if the patient asks for the 'Direct Line' to the nurse station?", a: "State: 'I cannot give that out, but I can send a high-priority message for a callback.'" },
-    { q: "How do I handle a patient asking for 'Botox' for migraines vs. cosmetic?", a: "Clarify the intent and schedule with the appropriate specialist (Neurology vs. Dermatology)." },
-    { q: "What if the patient asks if the clinic has 'Free Wi-Fi'?", a: "Confirm if available and mention that login details are usually at the front desk." },
-    { q: "How do I handle a patient who 'Forgot' their last doctor's name?", a: "Search the system for past records or ask for the clinic location to help identify them." },
-    { q: "What if the patient asks for a 'Notary' at the clinic?", a: "State whether or not the office provides notary services for medical documents." },
-    { q: "How do I handle a patient asking for a 'Service' the clinic doesn't provide?", a: "Offer to find a local referral or provide the number for their insurance's provider search." },
-    { q: "What if the patient asks for a 'Quiet Room' due to sensory issues?", a: "Note 'Sensory Accommodations' and suggest a low-traffic time slot." },
-    { q: "How do I handle a patient who wants to 'Pay Cash' to keep a visit off their insurance record?", a: "Confirm: 'You have the right to self-pay; I will mark the account accordingly.'" },
-    { q: "What if the patient asks for a 'Specific' brand of vaccine?", a: "Check current inventory or state: 'We carry [Brand]; if you require another, we can provide a referral.'" },
-    { q: "How do I handle a patient asking for 'STDs' testing anonymously?", a: "Explain the clinic’s privacy policy and how results are discreetly shared through the portal." },
-    { q: "What if the patient asks if the doctor is 'Old' or 'Young'?", a: "State: 'The provider is highly experienced and has been in practice for [X] years.'" },
-    { q: "How do I handle a patient who wants to schedule 'Pre-Travel' vaccinations?", a: "Advise them to book at least 4-6 weeks before travel to allow for immunity build-up." },
-    { q: "What if the patient asks for the 'Fax Number' of a local pharmacy?", a: "Look it up in your database or ask the patient to provide it if it's a specialty pharmacy." },
-    { q: "How do I handle a patient asking for 'Pet' medical advice?", a: "Politely state: 'We only treat human patients; please contact your local veterinarian.'" },
-    { q: "What if the patient asks for a 'Copy' of their ID back?", a: "Explain: 'We only take a digital scan for your chart; we do not keep the physical copy.'" },
-    { q: "How do I handle a patient who wants a 'Work-In' but is an hour away?", a: "Advise: 'We can put you on the schedule, but if you arrive after [Time], we may have to reschedule.'" },
-    { q: "What if the patient asks for 'CBD' oil recommendations?", a: "State: 'The doctor can discuss the medical use of supplements during your visit.'" },
-    { q: "How do I handle a patient who 'Refuses' to give an email address?", a: "State: 'That's fine; we will provide your appointment reminders via phone call instead.'" },
-    { q: "What if the patient asks for 'Translation' of a document from another country?", a: "Refer them to a professional medical translation service or the medical records department." },
-    { q: "How do I handle a patient who wants to 'Tour' the facility first?", a: "Check if the manager allows brief tours or point them to a virtual tour on the website." },
-    { q: "What if the patient asks for 'Lactation' support?", a: "Check if you have a certified consultant or a nurse who specializes in postpartum care." },
-    { q: "How do I handle a patient who 'Needs' a script for an emotional support animal?", a: "Schedule a mental health evaluation; clarify that the doctor will determine the need." },
-    { q: "What if the patient asks for 'Acupressure' points over the phone?", a: "State: 'I cannot provide medical instructions; please consult with the clinical team.'" },
-    { q: "How do I handle a patient asking for 'Parking' for a oversized vehicle?", a: "Provide info on street parking or nearby lots that accommodate larger vehicles." },
-    { q: "What if the patient asks if the doctor 'Is a Parent'?", a: "Keep it professional: 'The doctor has extensive experience with [Pediatrics/Family Medicine].'" },
-    { q: "How do I handle a patient who wants to 'Batch' three different issues in a 15-min slot?", a: "Advise: 'We may need to book a longer 'extended' visit to ensure the doctor covers all your concerns.'" },
-    { q: "What if the patient asks for 'Free' medical equipment?", a: "Refer them to a local community resource or the social work department." },
-    { q: "How do I handle a patient asking for 'Ear Piercing'?", a: "Confirm if the pediatricians offer medical ear piercing; otherwise, say no." },
-    { q: "What if the patient asks for the 'Wait Time' in the lobby right now?", a: "Give a general estimate (e.g., 'Current wait is about 20 minutes') but add that it can fluctuate." },
-    { q: "How do I handle a patient who wants to 'Shadow' the doctor?", a: "Refer all student or shadowing requests to the HR or clinical education department." },
-    { q: "What if the patient asks for 'Hospice' information?", a: "Transfer them to the 'Care Coordinator' or 'Social Worker' for a compassionate discussion." },
-    { q: "How do I handle a patient asking for 'IVF' services in a general OBGYN clinic?", a: "Clarify: 'We offer initial fertility workups and then refer to a specialized RE center.'" },
-    { q: "What if the patient asks for 'Natural' childbirth options?", a: "Note the preference and schedule them with a midwife or a doctor supportive of birth plans." },
-    { q: "How do I handle a patient who wants to 'Switch' doctors within the same practice?", a: "Follow the 'Internal Transfer' policy, which may require manager approval." },
-    { q: "What if the patient asks for a 'Meal' recommendation for a diabetic diet?", a: "Offer to schedule a 'Nutritionist' or 'Dietician' appointment." },
-    { q: "How do I handle a patient who 'Lost' their script for a controlled substance?", a: "Explain: 'A visit is required for all replacement scripts for controlled medications.'" },
-    { q: "What if the patient asks for the 'Cell Phone' of the Office Manager?", a: "Never provide personal numbers; give the professional office extension." },
-    { q: "How do I handle a patient asking for 'Life Insurance' exam results?", a: "Advise them to contact the life insurance company, as they own the results of that exam." },
-    { q: "What if the patient asks for 'Stitches' to be removed that were done elsewhere?", a: "Confirm: 'We can do that; please bring the discharge paperwork from the facility that placed them.'" },
-    { q: "How do I handle a patient who wants a 'Refund' for a co-pay?", a: "Transfer them to the billing department to process the request." },
-    { q: "What if the patient asks for 'Religious' exemptions for vaccines?", a: "Schedule an appointment; state that the doctor will discuss the legal/medical requirements." },
-    { q: "How do I handle a patient asking for 'Skilled Nursing' placement?", a: "Refer them to the 'Discharge Planner' or 'Case Manager'." },
-    { q: "What if the patient asks for 'Home Health' to come to them today?", a: "Explain that home health requires a doctor's order and a 24-48 hour setup window." },
-    { q: "How do I handle a patient asking for 'Legal' advice on a malpractice claim?", a: "Immediately state: 'I cannot assist with legal matters; please consult an attorney.'" },
-    { q: "What if the patient asks if the doctor 'Uses' the medication they prescribe?", a: "State: 'The doctor selects treatments based on clinical guidelines and your specific health needs.'" },
-    { q: "How do I handle a patient asking for 'Blood Type' testing?", a: "Schedule a simple 'Lab-Only' visit for a blood type screen." },
-    { q: "What if the patient asks for 'Probiotic' brand names?", a: "Advise them to discuss specific brands with the doctor or pharmacist." },
-    { q: "How do I handle a patient asking for 'Durable Medical Equipment' (DME) repair?", a: "Refer them to the vendor who originally supplied the equipment." },
-    { q: "What if the patient asks for 'Wound Care' instructions over the phone?", a: "State: 'For safety, please follow the printed instructions provided, or I can have a nurse call you.'" },
-    { q: "How do I handle a patient who wants to 'Bring' their pet (non-service animal)?", a: "State: 'Only ADA-recognized service animals are permitted inside the clinic.'" },
-    { q: "What if the patient asks if the doctor is 'Accepting' new Medicaid patients?", a: "Check the current 'Panel Status' for that specific doctor and insurance." },
-    { q: "How do I handle a patient asking for 'Vision' testing in a medical clinic?", a: "Clarify if it's a basic screening vs. an eye exam; refer to Optometry if needed." },
-    { q: "What if the patient asks for 'Bilingual' staff specifically?", a: "Check which staff members are on duty or offer the Language Line." },
-    { q: "How do I handle a patient who wants a 'Work-In' but has a 4.5/5 rating (Difficult Patient flag)?", a: "Follow the standard protocol but alert the manager of the request." },
-    { q: "What if the patient asks for 'Stem Cell' therapy?", a: "Verify if the clinic offers this specific service or refer to a specialist." },
-    { q: "How do I handle a patient asking for 'Travel' clinic costs?", a: "Provide the 'Consultation Fee' plus the estimated cost per vaccine." },
-    { q: "What if the patient asks for 'Hormone' pellets?", a: "Check if the provider is trained in pellet insertion before booking." },
-    { q: "How do I handle a patient who wants to 'Cancel' because of a negative Yelp review?", a: "Acknowledge: 'I'm sorry to hear that; we strive for great care. Would you like to speak to a manager instead?'" },
-    { q: "What if the patient asks for 'Earwax' removal?", a: "Confirm: 'Yes, we can do that; it's a standard nurse or doctor procedure.'" },
-    { q: "How do I handle a patient asking for 'Surgical' clearance from a different state?", a: "Confirm: 'We can do the clearance, but please ensure we have the surgeon's specific requirements.'" },
-    { q: "What if the patient asks for 'Medical' marijuana certification?", a: "Check the clinic policy; some clinics do not provide certifications." },
-    { q: "How do I handle a patient who wants to 'Add' a family member to their call?", a: "Use the conference feature on your phone system and document the verbal consent." },
-    { q: "What if the patient asks for 'Breastfeeding' rooms on-site?", a: "Confirm: 'Yes, we have a private area available for your use.'" },
-    { q: "How do I handle a patient asking for 'IV Vitamin' therapy?", a: "Verify if it's a medical infusion vs. a wellness drip; book accordingly." },
-    { q: "What if the patient asks for 'Allergy' shots today?", a: "Check if their serum is already in the fridge and if a nurse is available." },
-    { q: "How do I handle a patient who wants a 'Paper' script only?", a: "Explain: 'We primarily use e-prescribing for accuracy, but we can provide paper if required.'" },
-    { q: "What if the patient asks for 'Financial Aid' for surgery?", a: "Refer them to the 'Hospital Financial Assistance' or 'Charity Care' office." },
-    { q: "How do I handle a patient asking for 'Colonoscopy' prep over the phone?", a: "Say: 'I will have the GI coordinator call you with the specific instructions.'" },
-    { q: "What if the patient asks for 'STD' results via text?", a: "State: 'For security, we can only provide results via the secure portal or a phone call.'" },
-    { q: "How do I handle a patient who wants to 'Skip' the co-pay just this once?", a: "State: 'Our contract with your insurance requires us to collect co-pays at the time of service.'" },
-    { q: "What if the patient asks for 'Surgical' pre-op instructions?", a: "Direct them to the 'Surgical Coordinator' for the full packet." },
-    { q: "How do I handle a patient asking for 'Lice' check?", a: "Confirm: 'Yes, we can perform an evaluation; please let the front desk know upon arrival.'" },
-    { q: "What if the patient asks for 'Inpatient' rehab?", a: "Transfer to the 'Case Management' or 'Social Work' team." },
-    { q: "How do I handle a patient who 'Found' a mistake in their chart?", a: "Explain: 'I will flag this for the medical records team to review and correct.'" },
-    { q: "What if the patient asks for 'Morning After' pill info?", a: "Provide immediate scheduling or advise that it is available over-the-counter." },
-    { q: "How do I handle a patient asking for 'X-Ray' results from an outside facility?", a: "Say: 'Please have that facility fax the report to us so the doctor can review it.'" },
-    { q: "What if the patient asks for 'Alternative' medicine like homeopathy?", a: "State: 'The doctor focuses on evidence-based medicine but can discuss all your options.'" },
-    { q: "How do I handle a patient who 'Wants to complain' about a nurse?", a: "Take a detailed message and assure them it will be given to the Nursing Supervisor." },
-    { q: "What if the patient asks for 'Translation' for a family member?", a: "Ask for the language and ensure an interpreter is booked for the appointment." },
-    { q: "How do I handle a patient who wants to 'Pay with an App' (Venmo/Zelle)?", a: "State: 'We only accept standard credit cards, cash, or the patient portal payment system.'" },
-    { q: "What if the patient asks for 'Occupational' therapy?", a: "Check if you have an OT on-site or provide a local referral." },
-    { q: "How do I handle a patient asking for 'Paternity' testing?", a: "State: 'We do not perform legal paternity tests; please contact a specialized lab.'" },
-    { q: "What if the patient asks for 'Hearing Aid' adjustment?", a: "Refer them to the 'Audiology' department or their original provider." },
-    { q: "How do I handle a patient who 'Refuses' to see a Physician Assistant (PA)?", a: "Say: 'I understand; let’s find a time that works with the MD/DO instead.'" },
-    { q: "What if the patient asks for 'Dialysis' times?", a: "Refer them to their specific dialysis center or social worker." },
-    { q: "How do I handle a patient asking for 'Travel' insurance medical forms?", a: "Explain: 'A visit is required for the doctor to certify your medical status for insurance.'" },
-    { q: "What if the patient asks for 'Skin Tag' removal costs?", a: "Provide the procedure code and estimate, but note it may be considered cosmetic by insurance." },
-    { q: "How do I handle a patient who 'Needs' a same-day referral?", a: "Explain: 'Referrals take 3-5 days to process, but I will mark this as urgent for the team.'" },
-    { q: "What if the patient asks for 'Dementia' screening?", a: "Schedule an 'Extended' visit to allow time for the cognitive testing." },
-    { q: "How do I handle a patient asking for 'In-Person' vs. 'Telehealth'?", a: "Explain the benefits of both and let them choose based on their symptoms." },
-    { q: "What if the patient asks for 'Sleep Apnea' supplies?", a: "Refer them to the 'Durable Medical Equipment' (DME) provider." },
-    { q: "How do I handle a patient who 'Is crying' because of a diagnosis?", a: "Offer empathy: 'I'm so sorry you're going through this. Would you like to speak with our care coordinator?'" },
-    { q: "What if the patient asks for 'Chemotherapy' scheduling?", a: "Transfer to the 'Oncology Scheduling' specialist." },
-    { q: "How do I handle a patient asking for 'Sports Medicine'?", a: "Check if the doctor is fellowship-trained in sports medicine or refer to Orthopedics." },
-    { q: "What if the patient asks for 'Holistic' nutrition?", a: "Check if the clinic has an Integrative Medicine specialist." },
-    { q: "How do I handle a patient who 'Doesn't have' their new insurance card yet?", a: "Ask for the 'Member ID' and 'Group Number' over the phone to verify." },
-    { q: "What if the patient asks for 'Physical' therapy for a child?", a: "Ensure you refer them to a 'Pediatric' specific therapist." },
-    { q: "How do I handle a patient asking for 'Prenatal' vitamins?", a: "State: 'The doctor can provide a prescription or recommendation at your first OB visit.'" },
-    { q: "What if the patient asks for 'Tuberculosis' (PPD) testing?", a: "Advise: 'You must return 48-72 hours later to have the test read by a nurse.'" },
-    { q: "How do I handle a patient who 'Needs' a letter for an airline for a refund?", a: "Explain: 'The doctor can provide this after a visit to confirm medical necessity.'" },
-    { q: "What if the patient asks for 'Plastics' (Cosmetic Surgery)?", a: "Refer to the 'Plastic Surgery' department or an outside specialist." },
-    { q: "How do I handle a patient asking for 'Bone Density' (DEXA) scans?", a: "Verify if your clinic has the machine on-site or schedule at an imaging center." },
-    { q: "What if the patient asks for 'Free' samples of expensive insulin?", a: "Refer to the 'Patient Assistance Program' (PAP) coordinator." },
-    { q: "How do I handle a patient who 'Missed' their prep for a colonoscopy?", a: "Advise: 'Please do not start the procedure; we must reschedule to ensure a clear view.'" },
-    { q: "What if the patient asks for 'Marriage Counseling'?", a: "Refer them to a 'Licensed Clinical Social Worker' (LCSW) or psychologist." },
-    { q: "How do I handle a patient asking for 'Surgical' staples removal?", a: "Confirm: 'Yes, we can do that; it takes about 15 minutes with a nurse.'" },
-    { q: "What if the patient asks for 'Wart' freezing?", a: "Confirm: 'Yes, we offer cryotherapy; please book a standard visit.'" },
-    { q: "How do I handle a patient who 'Wants to talk' about their lab results for 20 minutes?", a: "Advise: 'The doctor can go into detail with you during a follow-up appointment.'" },
-    { q: "What if the patient asks for 'Podiatry' (Foot Care)?", a: "Check if you have a podiatrist or refer to a local specialist." },
-    { q: "How do I handle a patient asking for 'Anxiety' medication on the first visit?", a: "State: 'The doctor will perform a full evaluation to find the best treatment plan for you.'" },
-    { q: "What if the patient asks for 'Home' blood pressure monitoring tips?", a: "Offer to email them a 'Blood Pressure Log' and instructions." },
-    { q: "How do I handle a patient who 'Needs' a doctor to sign a DMV form?", a: "Explain: 'A physical exam is required before the doctor can certify your driving ability.'" },
-    { q: "What if the patient asks for 'Asthma' inhaler training?", a: "Say: 'A nurse can provide a 1-on-1 education session during your visit.'" },
-    { q: "How do I handle a patient asking for 'Smoking Cessation' programs?", a: "Provide info on 'State Quit-Lines' and schedule a doctor visit for cessation aids." },
-    { q: "What if the patient asks for 'Vaginal Birth After Cesarean' (VBAC)?", a: "Check if the OBGYN and hospital support VBACs before booking." },
-    { q: "How do I handle a patient who 'Refuses' to pay a past-due balance?", a: "Follow the 'Collections' policy; you may need to transfer to billing before scheduling." },
-    { q: "What if the patient asks for 'Speech' therapy?", a: "Refer them to a 'Speech-Language Pathologist' (SLP)." },
-    { q: "How do I handle a patient asking for 'Erectile Dysfunction' (ED) help?", a: "Schedule a private consultation with a primary care doctor or urologist." },
-    { q: "What if the patient asks for 'Hepatitis' screening?", a: "Schedule a 'Lab-Only' visit or add it to their physical exam." },
-    { q: "How do I handle a patient who 'Needs' a travel clearance for a cruise?", a: "Schedule a 'Fit-to-Fly' or 'Travel' consultation visit." },
-    { q: "What if the patient asks for 'Gluten-Free' diet advice?", a: "Offer to schedule a 'Dietician' visit for a customized plan." },
-    { q: "How do I handle a patient asking for 'Prostate' screening (PSA)?", a: "Schedule a visit to discuss the pros/cons with the doctor first." },
-    { q: "What if the patient asks for 'Shingles' vaccine (Shingrix)?", a: "Verify age (usually 50+) and stock availability." },
-    { q: "How do I handle a patient who 'Wants' a female nurse specifically?", a: "Note the preference and inform the clinical team; state that we try to accommodate." },
-    { q: "What if the patient asks for 'Endocrinology' for thyroid issues?", a: "Confirm if you need a referral from their PCP first." },
-    { q: "How do I handle a patient asking for 'Cardiac' stress tests?", a: "Verify if your clinic has the equipment or refer to Cardiology." },
-    { q: "What if the patient asks for 'Pneumonia' vaccine?", a: "Confirm their age/risk factors and stock availability." },
-    { q: "How do I handle a patient who 'Needs' a copy of their vaccine record for work?", a: "Offer to send it via the secure portal or mail it to their home." },
-    { q: "What if the patient asks for 'Mammogram' results?", a: "Advise: 'Results take 3-5 days; you will be notified via the portal or a letter.'" },
-    { q: "How do I handle a patient asking for 'Colon Cancer' screening (Cologuard)?", a: "Schedule a visit to see if they qualify for the home-test kit." },
-    { q: "What if the patient asks for 'Breast' ultrasound?", a: "Refer them to an imaging center or the 'Women’s Health' department." },
-    { q: "How do I handle a patient who 'Is panicked' about a new lump?", a: "Schedule them with the first available 'Urgent' slot for evaluation." },
-    { q: "What if the patient asks for 'Blood' transfusion info?", a: "Refer them to the 'Hematology' or 'Infusion' center." },
-    { q: "How do I handle a patient asking for 'In-Home' hospice?", a: "Transfer to the 'Palliative Care' or 'Social Work' coordinator." },
-    { q: "What if the patient asks for 'Catheter' supplies?", a: "Refer to the 'Durable Medical Equipment' (DME) vendor." },
-    { q: "How do I handle a patient who 'Needs' a letter for a service dog?", a: "Explain: 'A mental health or physical evaluation is required for such certifications.'" },
-    { q: "What if the patient asks for 'Pain' management injections?", a: "Verify if your clinic does them or refer to a 'Pain Specialist'." },
-    { q: "How do I handle a patient asking for 'Scoliosis' screening?", a: "Confirm: 'Yes, we perform these during a standard physical or specialized visit.'" },
-    { q: "What if the patient asks for 'A1C' testing for diabetes?", a: "Confirm: 'Yes, we can do a rapid finger-stick or a full lab draw.'" },
-    { q: "How do I handle a patient who 'Wants' to see a specific PA?", a: "Check that PA’s schedule and book accordingly." },
-    { q: "What if the patient asks for 'Vasectomy' info?", a: "Schedule an initial 'Consultation' visit with the urologist." },
-    { q: "How do I handle a patient asking for 'Birth Control' (Nexplanon/IUD)?", a: "Schedule a 'Consultation' first to discuss the device and check insurance coverage." },
-    { q: "What if the patient asks for 'Weight' loss surgery info?", a: "Refer them to the 'Bariatric Coordinator' or a specialized center." },
-    { q: "How do I handle a patient who 'Needs' a referral to a specific out-of-state specialist?", a: "Explain: 'Out-of-state referrals require extra insurance authorization; we will start the process.'" },
-    { q: "What if the patient asks for 'Kidney' stone help?", a: "If in severe pain, direct to ER; otherwise, schedule with a Urologist." },
-    { q: "How do I handle a patient asking for 'Mental Health' crisis help?", a: "Provide the 'National Crisis Hotline' number and offer an urgent triage callback." },
-    { q: "What if the patient asks for 'HIV' prep (PrEP)?", a: "Schedule a consultation; clarify that regular lab work is required for the script." },
-    { q: "How do I handle a patient who 'Wants' a physical but is sick right now?", a: "Advise: 'We should book an 'Acute' visit for your illness and reschedule the physical for later.'" },
-    { q: "What if the patient asks for 'TB' blood test (QuantiFERON)?", a: "Confirm: 'Yes, we can order that lab; it's often preferred over the skin test.'" },
-    { q: "How do I handle a patient asking for 'Osteoporosis' meds?", a: "Schedule an evaluation to review their latest bone density results." },
-    { q: "What if the patient asks for 'Lymphedema' therapy?", a: "Refer to a specialized 'Lymphedema Physical Therapist'." },
-    { q: "How do I handle a patient who 'Needs' a handicap placard for 6 months?", a: "Schedule a visit; state the doctor will complete the DMV application." },
-    { q: "What if the patient asks for 'Varicose Vein' treatment?", a: "Refer to a 'Vascular Surgeon' or 'Vein Specialist'." },
-    { q: "How do I handle a patient asking for 'Dermatology' for a rash?", a: "Ask if they’ve seen their PCP first or book directly if your clinic allows." },
-    { q: "What if the patient asks for 'Sleep' study results?", a: "Advise: 'Results take 7-10 days; the doctor will review them with you at your follow-up.'" },
-    { q: "How do I handle a patient who 'Wants' their co-pay waived due to financial hardship?", a: "Offer a 'Financial Hardship Form' for them to complete for approval." },
-    { q: "What if the patient asks for 'Travel' meds for altitude sickness?", a: "Schedule a 'Travel Consult' visit." },
-    { q: "How do I handle a patient asking for 'Pediatric' developmental screening?", a: "Confirm: 'Yes, we use standardized tools (like M-CHAT) during well-child visits.'" },
-    { q: "What if the patient asks for 'Iron' infusions?", a: "Check if your clinic has an infusion suite or refer to Hematology." },
-    { q: "How do I handle a patient who 'Needs' a school excuse for a month ago?", a: "State: 'We can only provide excuses for dates the patient was actually seen in our office.'" },
-    { q: "What if the patient asks for 'Gallbladder' surgery info?", a: "Schedule a consultation with a 'General Surgeon'." },
-    { q: "How do I handle a patient asking for 'Menopause' relief?", a: "Schedule an 'Extended' visit with an OBGYN or PCP to discuss options." },
-    { q: "What if the patient asks for 'Urgent' refills on a Saturday?", a: "Check if there is an 'On-Call' provider who can handle emergencies." },
-    { q: "How do I handle a patient who 'Wants' to know if the doctor is 'Liberal' or 'Conservative'?", a: "State: 'Our providers focus strictly on high-quality medical care for all patients.'" },
-    { q: "What if the patient asks for 'Skin Cancer' screening?", a: "Confirm: 'Yes, we offer full-body skin checks; please book a 20-minute slot.'" },
-    { q: "How do I handle a patient asking for 'B12' shots?", a: "Confirm: 'Yes, we can do these as a nurse-visit if you have an active order.'" },
-    { q: "What if the patient asks for 'Hearing' tests for an infant?", a: "Refer them to a 'Pediatric Audiologist'." },
-    { q: "How do I handle a patient who 'Lost' their hearing aid?", a: "Refer them to their 'Audiology' clinic for replacement options." },
-    { q: "What if the patient asks for 'Hernia' repair info?", a: "Schedule a 'General Surgery' consultation." },
-    { q: "How do I handle a patient asking for 'Bio-identical' hormones?", a: "Verify if the provider specializes in 'Integrative' or 'Functional' medicine." },
-    { q: "What if the patient asks for 'Surgical' drain removal?", a: "Confirm: 'Yes, we can do that; please bring your post-op instructions.'" },
-    { q: "How do I handle a patient who 'Wants' to pay after the visit?", a: "State: 'Our policy is to collect payment at the time of check-in.'" },
-    { q: "What if the patient asks for 'Home' COVID test verification?", a: "Explain: 'We cannot verify home tests; we must perform an in-office test for official records.'" },
-    { q: "How do I handle a patient asking for 'Wound' VAC supplies?", a: "Refer to the 'Home Health' agency or the 'Wound Care' clinic." },
-    { q: "What if the patient asks for 'DNR' (Do Not Resuscitate) forms?", a: "Offer to provide the 'POLST' or 'Advanced Directive' forms for the doctor to sign." },
-    { q: "How do I handle a patient who 'Needs' an urgent ultrasound for a possible DVT?", a: "Direct them to the ER or an 'Urgent Care' with stat imaging capabilities." },
-    { q: "What if the patient asks for 'Breast' pump prescriptions?", a: "Confirm: 'Yes, the doctor can write this script at your prenatal or postpartum visit.'" },
-    { q: "How do I handle a patient asking for 'Allergy' testing (skin pricks)?", a: "Check if an 'Allergist' is on-site or provide a referral." },
-    { q: "What if the patient asks for 'Travel' shots for a baby?", a: "Refer them to a 'Pediatric Travel Specialist'." },
-    { q: "How do I handle a patient who 'Wants' to speak to the doctor’s wife/husband?", a: "Politely state: 'That information is private; how can I help you with your medical needs?'" },
-    { q: "What if the patient asks for 'Sports' injury rehab?", a: "Refer to a 'Physical Therapist' specializing in sports medicine." },
-    { q: "How do I handle a patient asking for 'Nerve' conduction studies (EMG)?", a: "Check if your Neurologist performs these on-site." },
-    { q: "What if the patient asks for 'In-Office' procedures (like mole removal) today?", a: "Advise: 'The doctor will evaluate it today; the procedure may need to be scheduled for a later date.'" },
-    { q: "What is the best way to handle a patient who refuses to hang up?", a: "Use a firm but kind closing: 'I've noted everything for the doctor; I must assist the next patient now. Goodbye!'" }
-    
-    ];
+        // GROUP 1
+        { q: `How should I greet a patient?`, a: `Use a professional greeting: 'Thank you for calling [Clinic Name], this is [Your Name], how may I assist you today?'` },
+        { q: `What if I can’t understand the patient?`, a: `Politely ask them to repeat or clarify: 'I’m sorry, I want to make sure I have this right. Could you please repeat that?'` },
+        { q: `How do I verify identity?`, a: `Always ask for at least two identifiers, usually full name and date of birth.` },
+        { q: `How do I handle a long silence?`, a: `Provide 'verbal nods' or check-in: 'I am still here, just looking for the best available slot for you.'` },
+        { q: `How do I put a patient on hold?`, a: `Always ask permission first: 'May I place you on a brief hold while I check that schedule?'` },
+        { q: `How long can I leave someone on hold?`, a: `Try not to exceed 60–90 seconds without checking back in.` },
+        { q: `What if the patient is using a speakerphone?`, a: `If the quality is poor, politely ask: 'I’m having a little trouble hearing you; would you mind taking me off speakerphone?'` },
+        { q: `Can I use medical jargon?`, a: `No. Use plain language (e.g., 'fasting' vs. 'not eating before the test').` },
+        { q: `What do I do if the line disconnects?`, a: `Call them back immediately if you have their number on file.` },
+        { q: `How do I end the call?`, a: `Confirm the appointment details and ask: 'Is there anything else I can help you with today?'` },
+        { q: `What if the requested time is unavailable?`, a: `Offer the two closest alternatives: 'That time is taken, but I have 9:00 AM or 1:15 PM available.'` },
+        { q: `How do I handle a 'work-in' or urgent request?`, a: `Follow your clinic’s triage protocol or consult a lead/nurse before squeezing them in.` },
+        { q: `What if the patient insists on a specific doctor who is booked?`, a: `Offer another provider in the same department or the next available date for their preferred doctor.` },
+        { q: `How do I schedule a new patient?`, a: `Collect full demographics, insurance info, and the reason for the visit.` },
+        { q: `What if the patient doesn't know why they are calling?`, a: `Ask clarifying questions: 'Are you experiencing new symptoms or is this for a yearly follow-up?'` },
+        { q: `How do I handle multiple family members?`, a: `Schedule them back-to-back if possible, but verify identity for each individual separately.` },
+        { q: `What do I do for a 'No Show' patient?`, a: `Follow the policy for rescheduling—some clinics require a fee or manager approval.` },
+        { q: `How do I handle a cancellation?`, a: `Ask if they’d like to reschedule immediately to keep them in the system.` },
+        { q: `What if the patient needs an interpreter?`, a: `Note the language needed in the appointment notes and follow your facility's interpreter booking process.` },
+        { q: `Can I schedule an appointment for a minor?`, a: `Yes, but you must speak with the legal guardian to confirm details.` },
+        { q: `What if the patient says they have chest pain?`, a: `Immediately follow emergency protocol: 'Please hang up and dial 911 or go to the nearest ER.'` },
+        { q: `What if the patient sounds very ill?`, a: `Escalate to a nurse or supervisor immediately; do not attempt to give medical advice.` },
+        { q: `Can I tell a patient which medication to take?`, a: `No. Refer all medical/dosage questions to the clinical staff.` },
+        { q: `How do I handle a patient mentioning self-harm?`, a: `Keep them on the line and follow your center’s immediate crisis escalation procedure.` },
+        { q: `What if the patient asks for a diagnosis?`, a: `Explain: 'I am a scheduler and not clinically trained, but the doctor will discuss that with you during your visit.'` },
+        { q: `What if their insurance is inactive?`, a: `Inform them politely and ask if they have a new card or if they would like to pay out-of-pocket.` },
+        { q: `Should I quote exact prices?`, a: `No, give estimated ranges or refer them to the billing department.` },
+        { q: `What if the patient refuses to give insurance info?`, a: `Explain it is required to verify coverage and prevent unexpected bills.` },
+        { q: `How do I handle a referral requirement?`, a: `Remind the patient: 'Your insurance requires a referral from your primary doctor before this visit.'` },
+        { q: `What if the patient complains about a bill?`, a: `Transfer them to the billing department or provide their direct number.` },
+        { q: `What if the patient is angry about wait times?`, a: `Acknowledge the frustration: 'I understand it’s frustrating; I’m looking for the soonest opening.'` },
+        { q: `How do I handle a patient using profanity?`, a: `Set a boundary: 'I want to help you, but I must ask you to use professional language so I can do so.'` },
+        { q: `What if a patient demands to speak to a manager?`, a: `Try to assist first, but if they persist, follow your escalation path.` },
+        { q: `How do I handle 'Doctor Shopping'?`, a: `Follow the clinic’s policy on new patient screenings and narcotics.` },
+        { q: `What if the patient blames me for a mistake?`, a: `Don't take it personally. Apologize for the inconvenience and focus on the solution.` },
+        { q: `Can I leave a voicemail with medical details?`, a: `No. Only leave your name, clinic name, and a call-back number unless authorized otherwise.` },
+        { q: `What if a spouse calls for a patient’s records?`, a: `Do not release info unless there is a signed HIPAA waiver on file.` },
+        { q: `Can I look up my own records or a friend's?`, a: `No. This is a HIPAA violation and grounds for termination.` },
+        { q: `What if a patient asks to be removed from a call list?`, a: `Mark them as 'Do Not Call' in the system immediately.` },
+        { q: `How do I verify a third-party caller (e.g., law firm)?`, a: `Transfer them to the Medical Records or Legal department.` },
+        { q: `What if the system crashes during a call?`, a: `Take the patient's name and number on paper and promise to call them back once it's resolved.` },
+        { q: `How do I handle a patient who talks too much?`, a: `Use 'closed-ended' questions (Yes/No) to gently steer the conversation back to scheduling.` },
+        { q: `What if the patient asks for the doctor's personal cell?`, a: `Never give it out. Offer to take a message for the office staff.` },
+        { q: `How do I confirm a Telehealth visit?`, a: `Ensure the patient has the correct link and knows how to log in.` },
+        { q: `What do I do if a patient asks for a different location?`, a: `Check the provider's schedule for other clinic branches.` },
+        { q: `How do I note a 'Special Request' (e.g., wheelchair)?`, a: `Add it prominently in the appointment notes for the front desk.` },
+        { q: `What if the patient is confused about prep (e.g., fasting)?`, a: `Read the standardized instructions from your script exactly.` },
+        { q: `How do I handle a 'Waitlist' request?`, a: `Add them to the electronic waitlist and explain how they will be notified of openings.` },
+        { q: `Can I give out a doctor’s email?`, a: `Generally no, unless it is a public-facing office email.` },
+        { q: `What is the most important part of the call?`, a: `Accuracy. Double-check the date, time, and location before hanging up.` },
+        { q: `What if a patient asks for a 'same-day' appointment?`, a: `Check urgent blocks; if full, suggest triage nurse for emergency assessment.` },
+        { q: `How do I handle a request for a second opinion?`, a: `Ask patient to ensure records are sent over before the appointment date.` },
+        { q: `What if the patient is late for their call?`, a: `For Telehealth, call to assist; for in-office, inform them of grace period policy.` },
+        { q: `How do I handle a procedure (e.g., MRI/Surgery)?`, a: `Follow specific pre-auth checklist and confirm fasting rules.` },
+        { q: `What if a patient asks for a 'quiet' time?`, a: `Suggest first morning appointment or first slot after lunch.` },
+        { q: `How do I handle a 'Referral Out'?`, a: `Provide specialist contact info and confirm records were sent.` },
+        { q: `Can I schedule a 'Follow-up' without an order?`, a: `Only if the previous visit note states a timeframe (e.g., 'return in 2 weeks').` },
+        { q: `What if a patient asks to be moved up on the waitlist?`, a: `Explain list is chronological but note any urgent symptom changes.` },
+        { q: `How do I handle a patient who wants to 'interview' the doctor?`, a: `Explain we don't offer interviews, but they can book a Consultation.` },
+        { q: `What if the patient is out of state/country?`, a: `Verify provider licensing for that location before booking Telehealth.` },
+        { q: `What if a patient is crying?`, a: `Slow down. Say: 'I hear you're going through a lot; let's get you scheduled for help.'` },
+        { q: `How do I handle an 'Over-sharer'?`, a: `Gently interrupt: 'I want to make sure I save enough time to get you scheduled.'` },
+        { q: `What if the patient has a hearing impairment?`, a: `Speak clearly and use TTY/Relay service if available.` },
+        { q: `Can I use 'Honey' or 'Dear'?`, a: `No. Stick to professional titles (Mr., Ms.) or the name provided.` },
+        { q: `How do I handle 'Doctor Shopping' for meds?`, a: `Follow Controlled Substance policy; do not promise specific prescriptions.` },
+        { q: `What if the patient is unhappy with the doctor recommended?`, a: `Offer a different provider or location within the group.` },
+        { q: `How do I confirm the address?`, a: `Ask: 'Could you please verify your current mailing address for me?'` },
+        { q: `What if a patient asks for a 'Call Back' from the doctor?`, a: `Set expectations: 'I'll message the team; they usually respond in 24-48 hours.'` },
+        { q: `How do I handle a patient with a strong accent?`, a: `Focus on key numbers/dates; repeat back slowly to ensure understanding.` },
+        { q: `What if the patient is using a 'Proxy'?`, a: `Ensure legal Power of Attorney or Consent is on file before discussing schedule.` },
 
-    // Added the rest of your categories as searchable text
-    const extraContent = "insurance billing triage emergency compliance hipaa technical scheduling conflict specialized communication";
+        // GROUP 2
+        { q: `How do I document a 'Difficult Call'?`, a: `Use objective language: 'Patient used profanity and hung up,' not personal opinions.` },
+        { q: `What if I make a scheduling error?`, a: `Call patient immediately, apologize, and prioritize finding a new slot.` },
+        { q: `How do I handle 'No-Show' fees?`, a: `State policy clearly: 'We require 24 hours notice to avoid a fee.'` },
+        { q: `What if the patient asks about doctor credentials?`, a: `Have Provider Bio sheet ready with education and board certifications.` },
+        { q: `How do I handle a 'Double Booking'?`, a: `Avoid unless a supervisor or doctor specifically approves for an emergency.` },
+        { q: `What if the patient can't find the email link?`, a: `Verify email, check spam, and offer to resend while they are on the line.` },
+        { q: `How do I handle a patient with no internet?`, a: `Offer in-person visit or check for phone-only consultation options.` },
+        { q: `What if the patient’s portal account is locked?`, a: `Provide password reset steps or transfer to Tech Support.` },
+        { q: `How do I explain 'Checking In' online?`, a: `Tell them: 'Click the link in your reminder text to confirm your info.'` },
+        { q: `What if the patient’s phone number is disconnected?`, a: `Search system for emergency contact or Next of Kin.` },
+        { q: `How do I handle a browser compatibility issue?`, a: `Suggest using Chrome or Safari for best results with medical software.` },
+        { q: `What if the patient asks about 'Data Privacy'?`, a: `Assure them: 'Our platform is fully encrypted and HIPAA-compliant.'` },
+        { q: `Can I help a patient set up their webcam?`, a: `Give basic instructions but limit to 2 minutes; refer to tech support if needed.` },
+        { q: `How do I handle a patient who prefers 'Texting'?`, a: `Opt them into SMS notifications if your system allows it.` },
+        { q: `What if the scheduling software is lagging?`, a: `Apologize: 'System is slow today; thanks for your patience while this loads.'` },
+        { q: `How do I handle a patient with dementia?`, a: `Speak slowly; ask if a caregiver is available to confirm details.` },
+        { q: `What if a patient needs a bariatric/low-light room?`, a: `Note 'Room Requirement' in appointment notes and alert clinical staff.` },
+        { q: `How do I schedule a 'Work Comp' visit?`, a: `Request claim number, date of injury, and adjuster info before booking.` },
+        { q: `What if the patient is 'Homebound'?`, a: `Check for home health options or refer to a mobile provider.` },
+        { q: `How do I handle a patient with a service animal?`, a: `Service animals are welcome; ask if they need specific accommodations.` },
+        { q: `What if the patient is a 'VIP'?`, a: `Follow high-privacy protocol—often using pseudonym or restricted file.` },
+        { q: `How do I handle a different time zone?`, a: `Confirm: 'That is 2:00 PM your time and 4:00 PM our time.'` },
+        { q: `What if a patient needs a long-form physical (FAA/DOT)?`, a: `Ensure provider is certified for that specific exam before booking.` },
+        { q: `How do I handle Transgender/Non-binary patients?`, a: `Use preferred name and pronouns as noted in the chart.` },
+        { q: `What if the patient asks for a specific gender provider?`, a: `Respect preference and schedule with requested gender if available.` },
+        { q: `How do I handle a 'Provider Outage' (sick day)?`, a: `Call scheduled patients immediately to offer next available or different doctor.` },
+        { q: `What if a doctor wants to 'Close their schedule'?`, a: `Route request to Practice Manager before blocking calendar.` },
+        { q: `How do I handle a 'Transition of Care'?`, a: `Ensure discharge summary is available before the first follow-up.` },
+        { q: `What if the patient needs 'Stat' lab results?`, a: `Schedule follow-up for day after labs to ensure results are ready.` },
+        { q: `How do I schedule a 'Lunch and Learn'?`, a: `Refer to Office Manager; do not put on clinical calendar yourself.` },
+        { q: `What if a provider is running late?`, a: `Call upcoming patients to offer late arrival or rescheduling.` },
+        { q: `How do I handle 'Representative' calls (Pharma)?`, a: `Do not put on patient schedule; refer to manager’s line.` },
+        { q: `What if the clinic is closing for weather?`, a: `Call all patients and move them to a 'Priority Reschedule' list.` },
+        { q: `How do I handle 'New Patient Paperwork'?`, a: `Email forms or ask them to arrive 15 minutes early.` },
+        { q: `What if I see a 'Warning Flag' on a chart?`, a: `Read the note carefully (e.g., Collections/Behavior) before offering time.` },
+        { q: `Will the doctor give me [Specific Medication]?`, a: `Explain: 'The doctor will evaluate your needs during the visit.'` },
+        { q: `How do I handle a 'Self-Referral'?`, a: `Check if insurance requires a PCP referral first to avoid denial.` },
+        { q: `What if the patient is 'Self-Pay'?`, a: `Provide standard discount rate and mention payment is due at visit.` },
+        { q: `How do I handle 'Needs to be seen now' (non-emergency)?`, a: `Offer Cancellation List and promise to call if a slot opens.` },
+        { q: `What if a patient complains about Check-in?`, a: `Empathize: 'Paperwork helps the doctor provide better care.'` },
+        { q: `How do I handle a 'Direct Transfer' from hospital?`, a: `Get Ordering Physician name and Referring Facility info immediately.` },
+        { q: `What if a patient asks 'Who is the best doctor?'`, a: `Say: 'All providers are excellent; Dr. X is popular for [Specialty].'` },
+        { q: `How do I handle a 'Wrong Number'?`, a: `Inform them and provide correct number if it's a sister clinic.` },
+        { q: `What if the patient is a 'Frequent Caller'?`, a: `Remain professional and focused; do not show impatience.` },
+        { q: `How do I handle a 'Second-hand' cancellation?`, a: `Verify patient DOB and name before accepting the change.` },
+        { q: `What if a patient wants to 'Verify a script'?`, a: `Transfer to Pharmacy Line or Nurse’s Station.` },
+        { q: `How do I handle 'Medical Record' requests?`, a: `Explain signed release is required; give fax or portal link.` },
+        { q: `What if the patient asks about 'Co-pays'?`, a: `Say: 'Co-pay is set by insurance; please bring your card to verify.'` },
+        { q: `How do I handle refusal to give reason for visit?`, a: `Explain: 'Doctor needs a reason to book the correct amount of time.'` },
+        { q: `What if the patient says another agent lied?`, a: `Don't argue: 'Sorry for confusion; let me check current policy.'` },
+        { q: `How do I handle 'High Call Volume'?`, a: `Stay calm, keep greetings concise, and focus on one patient at a time.` },
+        { q: `What if I get a 'Hate Speech' call?`, a: `Stay silent, document, and follow Immediate Termination policy.` },
+        { q: `How do I handle 'Burnout' during a shift?`, a: `Take scheduled breaks and step away from the screen to reset.` },
+        { q: `Can I eat while on a call?`, a: `No. It is audible and unprofessional.` },
+        { q: `What if I am 'Not Sure' of the answer?`, a: `Never guess. Say: 'Let me check with my supervisor for the right info.'` },
+        { q: `How do I handle 'Muffled' audio?`, a: `Say: 'I'm sorry, you sound distant. Could you move closer to the mic?'` },
+        { q: `What if a patient asks 'How are you?'`, a: `Keep it brief: 'Doing well, thanks! How can I help you today?'` },
+        { q: `How do I manage 'Wrap-up' time?`, a: `Complete notes immediately after the call to stay ready for next one.` },
+        { q: `What if a patient offers a 'Tip'?`, a: `Decline: 'That's kind, but we aren't allowed to accept gifts.'` },
+        { q: `How do I handle 'Dead Air'?`, a: `Narrate actions: 'I’m searching the provider's schedule now...'` },
+        { q: `What is a 'Prior Auth'?`, a: `Approval from insurance that they will cover the procedure.` },
+        { q: `What if insurance isn't in network?`, a: `Inform them: 'We are out-of-network; costs may be higher. Proceed?'` },
+        { q: `How do I handle 'Coordination of Benefits'?`, a: `Tell patient to call insurance to clarify which plan is Primary.` },
+
+        // GROUP 3
+        { q: `What if a patient asks to 'Split' a payment?`, a: `Refer to billing office to set up a formal payment plan.` },
+        { q: `How do I handle 'Deductible' questions?`, a: `Say: 'Deductible is what you pay before insurance kicks in. Contact insurer for totals.'` },
+        { q: `How do I handle 'No appointments for 3 months'?`, a: `Check Waitlist and offer nearby clinic locations.` },
+        { q: `What if it's an emergency but they won't call 911?`, a: `Explain: 'By policy, I must recommend ER for those symptoms.'` },
+        { q: `How do I handle 'Lab-only' appointments?`, a: `Ensure Lab Order is in system before patient arrives.` },
+        { q: `What if the patient asks for 'Directions'?`, a: `Have script ready with landmarks and parking instructions.` },
+        { q: `How do I handle 'Multiple Providers' in one day?`, a: `Cluster appointments to minimize patient travel time.` },
+        { q: `What if the patient asks for Doctor Credentials?`, a: `Provide school and experience info from your directory.` },
+        { q: `How do I handle 'Last Minute' changes?`, a: `Be patient and re-verify all new details before hanging up.` },
+        { q: `What if the patient is distracted/driving?`, a: `Ask: 'Would you prefer I call back when you aren't driving?'` },
+        { q: `How do I handle 'Aggressive' questioning?`, a: `Stay neutral and repeat clinic policy firmly but kindly.` },
+        { q: `What if the patient asks 'What would you do?'`, a: `Say: 'I can't make medical decisions, but a consultation is helpful.'` },
+        { q: `How do I handle 'Language Line' delays?`, a: `Say: 'Connecting to interpreter; please stay on the line for one moment.'` },
+        { q: `What if patient asks for a Manager Callback?`, a: `Verify contact number and give estimated callback window.` },
+        { q: `How do I handle 'Schedule Blocks'?`, a: `Respect doctor admin time; do not book over without permission.` },
+        { q: `What if a patient wants to 'Record the call'?`, a: `Follow state/company policy; usually must be noted.` },
+        { q: `What is the 'Golden Rule' of scheduling?`, a: `Treat every patient’s time as if it were your own.` },
+        { q: `How do I handle a patient who wants to 'skip' a required intake?`, a: `Explain: 'This step ensures the doctor has your full history to provide safe care.'` },
+        { q: `What if a patient asks for a 'proxy' to book for them?`, a: `Verify legal authorization or a 'Consent to Release' form on file first.` },
+        { q: `How do I handle a patient who is 'Doctor-Shopping' for a second opinion?`, a: `Note it as a 'Consultation' and request the previous doctor's records.` },
+        { q: `What if the patient mentions a 'Legal Case'?`, a: `Flag the account for 'Third-Party Billing' or 'PIP' insurance protocols.` },
+        { q: `How do I handle an 'Out-of-Country' patient?`, a: `Confirm 'Self-Pay' status and explain international insurance may not be accepted.` },
+        { q: `What if the patient asks for a 'Guaranteed' result?`, a: `Clarify: 'The doctor will discuss potential outcomes, but results vary.'` },
+        { q: `How do I handle a 'VIP/Public Figure'?`, a: `Use an 'Alias' if allowed by HIPAA protocol to ensure maximum privacy.` },
+        { q: `What if the patient refuses to give a Social Security Number?`, a: `Explain it's for identity/billing, but offer internal ID alternative if allowed.` },
+        { q: `How do I handle a patient who is 'Hyper-Anxious'?`, a: `Lower your pitch, speak slowly, and confirm each step to reassure them.` },
+        { q: `What if a patient asks 'Will this hurt?'`, a: `Say: 'Clinical team will explain procedure and comfort options at visit.'` },
+        { q: `What is a 'COB' (Coordination of Benefits)?`, a: `It determines which insurance pays first when a patient has two plans.` },
+        { q: `How do I handle 'Medicare Secondary'?`, a: `Ask for 'Primary' coverage details to ensure correct billing order.` },
+        { q: `What if the patient’s 'Referral' is expired?`, a: `Advise: 'You'll need a new referral from your PCP before the visit.'` },
+        { q: `How do I handle 'Pre-Certification' vs 'Pre-Authorization'?`, a: `Treat both as 'Insurance Approval' required before the service.` },
+        { q: `What if the patient asks about 'Balance Billing'?`, a: `Refer to billing department or Surprise Billing policy notice.` },
+        { q: `How do I handle 'Workers' Comp' denials?`, a: `Direct patient to their 'Adjuster' or 'Case Manager' to resolve status.` },
+        { q: `What if a patient wants to 'Negotiate' a price?`, a: `Transfer them to a 'Financial Counselor' or billing supervisor.` },
+        { q: `How do I handle 'HSA/FSA' card questions?`, a: `Confirm: 'We accept most health spending cards for co-pay or balance.'` },
+        { q: `What if the patient's 'Plan' isn't listed?`, a: `Search by the 'Payer ID' on the back of the card rather than name.` },
+        { q: `How do I explain a 'Facility Fee'?`, a: `Say: 'This covers clinic equipment and staff, separate from doctor's fee.'` },
+        { q: `What if the 'EMR' is down?`, a: `Use 'Manual Downtime Form' to record patient data on paper.` },
+        { q: `How do I handle 'Duplicate' charts?`, a: `Flag both accounts for Medical Records department to merge.` },
+        { q: `What if the patient’s 'Phone Number' won't save?`, a: `Check for special characters or extra spaces in the field.` },
+        { q: `How do I handle 'Automatic Reminders'?`, a: `Confirm: 'You'll get a text 48 hours before. Want to opt-out?'` },
+        { q: `What if 'Provider Schedule' is blocked for Admin?`, a: `Do not book over it without direct order from manager.` },
+        { q: `How do I handle 'Telehealth Audio' lag?`, a: `Suggest hanging up and reconnecting or using phone for audio.` },
+        { q: `What if the 'Patient Portal' won't show appointment?`, a: `Verify 'Sync' status in your scheduling software.` },
+        { q: `How do I handle 'Multi-Resource' booking?`, a: `Ensure Room and Provider are both available before confirming.` },
+        { q: `What if the patient’s 'Email' is bouncing?`, a: `Ask them to spell it using the Phonetic Alphabet (A as in Apple).` },
+        { q: `How do I handle 'Time Zone' shifts for Telehealth?`, a: `Book in Clinic Local Time and notify patient of difference.` },
+        { q: `What if a patient is 'Screaming'?`, a: `Say: 'I want to help, but I need to be able to hear you clearly. Can we lower our voices?'` },
+        { q: `How do I handle a 'Passive-Aggressive' caller?`, a: `Stay strictly professional and focused on the scheduling task.` },
+        { q: `What if a patient 'Threatens' a lawsuit?`, a: `Stop conversation and transfer to Risk Management or Legal.` },
+        { q: `How do I handle a patient 'Refusing' to hang up?`, a: `Final Summary: 'Since we're set, I must move to next caller. Have a great day!'` },
+        { q: `What if the patient 'Complains' about the doctor?`, a: `Document 'Grievance' and provide Patient Advocate contact info.` },
+        { q: `How do I handle 'Family Feud' over a patient?`, a: `Only speak with Legal Guardian or Authorized Rep on file.` },
+        { q: `What if the patient 'Accuses' you of being rude?`, a: `Apologize: 'Sorry if I came across that way; let’s focus on the schedule.'` },
+        { q: `How do I handle a 'Language Barrier' conflict?`, a: `Immediately bring in a Professional Interpreter.` },
+        { q: `What if a patient 'Demands' a callback in an hour?`, a: `Set expectations: 'Manager will call back in one business day.'` },
+        { q: `How do I handle a 'Drunk or Impaired' caller?`, a: `Keep call brief, prioritize safety, and notify supervisor.` },
+        { q: `What is a 'Late Arrival' policy?`, a: `Usually: 'If more than 15 mins late, we may need to reschedule.'` },
+        { q: `How do I handle 'Walk-in' inquiries?`, a: `Say: 'We are by appointment only; I can check for openings later today.'` },
+        { q: `What if the patient needs Handicap Parking?`, a: `Provide specific instructions on ramps and elevator locations.` },
+        { q: `Service Animal vs Emotional Support?`, a: `Service animals permitted by ADA; ESAs subject to different rules.` },
+
+        // GROUP 4
+        { q: `What if patient asks for Medical Records immediately?`, a: `Requests take [X] days; I can send the release form now.` },
+        { q: `How do I handle 'Lab-Only' visits?`, a: `Ensure patient knows if they need to be 'Fasting'.` },
+        { q: `What if the patient asks about 'Parking Fees'?`, a: `Be honest: 'We do not validate' or 'Parking is free in rear lot.'` },
+        { q: `How do I handle 'Same-Day' cancellations?`, a: `Mark as 'Late Cancel' and inform of any potential fee.` },
+        { q: `What if patient needs 'Special' test equipment?`, a: `Check if Equipment is available, not just the doctor.` },
+        { q: `How do I handle 'Pre-Op' clearances?`, a: `Must be scheduled within specific window (usually 30 days) before surgery.` },
+        { q: `What if a patient 'Self-Diagnoses'?`, a: `Say: 'The doctor will perform a thorough evaluation to find the cause of your symptoms.'` },
+        { q: `How do I handle 'Post-Op' complication call?`, a: `Transfer to Surgical Nurse or On-Call Doctor immediately.` },
+        { q: `What if patient 'Asks for script refill'?`, a: `Transfer to Refill Line or Medical Assistant.` },
+        { q: `How do I handle 'Pregnancy' scheduling?`, a: `Ask for 'LMP' (Last Period) to determine correct week for first visit.` },
+        { q: `What if the patient doesn't speak English?`, a: `Use Language Line before gathering any medical data.` },
+        { q: `How do I handle 'Stat' imaging?`, a: `Ensure Radiology has order before patient leaves house.` },
+        { q: `What if patient mentions an allergy?`, a: `Immediately Flag allergy in Clinical Warnings section of chart.` },
+        { q: `How do I handle 'Pediatric' vaccinations?`, a: `Remind parent to bring Immunization Record to visit.` },
+        { q: `What if the patient asks about Side Effects?`, a: `Say: 'Doctor or pharmacist is best person to discuss that.'` },
+        { q: `How do I handle 'Work/School Notes'?`, a: `Say: 'Front desk can provide excuse at end of appointment.'` },
+        { q: `How do I handle 'Call Waiting' while on a line?`, a: `Stay with current patient; let system route call to next agent.` },
+        { q: `What if I need to update my status to 'Away'?`, a: `Only during Scheduled Breaks to maintain coverage.` },
+        { q: `What if I notice an Error in a colleague's work?`, a: `Message them privately or follow Peer Review protocol.` },
+        { q: `Can I take personal calls on my headset?`, a: `Never. Keep personal devices away from workstation.` },
+        { q: `What if patient asks 'Are you a nurse?'`, a: `Say: 'I am a scheduling specialist; I can get a nurse to call back.'` },
+        { q: `How do I handle 'Background Noise' (sirens)?`, a: `Wait for it to pass; say 'Sorry, could you repeat that?'` },
+        { q: `What if the patient is recording me?`, a: `Be extra professional; assume every call is monitored.` },
+        { q: `How do I handle Holiday scheduling?`, a: `Remind patient of closures: 'Next available is Tuesday.'` },
+        { q: `What if the patient praises me?`, a: `Thank them: 'Happy I could help you get this sorted today!'` },
+        { q: `How do I handle 'Ghost calls' (silence)?`, a: `Identify yourself; say 'I can't hear you, please call back' before hanging up.` },
+        { q: `How do I handle New Patient Transfers?`, a: `Collect previous doctor info to request records.` },
+        { q: `What if patient refuses a specific doctor?`, a: `Say: 'I understand; let’s find another provider who meets your needs.'` },
+        { q: `How do I handle sensitive info (HIV/Mental Health)?`, a: `Use Discretion; do not repeat terms loudly in open office.` },
+        { q: `What if patient changes mind mid-call?`, a: `Restart Search patiently; accuracy is better than speed.` },
+        { q: `How do I handle outdated insurance?`, a: `Say: 'Plan ended in Dec; do you have a new card I can see?'` },
+        { q: `What if patient wants to talk to doctor NOW?`, a: `Say: 'Doctor is with patients; I can leave message for their team.'` },
+        { q: `How do I handle multiple symptoms for one visit?`, a: `Advise: 'Doctor may focus on most urgent issue first today.'` },
+        { q: `What if patient missed Telehealth link?`, a: `Resend it and stay on line until they confirm receipt.` },
+        { q: `How do I handle Medicare Enrollment questions?`, a: `Refer to Social Security Office or Patient Counselor.` },
+        { q: `What if the patient asks for a discount?`, a: `Mention 'Prompt Pay' discount if paid in full on day of service.` },
+        { q: `How do I handle Divorced Parents scheduling?`, a: `Follow Primary Guarantor rules for billing and consent.` },
+        { q: `What if the patient asks for your name again?`, a: `Provide it clearly with your extension number.` },
+        { q: `How do I handle Provider Preferences?`, a: `Say: 'Dr. Smith is a specialist; want his first available?'` },
+        { q: `What if the patient doesn't have a ride?`, a: `Suggest Medical Transport services via their insurance.` },
+        { q: `How do I handle rebooking canceled appts?`, a: `Treat as High Priority to get them back on track.` },
+        { q: `What if patient asks about COVID policy?`, a: `Provide current masking and screening rules.` },
+        { q: `How do I handle waitlist notifications?`, a: `Call patient: 'Slot opened for tomorrow; would you like it?'` },
+        { q: `What if patient wants specialist without PCP?`, a: `Policy requires PCP referral to ensure you see the right person.` },
+        { q: `How do I handle Overbooked days?`, a: `Consult Flow Manager before adding anyone to the list.` },
+        { q: `What if patient hangs up before I'm done?`, a: `Finish entry if you have data; call back once if not.` },
+        { q: `How do I handle Direct Admissions?`, a: `These go through Hospitalist or Charge Nurse line.` },
+        { q: `What if patient asks for Office Manager?`, a: `Say: 'I can see if they are available; what is this regarding?'` },
+        { q: `How do I handle High-Risk reports?`, a: `Use Red Flag script and escalate to clinical professional.` },
+        { q: `What if patient asks about Clinical Trials?`, a: `Refer to Research Coordinator or clinic website.` },
+        { q: `How do I handle Billing Disputes?`, a: `Transfer to Billing Resolution team.` },
+        { q: `What if patient is confused about meds?`, a: `Transfer to Nursing Triage line.` },
+        { q: `How do I handle Translation Software?`, a: `Avoid it. Use official Language Line for accuracy.` },
+        { q: `What if patient asks for Wi-Fi password?`, a: `Say: 'Not available here; usually posted in waiting room.'` },
+        { q: `How do I handle Feedback calls?`, a: `Thank them and route to Quality Improvement team.` },
+        { q: `What is the best way to close a successful call?`, a: `Confirm date, time, and location; say 'See you then!'` },
+        { q: `What if the patient asks for the doctor’s medical license number?`, a: `Provide it if available in your directory or offer to have the office manager send it via email.` },
+        { q: `How do I handle a patient who wants to 'walk-in' for a flu shot?`, a: `Check if your clinic has a dedicated nurse-led flu clinic or if an appointment is strictly required.` },
+        { q: `What if the patient asks about the clinic’s 'No-Weapon' policy?`, a: `Confirm: 'For the safety of all patients, we maintain a weapon-free facility.'` },
+        { q: `How do I handle a patient asking for a specific room number in advance?`, a: `Explain that rooms are assigned at check-in based on clinical needs.` },
+        { q: `What if the patient asks for a 'Telehealth' visit but is driving?`, a: `Say: 'For your safety, please pull over or reschedule; the doctor cannot conduct the visit while you are driving.'` },
+        { q: `How do I handle a request for a 'Home Sleep Study' kit?`, a: `Schedule a consultation first; the doctor must order the kit after an evaluation.` },
+        { q: `What if the patient asks for 'Free Samples' of a medication?`, a: `Advise: 'You can discuss available samples with the doctor during your exam.'` },
+        { q: `How do I handle a patient who wants to pay with a personal check?`, a: `Verify the clinic's policy; many now only accept credit, debit, or cash.` },
+        { q: `What if the patient asks for the doctor's 'Success Rate' for a surgery?`, a: `Say: 'The surgeon will discuss their experience and clinical outcomes during your consultation.'` },
+        { q: `How do I handle a patient asking for 'Validation' of their parking ticket?`, a: `Provide the specific policy (e.g., 'We validate for the first hour only').` },
+        { q: `What if the patient asks for a 'Late' afternoon appointment but the doctor leaves early on Fridays?`, a: `Offer the latest available Friday slot or a full afternoon slot on a different day.` },
+        { q: `How do I handle a patient who wants to 'Records-Match' with a relative?`, a: `Ensure separate accounts and strictly follow HIPAA—never confirm a relative's appointment.` },
+        { q: `What if the patient asks for 'Bio-Identical' hormone therapy specifically?`, a: `Check if the provider offers that service before booking to avoid an unnecessary visit.` },
+        { q: `How do I handle a patient who is 'Recording' the waiting room on their phone?`, a: `Notify the on-site manager immediately; this is a privacy violation for other patients.` },
+        { q: `What if the patient asks if the doctor 'Believes' in a specific alternative treatment?`, a: `Say: 'The doctor can discuss various treatment philosophies with you during the visit.'` },
+        { q: `How do I handle a patient who wants to schedule 'Acupuncture' in a medical clinic?`, a: `Verify if a licensed provider on-site performs it; otherwise, provide a referral.` },
+        { q: `What if the patient asks for 'Oxygen' to be ready upon arrival?`, a: `Note this in the 'Alert' section of the chart and notify the nursing lead immediately.` },
+        { q: `How do I handle a patient who is 'Aggressively' asking for a discount for being a senior?`, a: `State the policy clearly: 'We offer a standard senior discount of [X]% for self-pay patients.'` },
+        { q: `What if the patient asks for a 'Detailed' breakdown of their deductible over the phone?`, a: `Advise them to contact their insurance provider's member services for the most current data.` },
+        { q: `How do I handle a patient who wants to 'Record' the doctor's audio?`, a: `State: 'Please ask the doctor for permission at the start of your visit.'` },
+        { q: `What if the patient asks if the doctor is 'Board Certified'?`, a: `Confirm their status using the internal provider profile.` },
+        { q: `How do I handle a patient who 'Refuses' to wear a mask in a high-risk area?`, a: `State the current facility policy and offer a Telehealth alternative if they remain non-compliant.` },
+        { q: `What if the patient asks for 'Vitamins' to be prescribed for insurance coverage?`, a: `Say: 'The provider will determine if a prescription is medically necessary during the visit.'` },
+        { q: `How do I handle a patient asking for 'Physical Therapy' at the same time as their doctor visit?`, a: `Explain these are separate appointments and coordinate the times as closely as possible.` },
+        { q: `What if the patient asks for the 'NPI' number for their insurance claim?`, a: `Provide the provider’s National Provider Identifier from your records.` },
+        { q: `How do I handle a patient who wants to schedule a 'School Sports Physical'?`, a: `Remind them to bring the required school forms and a parent/guardian.` },
+        { q: `What if the patient asks if the doctor 'Likes' working there?`, a: `Keep it professional: 'Our team is very dedicated to patient care!'` },
+        { q: `How do I handle a patient asking for 'FMLA' paperwork before being seen?`, a: `Explain: 'Paperwork is completed after the provider has established a treatment plan.'` },
+        { q: `What if the patient asks for 'IV Hydration' without a medical reason?`, a: `Check if the clinic offers elective IV services or if a medical evaluation is required first.` },
+        { q: `How do I handle a patient who wants a 'Same-Day' prescription but no visit?`, a: `Explain: 'For your safety, the doctor requires an evaluation before prescribing new medications.'` },
+        { q: `What if the patient asks for 'Price Matching' for a lab test?`, a: `State: 'Our rates are standardized, but we can provide a cost estimate for you to compare.'` },
+        { q: `How do I handle a patient who is 'Cursing' at the hold music?`, a: `Acknowledge the wait time upon return: 'Thank you for your patience; I'm ready to help now.'` },
+        { q: `What if the patient asks for a 'Curbside' injection?`, a: `Check the clinic’s specific protocol for mobility-impaired patients.` },
+        { q: `How do I handle a patient asking for 'Weight Loss' drugs over the phone?`, a: `Schedule an initial 'Weight Management Consultation' to discuss options.` },
+        { q: `What if the patient asks for the 'Office Manager's' direct email?`, a: `Provide the general office email or take a message for the manager to respond.` },
+        { q: `How do I handle a patient who wants to 'Book' for a friend as a surprise?`, a: `Explain: 'For privacy and consent, the patient must be aware of and agree to the appointment.'` },
+        { q: `What if the patient asks for the 'C-Code' for a specific procedure?`, a: `Refer the call to the coding or billing department for technical billing codes.` },
+        { q: `How do I handle a patient asking for 'Genetic Testing'?`, a: `Schedule a consultation to determine if they meet the clinical criteria for the test.` },
+        { q: `What if the patient asks for a 'Private' waiting area?`, a: `Note the request for the front desk; offer the earliest appointment when the clinic is less crowded.` },
+        { q: `How do I handle a patient who wants to 'Video Call' their family during the exam?`, a: `Say: 'That is usually fine, but please confirm with the doctor once you are in the room.'` },
+        { q: `What if the patient asks if the doctor is 'In-Network' for a very specific plan?`, a: `Use your insurance verification tool; if unsure, advise the patient to call their insurer.` },
+        { q: `How do I handle a patient asking for 'Bariatric' seating?`, a: `Confirm: 'We have accommodations available; I will make a note for the staff to ensure your comfort.'` },
+        { q: `What if the patient asks for a 'Standing' order for monthly labs?`, a: `Explain that the doctor must authorize standing orders during a follow-up visit.` },
+        { q: `How do I handle a patient who wants to 'Bring' their own medical supplies?`, a: `Advise: 'Please bring them, but the clinical staff will determine if they can be used for your treatment.'` },
+        { q: `What if the patient asks for the 'Direct Line' to the nurse station?`, a: `State: 'I cannot give that out, but I can send a high-priority message for a callback.'` },
+        { q: `How do I handle a patient asking for 'Botox' for migraines vs. cosmetic?`, a: `Clarify the intent and schedule with the appropriate specialist (Neurology vs. Dermatology).` },
+        { q: `What if the patient asks if the clinic has 'Free Wi-Fi'?`, a: `Confirm if available and mention that login details are usually at the front desk.` },
+        { q: `How do I handle a patient who 'Forgot' their last doctor's name?`, a: `Search the system for past records or ask for the clinic location to help identify them.` },
+        { q: `What if the patient asks for a 'Notary' at the clinic?`, a: `State whether or not the office provides notary services for medical documents.` },
+        { q: `How do I handle a patient asking for a 'Service' the clinic doesn't provide?`, a: `Offer to find a local referral or provide the number for their insurance's provider search.` },
+        { q: `What if the patient asks for a 'Quiet Room' due to sensory issues?`, a: `Note 'Sensory Accommodations' and suggest a low-traffic time slot.` },
+        { q: `How do I handle a patient who wants to 'Pay Cash' to keep a visit off their insurance record?`, a: `Confirm: 'You have the right to self-pay; I will mark the account accordingly.'` },
+        { q: `What if the patient asks for a 'Specific' brand of vaccine?`, a: `Check current inventory or state: 'We carry [Brand]; if you require another, we can provide a referral.'` },
+        { q: `How do I handle a patient asking for 'STDs' testing anonymously?`, a: `Explain the clinic’s privacy policy and how results are discreetly shared through the portal.` },
+        { q: `What if the patient asks if the doctor is 'Old' or 'Young'?`, a: `State: 'The provider is highly experienced and has been in practice for [X] years.'` },
+        { q: `How do I handle a patient who wants to schedule 'Pre-Travel' vaccinations?`, a: `Advise them to book at least 4-6 weeks before travel to allow for immunity build-up.` },
+        { q: `What if the patient asks for the 'Fax Number' of a local pharmacy?`, a: `Look it up in your database or ask the patient to provide it if it's a specialty pharmacy.` },
+        { q: `How do I handle a patient asking for 'Pet' medical advice?`, a: `Politely state: 'We only treat human patients; please contact your local veterinarian.'` },
+        { q: `What if the patient asks for a 'Copy' of their ID back?`, a: `Explain: 'We only take a digital scan for your chart; we do not keep the physical copy.'` },
+        { q: `How do I handle a patient who wants a 'Work-In' but is an hour away?`, a: `Advise: 'We can put you on the schedule, but if you arrive after [Time], we may have to reschedule.'` },
+        { q: `What if the patient asks for 'CBD' oil recommendations?`, a: `State: 'The doctor can discuss the medical use of supplements during your visit.'` },
+        { q: `How do I handle a patient who 'Refuses' to give an email address?`, a: `State: 'That's fine; we will provide your appointment reminders via phone call instead.'` },
+        { q: `What if the patient asks for 'Translation' of a document from another country?`, a: `Refer them to a professional medical translation service or the medical records department.` },
+        { q: `How do I handle a patient who wants to 'Tour' the facility first?`, a: `Check if the manager allows brief tours or point them to a virtual tour on the website.` },
+        { q: `What if the patient asks for 'Lactation' support?`, a: `Check if you have a certified consultant or a nurse who specializes in postpartum care.` },
+        { q: `How do I handle a patient who 'Needs' a script for an emotional support animal?`, a: `Schedule a mental health evaluation; clarify that the doctor will determine the need.` },
+        { q: `What if the patient asks for 'Acupressure' points over the phone?`, a: `State: 'I cannot provide medical instructions; please consult with the clinical team.'` },
+        { q: `How do I handle a patient asking for 'Parking' for a oversized vehicle?`, a: `Provide info on street parking or nearby lots that accommodate larger vehicles.` },
+        { q: `What if the patient asks if the doctor 'Is a Parent'?`, a: `Keep it professional: 'The doctor has extensive experience with [Pediatrics/Family Medicine].'` },
+        { q: `How do I handle a patient who wants to 'Batch' three different issues in a 15-min slot?`, a: `Advise: 'We may need to book a longer 'extended' visit to ensure the doctor covers all your concerns.'` },
+        { q: `What if the patient asks for 'Free' medical equipment?`, a: `Refer them to a local community resource or the social work department.` },
+        { q: `How do I handle a patient asking for 'Ear Piercing'?`, a: `Confirm if the pediatricians offer medical ear piercing; otherwise, say no.` },
+        { q: `What if the patient asks for the 'Wait Time' in the lobby right now?`, a: `Give a general estimate (e.g., 'Current wait is about 20 minutes') but add that it can fluctuate.` },
+        { q: `How do I handle a patient who wants to 'Shadow' the doctor?`, a: `Refer all student or shadowing requests to the HR or clinical education department.` },
+        { q: `What if the patient asks for 'Hospice' information?`, a: `Transfer them to the 'Care Coordinator' or 'Social Worker' for a compassionate discussion.` },
+        { q: `How do I handle a patient asking for 'IVF' services in a general OBGYN clinic?`, a: `Clarify: 'We offer initial fertility workups and then refer to a specialized RE center.'` },
+        { q: `What if the patient asks for 'Natural' childbirth options?`, a: `Note the preference and schedule them with a midwife or a doctor supportive of birth plans.` },
+        { q: `How do I handle a patient who wants to 'Switch' doctors within the same practice?`, a: `Follow the 'Internal Transfer' policy, which may require manager approval.` },
+        { q: `What if the patient asks for a 'Meal' recommendation for a diabetic diet?`, a: `Offer to schedule a 'Nutritionist' or 'Dietician' appointment.` },
+        { q: `How do I handle a patient who 'Lost' their script for a controlled substance?`, a: `Explain: 'A visit is required for all replacement scripts for controlled medications.'` },
+        { q: `What if the patient asks for the 'Cell Phone' of the Office Manager?`, a: `Never provide personal numbers; give the professional office extension.` },
+        { q: `How do I handle a patient asking for 'Life Insurance' exam results?`, a: `Advise them to contact the life insurance company, as they own the results of that exam.` },
+        { q: `What if the patient asks for 'Stitches' to be removed that were done elsewhere?`, a: `Confirm: 'We can do that; please bring the discharge paperwork from the facility that placed them.'` },
+        { q: `How do I handle a patient who wants a 'Refund' for a co-pay?`, a: `Transfer them to the billing department to process the request.` },
+        { q: `What if the patient asks for 'Religious' exemptions for vaccines?`, a: `Schedule an appointment; state that the doctor will discuss the legal/medical requirements.` },
+        { q: `How do I handle a patient asking for 'Skilled Nursing' placement?`, a: `Refer them to the 'Discharge Planner' or 'Case Manager'.` },
+        { q: `What if the patient asks for 'Home Health' to come to them today?`, a: `Explain that home health requires a doctor's order and a 24-48 hour setup window.` },
+        { q: `How do I handle a patient asking for 'Legal' advice on a malpractice claim?`, a: `Immediately state: 'I cannot assist with legal matters; please consult an attorney.'` },
+        { q: `What if the patient asks if the doctor 'Uses' the medication they prescribe?`, a: `State: 'The doctor selects treatments based on clinical guidelines and your specific health needs.'` },
+        { q: `How do I handle a patient asking for 'Blood Type' testing?`, a: `Schedule a simple 'Lab-Only' visit for a blood type screen.` },
+        { q: `What if the patient asks for 'Probiotic' brand names?`, a: `Advise them to discuss specific brands with the doctor or pharmacist.` },
+        { q: `How do I handle a patient asking for 'Durable Medical Equipment' (DME) repair?`, a: `Refer them to the vendor who originally supplied the equipment.` },
+        { q: `What if the patient asks for 'Wound Care' instructions over the phone?`, a: `State: 'For safety, please follow the printed instructions provided, or I can have a nurse call you.'` },
+        { q: `How do I handle a patient who wants to 'Bring' their pet (non-service animal)?`, a: `State: 'Only ADA-recognized service animals are permitted inside the clinic.'` },
+        { q: `What if the patient asks if the doctor is 'Accepting' new Medicaid patients?`, a: `Check the current 'Panel Status' for that specific doctor and insurance.` },
+        { q: `How do I handle a patient asking for 'Vision' testing in a medical clinic?`, a: `Clarify if it's a basic screening vs. an eye exam; refer to Optometry if needed.` },
+        { q: `What if the patient asks for 'Bilingual' staff specifically?`, a: `Check which staff members are on duty or offer the Language Line.` },
+        { q: `How do I handle a patient who wants a 'Work-In' but has a 4.5/5 rating (Difficult Patient flag)?`, a: `Follow the standard protocol but alert the manager of the request.` },
+        { q: `What if the patient asks for 'Stem Cell' therapy?`, a: `Verify if the clinic offers this specific service or refer to a specialist.` },
+        { q: `How do I handle a patient asking for 'Travel' clinic costs?`, a: `Provide the 'Consultation Fee' plus the estimated cost per vaccine.` },
+        { q: `What if the patient asks for 'Hormone' pellets?`, a: `Check if the provider is trained in pellet insertion before booking.` },
+        { q: `How do I handle a patient who wants to 'Cancel' because of a negative Yelp review?`, a: `Acknowledge: 'I'm sorry to hear that; we strive for great care. Would you like to speak to a manager instead?'` },
+        { q: `What if the patient asks for 'Earwax' removal?`, a: `Confirm: 'Yes, we can do that; it's a standard nurse or doctor procedure.'` },
+        { q: `How do I handle a patient asking for 'Surgical' clearance from a different state?`, a: `Confirm: 'We can do the clearance, but please ensure we have the surgeon's specific requirements.'` },
+        { q: `What if the patient asks for 'Medical' marijuana certification?`, a: `Check the clinic policy; some clinics do not provide certifications.` },
+        { q: `How do I handle a patient who wants to 'Add' a family member to their call?`, a: `Use the conference feature on your phone system and document the verbal consent.` },
+        { q: `What if the patient asks for 'Breastfeeding' rooms on-site?`, a: `Confirm: 'Yes, we have a private area available for your use.'` },
+        { q: `How do I handle a patient asking for 'IV Vitamin' therapy?`, a: `Verify if it's a medical infusion vs. a wellness drip; book accordingly.` },
+        { q: `What if the patient asks for 'Allergy' shots today?`, a: `Check if their serum is already in the fridge and if a nurse is available.` },
+        { q: `How do I handle a patient who wants a 'Paper' script only?`, a: `Explain: 'We primarily use e-prescribing for accuracy, but we can provide paper if required.'` },
+        { q: `What if the patient asks for 'Financial Aid' for surgery?`, a: `Refer them to the 'Hospital Financial Assistance' or 'Charity Care' office.` },
+        { q: `How do I handle a patient asking for 'Colonoscopy' prep over the phone?`, a: `Say: 'I will have the GI coordinator call you with the specific instructions.'` },
+        { q: `What if the patient asks for 'STD' results via text?`, a: `State: 'For security, we can only provide results via the secure portal or a phone call.'` },
+        { q: `How do I handle a patient who wants to 'Skip' the co-pay just this once?`, a: `State: 'Our contract with your insurance requires us to collect co-pays at the time of service.'` },
+        { q: `What if the patient asks for 'Surgical' pre-op instructions?`, a: `Direct them to the 'Surgical Coordinator' for the full packet.` },
+        { q: `How do I handle a patient asking for 'Lice' check?`, a: `Confirm: 'Yes, we can perform an evaluation; please let the front desk know upon arrival.'` },
+        { q: `What if the patient asks for 'Inpatient' rehab?`, a: `Transfer to the 'Case Management' or 'Social Work' team.` },
+        { q: `How do I handle a patient who 'Found' a mistake in their chart?`, a: `Explain: 'I will flag this for the medical records team to review and correct.'` },
+        { q: `What if the patient asks for 'Morning After' pill info?`, a: `Provide immediate scheduling or advise that it is available over-the-counter.` },
+        { q: `How do I handle a patient asking for 'X-Ray' results from an outside facility?`, a: `Say: 'Please have that facility fax the report to us so the doctor can review it.'` },
+        { q: `What if the patient asks for 'Alternative' medicine like homeopathy?`, a: `State: 'The doctor focuses on evidence-based medicine but can discuss all your options.'` },
+        { q: `How do I handle a patient who 'Wants to complain' about a nurse?`, a: `Take a detailed message and assure them it will be given to the Nursing Supervisor.` },
+        { q: `What if the patient asks for 'Translation' for a family member?`, a: `Ask for the language and ensure an interpreter is booked for the appointment.` },
+        { q: `How do I handle a patient who wants to 'Pay with an App' (Venmo/Zelle)?`, a: `State: 'We only accept standard credit cards, cash, or the patient portal payment system.'` },
+        { q: `What if the patient asks for 'Occupational' therapy?`, a: `Check if you have an OT on-site or provide a local referral.` },
+
+        // GROUP 5
+        { q: `How do I handle a patient asking for 'Paternity' testing?`, a: `State: 'We do not perform legal paternity tests; please contact a specialized lab.'` },
+        { q: `What if the patient asks for 'Hearing Aid' adjustment?`, a: `Refer them to the 'Audiology' department or their original provider.` },
+        { q: `How do I handle a patient who 'Refuses' to see a Physician Assistant (PA)?`, a: `Say: 'I understand; let’s find a time that works with the MD/DO instead.'` },
+        { q: `What if the patient asks for 'Dialysis' times?`, a: `Refer them to their specific dialysis center or social worker.` },
+        { q: `How do I handle a patient asking for 'Travel' insurance medical forms?`, a: `Explain: 'A visit is required for the doctor to certify your medical status for insurance.'` },
+        { q: `What if the patient asks for 'Skin Tag' removal costs?`, a: `Provide the procedure code and estimate, but note it may be considered cosmetic by insurance.` },
+        { q: `How do I handle a patient who 'Needs' a same-day referral?`, a: `Explain: 'Referrals take 3-5 days to process, but I will mark this as urgent for the team.'` },
+        { q: `What if the patient asks for 'Dementia' screening?`, a: `Schedule an 'Extended' visit to allow time for the cognitive testing.` },
+        { q: `How do I handle a patient asking for 'In-Person' vs. 'Telehealth'?`, a: `Explain the benefits of both and let them choose based on their symptoms.` },
+        { q: `What if the patient asks for 'Sleep Apnea' supplies?`, a: `Refer them to the 'Durable Medical Equipment' (DME) provider.` },
+        { q: `How do I handle a patient who 'Is crying' because of a diagnosis?`, a: `Offer empathy: 'I'm so sorry you're going through this. Would you like to speak with our care coordinator?'` },
+        { q: `What if the patient asks for 'Chemotherapy' scheduling?`, a: `Transfer to the 'Oncology Scheduling' specialist.` },
+        { q: `How do I handle a patient asking for 'Sports Medicine'?`, a: `Check if the doctor is fellowship-trained in sports medicine or refer to Orthopedics.` },
+        { q: `What if the patient asks for 'Holistic' nutrition?`, a: `Check if the clinic has an Integrative Medicine specialist.` },
+        { q: `How do I handle a patient who 'Doesn't have' their new insurance card yet?`, a: `Ask for the 'Member ID' and 'Group Number' over the phone to verify.` },
+        { q: `What if the patient asks for 'Physical' therapy for a child?`, a: `Ensure you refer them to a 'Pediatric' specific therapist.` },
+        { q: `How do I handle a patient asking for 'Prenatal' vitamins?`, a: `State: 'The doctor can provide a prescription or recommendation at your first OB visit.'` },
+        { q: `What if the patient asks for 'Tuberculosis' (PPD) testing?`, a: `Advise: 'You must return 48-72 hours later to have the test read by a nurse.'` },
+        { q: `How do I handle a patient who 'Needs' a letter for an airline for a refund?`, a: `Explain: 'The doctor can provide this after a visit to confirm medical necessity.'` },
+        { q: `What if the patient asks for 'Plastics' (Cosmetic Surgery)?`, a: `Refer to the 'Plastic Surgery' department or an outside specialist.` },
+        { q: `How do I handle a patient asking for 'Bone Density' (DEXA) scans?`, a: `Verify if your clinic has the machine on-site or schedule at an imaging center.` },
+        { q: `What if the patient asks for 'Free' samples of expensive insulin?`, a: `Refer to the 'Patient Assistance Program' (PAP) coordinator.` },
+        { q: `How do I handle a patient who 'Missed' their prep for a colonoscopy?`, a: `Advise: 'Please do not start the procedure; we must reschedule to ensure a clear view.'` },
+        { q: `What if the patient asks for 'Marriage Counseling'?`, a: `Refer them to a 'Licensed Clinical Social Worker' (LCSW) or psychologist.` },
+        { q: `How do I handle a patient asking for 'Surgical' staples removal?`, a: `Confirm: 'Yes, we can do that; it takes about 15 minutes with a nurse.'` },
+        { q: `What if the patient asks for 'Wart' freezing?`, a: `Confirm: 'Yes, we offer cryotherapy; please book a standard visit.'` },
+        { q: `How do I handle a patient who 'Wants to talk' about their lab results for 20 minutes?`, a: `Advise: 'The doctor can go into detail with you during a follow-up appointment.'` },
+        { q: `What if the patient asks for 'Podiatry' (Foot Care)?`, a: `Check if you have a podiatrist or refer to a local specialist.` },
+        { q: `How do I handle a patient asking for 'Anxiety' medication on the first visit?`, a: `State: 'The doctor will perform a full evaluation to find the best treatment plan for you.'` },
+        { q: `What if the patient asks for 'Home' blood pressure monitoring tips?`, a: `Offer to email them a 'Blood Pressure Log' and instructions.` },
+        { q: `How do I handle a patient who 'Needs' a doctor to sign a DMV form?`, a: `Explain: 'A physical exam is required before the doctor can certify your driving ability.'` },
+        { q: `What if the patient asks for 'Asthma' inhaler training?`, a: `Say: 'A nurse can provide a 1-on-1 education session during your visit.'` },
+        { q: `How do I handle a patient asking for 'Smoking Cessation' programs?`, a: `Provide info on 'State Quit-Lines' and schedule a doctor visit for cessation aids.` },
+        { q: `What if the patient asks for 'Vaginal Birth After Cesarean' (VBAC)?`, a: `Check if the OBGYN and hospital support VBACs before booking.` },
+        { q: `How do I handle a patient who 'Refuses' to pay a past-due balance?`, a: `Follow the 'Collections' policy; you may need to transfer to billing before scheduling.` },
+        { q: `What if the patient asks for 'Speech' therapy?`, a: `Refer them to a 'Speech-Language Pathologist' (SLP).` },
+        { q: `How do I handle a patient asking for 'Erectile Dysfunction' (ED) help?`, a: `Schedule a private consultation with a primary care doctor or urologist.` },
+        { q: `What if the patient asks for 'Hepatitis' screening?`, a: `Schedule a 'Lab-Only' visit or add it to their physical exam.` },
+        { q: `How do I handle a patient who 'Needs' a travel clearance for a cruise?`, a: `Schedule a 'Fit-to-Fly' or 'Travel' consultation visit.` },
+        { q: `What if the patient asks for 'Gluten-Free' diet advice?`, a: `Offer to schedule a 'Dietician' visit for a customized plan.` },
+        { q: `How do I handle a patient asking for 'Prostate' screening (PSA)?`, a: `Schedule a visit to discuss the pros/cons with the doctor first.` },
+        { q: `What if the patient asks for 'Shingles' vaccine (Shingrix)?`, a: `Verify age (usually 50+) and stock availability.` },
+        { q: `How do I handle a patient who 'Wants' a female nurse specifically?`, a: `Note the preference and inform the clinical team; state that we try to accommodate.` },
+        { q: `What if the patient asks for 'Endocrinology' for thyroid issues?`, a: `Confirm if you need a referral from their PCP first.` },
+        { q: `How do I handle a patient asking for 'Cardiac' stress tests?`, a: `Verify if your clinic has the equipment or refer to Cardiology.` },
+        { q: `What if the patient asks for 'Pneumonia' vaccine?`, a: `Confirm their age/risk factors and stock availability.` },
+        { q: `How do I handle a patient who 'Needs' a copy of their vaccine record for work?`, a: `Offer to send it via the secure portal or mail it to their home.` },
+        { q: `What if the patient asks for 'Mammogram' results?`, a: `Advise: 'Results take 3-5 days; you will be notified via the portal or a letter.'` },
+        { q: `How do I handle a patient asking for 'Colon Cancer' screening (Cologuard)?`, a: `Schedule a visit to see if they qualify for the home-test kit.` },
+        { q: `What if the patient asks for 'Breast' ultrasound?`, a: `Refer them to an imaging center or the 'Women’s Health' department.` },
+        { q: `How do I handle a patient who 'Is panicked' about a new lump?`, a: `Schedule them with the first available 'Urgent' slot for evaluation.` },
+        { q: `What if the patient asks for 'Blood' transfusion info?`, a: `Refer them to the 'Hematology' or 'Infusion' center.` },
+        { q: `How do I handle a patient asking for 'In-Home' hospice?`, a: `Transfer to the 'Palliative Care' or 'Social Work' coordinator.` },
+        { q: `What if the patient asks for 'Catheter' supplies?`, a: `Refer to the 'Durable Medical Equipment' (DME) vendor.` },
+        { q: `How do I handle a patient who 'Needs' a letter for a service dog?`, a: `Explain: 'A mental health or physical evaluation is required for such certifications.'` },
+        { q: `What if the patient asks for 'Pain' management injections?`, a: `Verify if your clinic does them or refer to a 'Pain Specialist'.` },
+        { q: `How do I handle a patient asking for 'Scoliosis' screening?`, a: `Confirm: 'Yes, we perform these during a standard physical or specialized visit.'` },
+        { q: `What if the patient asks for 'A1C' testing for diabetes?`, a: `Confirm: 'Yes, we can do a rapid finger-stick or a full lab draw.'` },
+        { q: `How do I handle a patient who 'Wants' to see a specific PA?`, a: `Check that PA’s schedule and book accordingly.` },
+        { q: `What if the patient asks for 'Vasectomy' info?`, a: `Schedule an initial 'Consultation' visit with the urologist.` },
+        { q: `How do I handle a patient asking for 'Birth Control' (Nexplanon/IUD)?`, a: `Schedule a 'Consultation' first to discuss the device and check insurance coverage.` },
+        { q: `What if the patient asks for 'Weight' loss surgery info?`, a: `Refer them to the 'Bariatric Coordinator' or a specialized center.` },
+        { q: `How do I handle a patient who 'Needs' a referral to a specific out-of-state specialist?`, a: `Explain: 'Out-of-state referrals require extra insurance authorization; we will start the process.'` },
+        { q: `What if the patient asks for 'Kidney' stone help?`, a: `If in severe pain, direct to ER; otherwise, schedule with a Urologist.` },
+        { q: `How do I handle a patient asking for 'Mental Health' crisis help?`, a: `Provide the 'National Crisis Hotline' number and offer an urgent triage callback.` },
+        { q: `What if the patient asks for 'HIV' prep (PrEP)?`, a: `Schedule a consultation; clarify that regular lab work is required for the script.` },
+        { q: `How do I handle a patient who 'Wants' a physical but is sick right now?`, a: `Advise: 'We should book an 'Acute' visit for your illness and reschedule the physical for later.'` },
+        { q: `What if the patient asks for 'TB' blood test (QuantiFERON)?`, a: `Confirm: 'Yes, we can order that lab; it's often preferred over the skin test.'` },
+        { q: `How do I handle a patient asking for 'Osteoporosis' meds?`, a: `Schedule an evaluation to review their latest bone density results.` },
+        { q: `What if the patient asks for 'Lymphedema' therapy?`, a: `Refer to a specialized 'Lymphedema Physical Therapist'.` },
+        { q: `How do I handle a patient who 'Needs' a handicap placard for 6 months?`, a: `Schedule a visit; state the doctor will complete the DMV application.` },
+        { q: `What if the patient asks for 'Varicose Vein' treatment?`, a: `Refer to a 'Vascular Surgeon' or 'Vein Specialist'.` },
+        { q: `How do I handle a patient asking for 'Dermatology' for a rash?`, a: `Ask if they’ve seen their PCP first or book directly if your clinic allows.` },
+        { q: `What if the patient asks for 'Sleep' study results?`, a: `Advise: 'Results take 7-10 days; the doctor will review them with you at your follow-up.'` },
+        { q: `How do I handle a patient who 'Wants' their co-pay waived due to financial hardship?`, a: `Offer a 'Financial Hardship Form' for them to complete for approval.` },
+        { q: `What if the patient asks for 'Travel' meds for altitude sickness?`, a: `Schedule a 'Travel Consult' visit.` },
+        { q: `How do I handle a patient asking for 'Pediatric' developmental screening?`, a: `Confirm: 'Yes, we use standardized tools (like M-CHAT) during well-child visits.'` },
+        { q: `What if the patient asks for 'Iron' infusions?`, a: `Check if your clinic has an infusion suite or refer to Hematology.` },
+        { q: `How do I handle a patient who 'Needs' a school excuse for a month ago?`, a: `State: 'We can only provide excuses for dates the patient was actually seen in our office.'` },
+        { q: `What if the patient asks for 'Gallbladder' surgery info?`, a: `Schedule a consultation with a 'General Surgeon'.` },
+        { q: `How do I handle a patient asking for 'Menopause' relief?`, a: `Schedule an 'Extended' visit with an OBGYN or PCP to discuss options.` },
+        { q: `What if the patient asks for 'Urgent' refills on a Saturday?`, a: `Check if there is an 'On-Call' provider who can handle emergencies.` },
+        { q: `How do I handle a patient who 'Wants' to know if the doctor is 'Liberal' or 'Conservative'?`, a: `State: 'Our providers focus strictly on high-quality medical care for all patients.'` },
+        { q: `What if the patient asks for 'Skin Cancer' screening?`, a: `Confirm: 'Yes, we offer full-body skin checks; please book a 20-minute slot.'` },
+        { q: `How do I handle a patient asking for 'B12' shots?`, a: `Confirm: 'Yes, we can do these as a nurse-visit if you have an active order.'` },
+        { q: `What if the patient asks for 'Hearing' tests for an infant?`, a: `Refer them to a 'Pediatric Audiologist'.` },
+        { q: `How do I handle a patient who 'Lost' their hearing aid?`, a: `Refer them to their 'Audiology' clinic for replacement options.` },
+        { q: `What if the patient asks for 'Hernia' repair info?`, a: `Schedule a 'General Surgery' consultation.` },
+        { q: `How do I handle a patient asking for 'Bio-identical' hormones?`, a: `Verify if the provider specializes in 'Integrative' or 'Functional' medicine.` },
+        { q: `What if the patient asks for 'Surgical' drain removal?`, a: `Confirm: 'Yes, we can do that; please bring your post-op instructions.'` },
+        { q: `How do I handle a patient who 'Wants' to pay after the visit?`, a: `State: 'Our policy is to collect payment at the time of check-in.'` },
+        { q: `What if the patient asks for 'Home' COVID test verification?`, a: `Explain: 'We cannot verify home tests; we must perform an in-office test for official records.'` },
+        { q: `How do I handle a patient asking for 'Wound' VAC supplies?`, a: `Refer to the 'Home Health' agency or the 'Wound Care' clinic.` },
+        { q: `What if the patient asks for 'DNR' (Do Not Resuscitate) forms?`, a: `Offer to provide the 'POLST' or 'Advanced Directive' forms for the doctor to sign.` },
+        { q: `How do I handle a patient who 'Needs' an urgent ultrasound for a possible DVT?`, a: `Direct them to the ER or an 'Urgent Care' with stat imaging capabilities.` },
+        { q: `What if the patient asks for 'Breast' pump prescriptions?`, a: `Confirm: 'Yes, the doctor can write this script at your prenatal or postpartum visit.'` },
+        { q: `How do I handle a patient asking for 'Allergy' testing (skin pricks)?`, a: `Check if an 'Allergist' is on-site or provide a referral.` },
+        { q: `What if the patient asks for 'Travel' shots for a baby?`, a: `Refer them to a 'Pediatric Travel Specialist'.` },
+        { q: `How do I handle a patient who 'Wants' to speak to the doctor’s wife/husband?`, a: `Politely state: 'That information is private; how can I help you with your medical needs?'` },
+        { q: `What if the patient asks for 'Sports' injury rehab?`, a: `Refer to a 'Physical Therapist' specializing in sports medicine.` },
+        { q: `How do I handle a patient asking for 'Nerve' conduction studies (EMG)?`, a: `Check if your Neurologist performs these on-site.` },
+        { q: `What if the patient asks for 'In-Office' procedures (like mole removal) today?`, a: `Advise: 'The doctor will evaluate it today; the procedure may need to be scheduled for a later date.'` },
+        { q: `What is the best way to handle a patient who refuses to hang up?`, a: `Use a firm but kind closing: 'I've noted everything for the doctor; I must assist the next patient now. Goodbye!'` }
+    ];
 
     function renderFAQ(filter = "") {
         const list = document.getElementById('faq-list');
         list.innerHTML = "";
-        const filtered = faqs.filter(f => f.q.toLowerCase().includes(filter) || f.a.toLowerCase().includes(filter));
         
-        filtered.forEach((item, index) => {
+        const filtered = faqs.filter(f => 
+            f.q.toLowerCase().includes(filter.toLowerCase()) || 
+            f.a.toLowerCase().includes(filter.toLowerCase())
+        );
+        
+        if(filtered.length === 0) {
+            list.innerHTML = "<p style='color: #64748b; padding: 10px;'>No matching questions found.</p>";
+            return;
+        }
+
+        filtered.forEach((item) => {
             const div = document.createElement('div');
             div.className = 'faq-item';
             div.innerHTML = `
@@ -597,21 +616,23 @@
     }
 
     function toggleFAQ(el) {
-        el.parentElement.classList.toggle('open');
-        el.querySelector('span').innerText = el.parentElement.classList.contains('open') ? "−" : "+";
+        const item = el.parentElement;
+        item.classList.toggle('open');
+        el.querySelector('span').innerText = item.classList.contains('open') ? "−" : "+";
     }
 
     function searchFAQ() {
-        const val = document.getElementById('search').value.toLowerCase();
+        const val = document.getElementById('search').value;
         renderFAQ(val);
     }
 
     function copyText(txt) {
-        navigator.clipboard.writeText(txt);
-        alert("Copied to clipboard!");
+        navigator.clipboard.writeText(txt).then(() => {
+            alert("Script copied to clipboard!");
+        });
     }
 
-    // Progress Logic
+    // Training Progress Logic
     let currentStep = 1;
     function completeStep(step) {
         if(step === currentStep) {
@@ -625,28 +646,35 @@
     }
 
     function checkQuiz() {
-        const rbs = document.querySelectorAll('input[name="quiz"]');
-        if(rbs[1].checked) {
-            alert("Correct!");
+        const selected = document.querySelector('input[name="quiz"]:checked');
+        if(!selected) return alert("Please select an answer.");
+        
+        if(selected.value === 'right') {
+            alert("Correct! Boundary setting is key.");
             completeStep(3);
         } else {
-            alert("Incorrect. Please try again.");
+            alert("Incorrect. We must always set a boundary before taking action.");
         }
     }
 
     function updateProgress() {
         const percent = ((currentStep - 1) / 4) * 100;
         document.getElementById('progress-fill').style.width = percent + '%';
-        document.getElementById('progress-status').innerText = `Step ${currentStep} of 4`;
+        const labels = ["Video Overview", "Reviewing Protocols", "Knowledge Check", "Final Certification", "All Completed!"];
+        document.getElementById('progress-status').innerText = `Step ${currentStep > 4 ? 4 : currentStep} of 4: ${labels[currentStep-1]}`;
     }
 
     function finishTraining() {
         const name = document.getElementById('trainee-name').value;
-        if(!name) return alert("Enter your name");
-        window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Training Complete: ${name}`;
+        if(!name) return alert("Please enter your full name.");
+        window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Training Complete: ${name}&body=The trainee ${name} has successfully completed all 4 modules and reviewed the 400+ FAQ database.`;
     }
 
-    document.addEventListener('DOMContentLoaded', () => renderFAQ());
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderFAQ();
+        updateProgress();
+    });
 </script>
 
 </body>
