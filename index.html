@@ -26,15 +26,18 @@
                     <img src="logo.png" alt="Christian Family Medicine & Pediatrics Logo" class="logo">
                     <h1 class="site-title">CFM & Pediatrics <b>Workbook</b></h1>
                 </div>
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-item active">Home</a>
-                    <a href="visitTypes.html" class="nav-item">Visit Types</a>
-                    <a href="selfPayPrices.html" class="nav-item">Self Pay</a>
-					<a href="hours.html">Clinic Hours</a>
-		    <a href="additionalInfo.html" class="nav-item">Additional Info</a>
-		    <a href="controlPanel.html" class="nav-item">Control Panel</a>
-	            <a href="providersTrenton.html" class="nav-item">Trenton Providers</a>
-                </nav>
+               <nav class="dropdown-nav">
+    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+    <div id="dropdown-content" class="dropdown-content">
+        <a href="index.html">Home</a>
+        <a href="selfPayPrices.html">Self-Pay</a>
+        <a href="hours.html">Clinic Hours</a>
+		 <a href="providersTrenton.html">Trenton internal</a>
+		 <a href="visitTypes.html">Visit Types</a>
+		 <a href="additionalInfo.html">Additional Info</a>
+		 <a href="controlPanel.html">Admin Control</a>
+        </div>
+</nav>
                 <div id="trenton-clock" class="header-clock"></div>
             </div>
         </header>
@@ -230,6 +233,7 @@
 </body>
 
 </html>
+
 
 
 
