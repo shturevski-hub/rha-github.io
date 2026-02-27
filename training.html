@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFM Training | Course & Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .course-section { opacity: 0.5; transition: 0.4s; pointer-events: none; }
+        .course-section.active { opacity: 1; pointer-events: auto; }
+        .completed-badge { display: none; color: #166534; background: #dcfce7; padding: 5px 10px; border-radius: 4px; font-weight: bold; margin-left: 10px; }
+        .is-done .completed-badge { display: inline-block; }
+        .is-done { border-left: 6px solid #22c55e !important; }
+        .progress-bar-container { width: 100%; background: #e2e8f0; height: 12px; border-radius: 10px; overflow: hidden; margin: 20px 0; }
+        #progress-fill { width: 0%; height: 100%; background: #3b82f6; transition: 0.5s; }
+        .quiz-question { margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; text-align: left; }
+        .quiz-question p { font-weight: bold; margin-bottom: 10px; }
+        .finish-btn { background: #166534 !important; display: none; margin-top: 20px; }
+        .centered-content { text-align: center; }
+    </style>
+</head>
+<body class="locked">
+    <div id="access-lock-screen">
+        <div class="lock-box">
+            <h2 class="lock-title">🔒 Training Access</h2>
+            <p>Please enter your work code to begin the course.</p>
+            <input type="password" id="access-password-input" placeholder="Enter work code..." autofocus>
+            <button onclick="checkAccessPassword()">Enter Course</button>
+            <p id="lock-error-message"></p>
+        </div>
+    </div>
+    
+    <div id="main-content-wrapper">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Logo" class="logo">
+                    <h1 class="site-title">Clinician <b>Training Hub</b></h1>
+                </div>
+                <div id="trenton-clock">00:00:00</div>
+                <nav class="dropdown-nav">
+                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html">Home</a>
+                        <a href="training.html" class="active">Training Center</a>
+                        <a href="selfPayPrices.html">Self-Pay</a>
+                        <a href="visitTypes.html">Visit Types</a>
+                        <a href="hours.html">Clinic Hours</a>
+                        <a href="additionalInfo.html">Additional Info</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="info-card">
+                <h2>Course Progress</h2>
+                <div class="progress-bar-container"><div id="progress-fill"></div></div>
+                <p id="progress-text">0 of 4 steps completed</p>
+            </section>
+
+            <section id="mod-1" class="info-card course-section active">
+                <h3>Module 1: Workflow Overview <span class="completed-badge">✓ COMPLETED</span></h3>
+                <div style="background: #000; aspect-ratio: 16/9; margin: 15px 0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <p><i>[Training Video Placeholder]</i></p>
+                </div>
+                <button class="menu-button" onclick="completeModule(1)">Mark Module 1 Complete</button>
+            </section>
+
+            <section id="mod-2" class="info-card course-section">
+                <h3>Module 2: Ethics & Specifics <span class="completed-badge">✓ COMPLETED</span></h3>
+                <p>Ensure HIPAA compliance, DOB verification, and patient empathy on every call.</p>
+                <div class="note-important">Reminder: Never blind transfer a patient. Always use warm transfers.</div>
+                <button class="menu-button" onclick="completeModule(2)">Mark Module 2 Complete</button>
+            </section>
+
+            <section id="mod-3" class="info-card course-section">
+                <h3>Module 3: Knowledge Check <span class="completed-badge">✓ PASSED</span></h3>
+                <p>Answer correctly to unlock your certification.</p>
+                
+                <div id="quiz-container">
+                    <div class="quiz-question">
+                        <p>1. How should you verify a patient's identity?</p>
+                        <label><input type="radio" name="q1" value="a"> Full Name only</label><br>
+                        <label><input type="radio" name="q1" value="b"> DOB and Address</label><br>
+                        <label><input type="radio" name="q1" value="c"> By their voice</label>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p>2. What is the standard slot duration for a New Patient Intake?</p>
+                        <label><input type="radio" name="q2" value="a"> 15 Minutes</label><br>
+                        <label><input type="radio" name="q2" value="b"> 30 Minutes</label><br>
+                        <label><input type="radio" name="q2" value="c"> 60 Minutes</label>
+                    </div>
+                </div>
+                <button class="menu-button" onclick="checkQuiz()">Submit Quiz Answers</button>
+                <p id="quiz-feedback" style="margin-top:10px; font-weight:bold;"></p>
+            </section>
+
+            <section id="mod-4" class="info-card course-section centered-content">
+                <h3>🎉 Certification & Submission</h3>
+                <p>Please enter your name as it should appear on your training record.</p>
+                <input type="text" id="trainee-name" placeholder="Full Name..." style="padding: 15px; width: 320px; margin-bottom: 10px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1.1em;"><br>
+                <button class="menu-button finish-btn" id="submit-btn" onclick="submitCourse()">Send Completion Email</button>
+                <div id="final-confirmation"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 CFM Internal Training. Confidential Internal Resource.</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="lock.js"></script>
+    <script>
+        // Load existing progress from LocalStorage
+        let completed = JSON.parse(localStorage.getItem('cfm_training_progress')) || [];
+
+        function updateUI() {
+            const totalSteps = 4; 
+            const progressPercent = (completed.length / totalSteps) * 100;
+            
+            // Update Progress Bar
+            const fill = document.getElementById('progress-fill');
+            if(fill) fill.style.width = progressPercent + '%';
+            
+            const text = document.getElementById('progress-text');
+            if(text) text.innerText = `${completed.length} of ${totalSteps} steps completed`;
+
+            // Loop through sections to handle locking/unlocking
+            for(let i = 1; i <= totalSteps; i++) {
+                const section = document.getElementById(`mod-${i}`);
+                if (!section) continue;
+
+                if (completed.includes(i)) {
+                    section.classList.add('is-done');
+                }
+                
+                // Logic: A section is 'active' if it's the first one OR the previous one is done
+                if (i === 1 || completed.includes(i - 1)) {
+                    section.classList.add('active');
+                }
+            }
+
+            // Show final button if quiz is done (Module 3)
+            if (completed.includes(3)) {
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            }
+        }
+
+        function completeModule(num) {
+            if (!completed.includes(num)) {
+                completed.push(num);
+                localStorage.setItem('cfm_training_progress', JSON.stringify(completed));
+                updateUI();
+            }
+        }
+
+        function checkQuiz() {
+            const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+            const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+            const feedback = document.getElementById('quiz-feedback');
+
+            // Correct Answers: 1-b, 2-c
+            if (q1 === 'b' && q2 === 'c') {
+                feedback.style.color = "#166534";
+                feedback.innerText = "Correct! You have passed the knowledge check.";
+                completeModule(3);
+            } else {
+                feedback.style.color = "#dc2626";
+                feedback.innerText = "Some answers were incorrect. Please review the modules and try again.";
+            }
+        }
+
+        function submitCourse() {
+            const name = document.getElementById('trainee-name').value;
+            if (!name || name.length < 3) {
+                alert("Please enter your full name.");
+                return;
+            }
+
+            const completionDate = new Date().toLocaleString();
+            const verifCode = btoa(name + Date.now()).substring(0, 8).toUpperCase();
+
+            const recipient = "stefan.shturevski@fastpacehealth.com";
+            const subject = encodeURIComponent(`Training Completion: ${name}`);
+            const body = encodeURIComponent(
+                `CERTIFIED COMPLETION RECORD\n` +
+                `--------------------------\n` +
+                `Trainee Name: ${name}\n` +
+                `Course: CFM Internal Workbook Training\n` +
+                `Status: 100% (Passed Quiz)\n` +
+                `Date: ${completionDate}\n` +
+                `Verification Code: ${verifCode}\n\n` +
+                `This clinician has reviewed all protocols, ethics, and visit type guidelines.`
+            );
+
+            // Open Email Client
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+            
+            // Mark last step complete
+            completeModule(4);
+            
+            // Update UI to show success
+            document.getElementById('mod-4').innerHTML = `
+                <div style="color: #166534; padding: 20px;">
+                    <h3>✅ Record Generated</h3>
+                    <p>Thank you, ${name}. Your completion email has been triggered.</p>
+                </div>
+            `;
+        }
+
+        // Initialize UI on page load
+        document.addEventListener('DOMContentLoaded', updateUI);
+    </script>
+</body>
+</html>
