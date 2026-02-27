@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Hours | Trenton Medical</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo">
+                <h1 class="site-title">Trenton Medical</h1>
+            </div>
+            <div id="trenton-clock">00:00:00</div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="selfPayPrices.html">Self-Pay Prices</a>
+                <a href="hours.html" class="active">Clinic Hours</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="centered-heading">Clinic Hours of Operation</h2>
+        
+        <div class="search-container">
+            <label for="clinic-selector" class="search-label">Select a Location:</label>
+            <select id="clinic-selector">
+                <option value="trenton">Trenton Primary Care Center</option>
+                <option value="martin">Martin, TN</option>
+                <option value="shelbyville">Shelbyville, TN</option>
+                <option value="bolivar">Bolivar, TN</option>
+                <option value="henderson">Henderson, TN</option>
+                <option value="mckenzie">McKenzie, TN</option>
+                <option value="parsons">Parsons, TN</option>
+                <option value="ripley">Ripley, TN</option>
+                <option value="covington">Covington, TN</option>
+                <option value="tullahoma">Tullahoma, TN</option>
+            </select>
+        </div>
+
+        <div class="info-card">
+            <h3 id="selected-clinic-name">Trenton Primary Care Center</h3>
+            <h4>Current Status: <span id="current-status-badge">Checking...</span></h4>
+        </div>
+
+        <table id="hours-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Hours</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="hours-table-body">
+                </tbody>
+        </table>
+
+        <div class="note-important">
+            <strong>Note:</strong> Hours may vary by location on holidays. Please call your local clinic to confirm.
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Trenton Medical Services. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
