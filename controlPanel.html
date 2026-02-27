@@ -3,107 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Management System - Administration</title>
+    <title>CFM Workbook | Admin Control</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <div class="logo-container">
-                <img src="logo.png" alt="Christian Family Medicine & Pediatrics Logo" class="logo">
-                <h1 class="site-title">Christian Family Medicine & Pediatrics</h1>
-            </div>
-            <nav>
-               <a href="index.html">Home</a>
-                <a href="visitTypes.html">Visit Types</a>
-                <a href="selfPayPrices.html">Self Pay Prices</a>
-                <a href="providersTrenton.html">Providers Trenton</a>
-                <a href="additionalInfo.html">Additional Info</a>
-                <a href="controlPanel.html">Control Panel</a>
-            </nav>
+<body class="locked">
+    <div id="access-lock-screen">
+        <div class="lock-box">
+            <h2 class="lock-title">🔒 Admin Access</h2>
+            <input type="password" id="access-password-input" placeholder="Enter admin code..." autofocus>
+            <button onclick="checkAccessPassword()">Unlock Panel</button>
+            <p id="lock-error-message"></p>
         </div>
-    </header>
-
-    <main class="container">
-        
-        <section id="access-prompt">
-            <h2>🔒 Administrative Access Required</h2>
-            <p>Please enter the admin password to view the Workbook Content Administration Guidelines.</p>
-            <div style="margin: 20px 0; max-width: 400px;">
-                <input type="password" id="password-input" placeholder="Enter Password" style="padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
-                <button onclick="checkPassword()" style="padding: 10px 15px; background-color: #1952a8; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Access Panel
-                </button>
-                <p id="error-message" style="color: #c0392b; margin-top: 10px; font-weight: bold;"></p>
+    </div>
+    
+    <div id="main-content-wrapper">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Logo" class="logo">
+                    <h1 class="site-title">Admin <b>Control Panel</b></h1>
+                </div>
+                <div id="trenton-clock">00:00:00</div>
+                <nav class="dropdown-nav">
+                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html">Home</a>
+                        <a href="training.html">Training Center</a>
+                        <a href="selfPayPrices.html">Self-Pay</a>
+                        <a href="visitTypes.html">Visit Types</a>
+                        <a href="controlPanel.html" class="active">Admin Control</a>
+                    </div>
+                </nav>
             </div>
-        </section>
-        <div id="control-panel-content" style="display: none;">
-            
-            <h2>Workbook Content Administration Guidelines</h2>
-            <p>This resource provides instructions for authorized personnel to maintain and update the internal Workbook content. **All content is managed by directly editing the corresponding HTML files.**</p>
+        </header>
 
-            <section class="info-card warning">
-                <h3>❗ Important Policy on Updates</h3>
-                <p><strong>Content integrity is paramount.</strong> All changes must be reviewed and documented prior to implementation. Always work on a copy of the file before applying changes to the live version.</p>
-                <p>Verify that changes are displayed correctly by refreshing the browser after saving any file.</p>
-            </section>
-            
-            <hr>
-
+        <main class="container">
             <section class="info-card">
-                <h3>1. Managing Visit Types and Scheduling Data</h3>
-                <p>To modify appointment names, durations, or descriptions:</p>
-                <ol>
-                    <li>Open the file: <strong><code>visitTypes.html</code></strong> in a text editor.</li>
-                    <li>Locate the table body, typically marked with <code>&lt;tbody id="visit-types-table-body"&gt;</code>.</li>
-                    <li>**To Add/Delete:** Add or remove the full <code>&lt;tr&gt;...&lt;/tr&gt;</code> row structure.</li>
-                    <li>**To Edit:** Modify the content within the <code>&lt;td&gt;</code> tags of an existing row.</li>
-                    <li>Save the <code>visitTypes.html</code> file.</li>
-                </ol>
+                <h2>🛠️ Training Management</h2>
+                <p>Use these tools to manage training sessions on this specific workstation.</p>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #e2e8f0;">
+                
+                <div id="training-status-area">
+                    <h4>Current Workstation Status:</h4>
+                    <p id="local-status-text">Checking for data...</p>
+                    
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button class="menu-button" onclick="checkLocalTraining()">Refresh Status</button>
+                        <button class="menu-button" style="background-color: #dc2626 !important;" onclick="resetLocalTraining()">Reset Training for New User</button>
+                    </div>
+                </div>
             </section>
 
             <section class="info-card">
-                <h3>2. Managing Self-Pay Prices</h3>
-                <p>To update prices, services, or lab codes (including Base Rates, Add-ons, and Vaccines):</p>
-                <ol>
-                    <li>Open the file: <strong><code>selfPayPrices.html</code></strong> in a text editor.</li>
-                    <li>Locate the appropriate table section (e.g., <code>id="base-rate-table-body"</code>, <code>id="addon-table-body"</code>).</li>
-                    <li>Prices are hardcoded directly into the HTML. Edit the content of the relevant <code>&lt;td class="price-column"&gt;</code> tags for price changes.</li>
-                    <li>Save the <code>selfPayPrices.html</code> file.</li>
-                </ol>
+                <h3>Update Instructions</h3>
+                <p>To update pricing or provider lists, you must edit the individual HTML files. After saving, ensure you clear the browser cache on clinical workstations to see changes.</p>
+                <ul>
+                    <li><b>Pricing:</b> Edit <code>selfPayPrices.html</code></li>
+                    <li><b>Training Content:</b> Edit <code>training.html</code></li>
+                    <li><b>Global Styles:</b> Edit <code>style.css</code></li>
+                </ul>
             </section>
-
-            <section class="info-card">
-                <h3>3. Managing Internal Guidelines and Notes</h3>
-                <p>To update Provider Notes, Internal Guidelines, or resource lists:</p>
-                <ol>
-                    <li>Open the file: <strong><code>additionalInfo.html</code></strong> in a text editor.</li>
-                    <li>Locate the relevant content within the <code>&lt;main&gt;</code> section (organized by <code>&lt;section class="info-card"&gt;</code>).</li>
-                    <li>Directly edit the text content or adjust the structure of the lists (<code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code>).</li>
-                    <li>Save the <code>additionalInfo.html</code> file.</li>
-                </ol>
-            </section>
-
-            <section class="info-card">
-                <h3>4. Core Site Elements (Navigation, Branding)</h3>
-                <p>Changes to site title, navigation links, or the main welcome message (Home):</p>
-                <ol>
-                    <li>Open <strong><code>index.html</code></strong> (for Home page content) or all HTML files (for navigation changes).</li>
-                    <li>For Navigation: Edit the list of <code>&lt;a href="..."&gt;</code> links inside the <code>&lt;nav&gt;</code> tag in the header.</li>
-                    <li>For Branding/Style: Changes to the site's colors, fonts, or overall layout must be made in the <strong><code>style.css</code></strong> file.</li>
-                    <li>Save the updated file(s).</li>
-                </ol>
-            </section>
-
-        </div>
         </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Christian Family Medicine & Pediatrics Internal Workbook. Content Administration. Managed by Стефан Штуревски</p>
-        </div>
-    </footer>
+        <footer>
+            <p>&copy; 2026 CFM Internal Systems</p>
+        </footer>
+    </div>
     
     <script src="script.js"></script>
+    <script src="lock.js"></script>
+    <script>
+        // Function to check what is saved in the browser
+        function checkLocalTraining() {
+            const data = localStorage.getItem('cfm_training_progress');
+            const statusText = document.getElementById('local-status-text');
+            
+            if (data) {
+                const progress = JSON.parse(data);
+                const steps = progress.length;
+                if (steps >= 4) {
+                    statusText.innerHTML = `<b style="color: #166534;">✅ Training Complete (${steps}/4 steps)</b>`;
+                } else {
+                    statusText.innerHTML = `<b style="color: #ca8a04;">⚠️ Training In-Progress (${steps}/4 steps)</b>`;
+                }
+            } else {
+                statusText.innerHTML = "<b>⚪ No Training Data Found.</b> System is ready for a new user.";
+            }
+        }
+
+        // Function to wipe the training data
+        function resetLocalTraining() {
+            if (confirm("Are you sure? This will delete the progress for the current user and they will have to start the training from Step 1.")) {
+                localStorage.removeItem('cfm_training_progress');
+                alert("Training data has been cleared.");
+                checkLocalTraining();
+            }
+        }
+
+        // Run check on load
+        document.addEventListener('DOMContentLoaded', checkLocalTraining);
+    </script>
 </body>
 </html>
