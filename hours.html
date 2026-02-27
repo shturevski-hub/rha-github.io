@@ -23,46 +23,42 @@
         </div>
     </header>
 
-    <main class="container">
-        <h2 class="centered-heading">Clinic Hours of Operation</h2>
+<main>
+    <h2 class="centered-heading">Clinic Hours & Status</h2>
+    
+    <div class="info-card">
+        <label for="clinic-selector" class="search-label">Select a Clinic Location:</label>
+        <select id="clinic-selector">
+            <option value="trenton">Trenton Primary Care Center</option>
+            <option value="martin">Martin, TN</option>
+            <option value="shelbyville">Shelbyville, TN</option>
+            <option value="bolivar">Bolivar, TN</option>
+            <option value="henderson">Henderson, TN</option>
+            <option value="mckenzie">McKenzie, TN</option>
+            <option value="parsons">Parsons, TN</option>
+            <option value="ripley">Ripley, TN</option>
+            <option value="covington">Covington, TN</option>
+            <option value="tullahoma">Tullahoma, TN</option>
+        </select>
+    </div>
+
+    <div class="info-card">
+        <h3 id="selected-clinic-name">Trenton Primary Care Center</h3>
+        <p><strong>Current Status:</strong> <span id="current-status-badge">Checking...</span></p>
         
-        <div class="search-container">
-            <label for="clinic-selector" class="search-label">Select a Location:</label>
-            <select id="clinic-selector">
-                <option value="trenton">Trenton Primary Care Center</option>
-                <option value="martin">Martin, TN</option>
-                <option value="shelbyville">Shelbyville, TN</option>
-                <option value="bolivar">Bolivar, TN</option>
-                <option value="henderson">Henderson, TN</option>
-                <option value="mckenzie">McKenzie, TN</option>
-                <option value="parsons">Parsons, TN</option>
-                <option value="ripley">Ripley, TN</option>
-                <option value="covington">Covington, TN</option>
-                <option value="tullahoma">Tullahoma, TN</option>
-            </select>
-        </div>
-
-        <div class="info-card">
-            <h3 id="selected-clinic-name">Trenton Primary Care Center</h3>
-            <h4>Current Status: <span id="current-status-badge">Checking...</span></h4>
-        </div>
-
-        <table id="hours-table">
+        <table>
             <thead>
                 <tr>
                     <th>Day</th>
-                    <th>Hours</th>
+                    <th>Hours (Military)</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody id="hours-table-body">
                 </tbody>
         </table>
-
-        <div class="note-important">
-            <strong>Note:</strong> Hours may vary by location on holidays. Please call your local clinic to confirm.
-        </div>
-    </main>
+    </div>
+</main>
 
     <footer>
         <p>&copy; 2026 Trenton Medical Services. All rights reserved.</p>
