@@ -142,31 +142,26 @@ function displaySelfPayPrices() {
 }
 
 function renderHours() {
-    console.log("Attempting to render hours..."); // Check if this shows in Console
     const selector = document.getElementById('clinic-selector');
     const tableBody = document.getElementById('hours-table-body');
     const badge = document.getElementById('current-status-badge');
+    const nameHeading = document.getElementById('selected-clinic-name');
 
-    if (!selector || !tableBody) {
-        console.error("Missing HTML elements! Check your IDs.");
-        return;
-    }
+    if (!selector || !tableBody) return;
 
     const clinicKey = selector.value;
     const clinic = clinicData[clinicKey];
-    console.log("Selected Clinic:", clinic.name);
-
-    // ... (rest of the logic remains the same)
-}
+    if (nameHeading) nameHeading.textContent = clinic.name;
 
     const now = new Date();
-    // Get numeric Central Time components
-    const centralStr = now.toLocaleString("en-US", {timeZone: "America/Chicago", hour12: false});
-    const centralDate = new Date(centralStr);
-    
-    const currentDay = now.toLocaleDateString("en-US", {timeZone: "America/Chicago", weekday: "numeric"}) % 7;
-    const currentHour = parseInt(now.toLocaleTimeString("en-US", {timeZone: "America/Chicago", hour: "numeric", hour12: false}));
-    const currentMin = parseInt(now.toLocaleTimeString("en-US", {timeZone: "America/Chicago", minute: "numeric"}));
+    // Use Intl to get correct Central values independently of system clock
+    const dayFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'numeric' });
+    const hourFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false });
+    const minFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', minute: 'numeric' });
+
+    const currentDay = parseInt(dayFormatter.format(now)) % 7;
+    const currentHour = parseInt(hourFormatter.format(now));
+    const currentMin = parseInt(minFormatter.format(now));
     const currentTimeDecimal = currentHour + (currentMin / 60);
 
     let html = '';
@@ -176,9 +171,9 @@ function renderHours() {
     days.forEach((dayName, index) => {
         const timeRange = clinic.hours[index];
         let statusHtml = '-';
-        let rowStyle = (index === parseInt(currentDay)) ? 'style="background-color: #F1F8E9; font-weight: bold;"' : '';
+        let rowStyle = (index === currentDay) ? 'style="background-color: #F1F8E9; font-weight: bold;"' : '';
         
-        if (index === parseInt(currentDay)) {
+        if (index === currentDay) {
             if (timeRange !== "Closed") {
                 const [openStr, closeStr] = timeRange.split('-');
                 const openTime = parseInt(openStr.split(':')[0]);
@@ -208,30 +203,24 @@ function renderHours() {
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-    // UI Basics
     updateTrentonClock();
     setInterval(updateTrentonClock, 1000);
     setActiveNavLink();
 
-    // Directory Page Logic
     const providerSearch = document.getElementById('provider-search');
     if (providerSearch) providerSearch.addEventListener('input', filterDirectory);
 
-    // Self-Pay Page Logic
     displaySelfPayPrices();
     const priceSearch = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
     if (priceSearch) priceSearch.addEventListener('input', filterTables);
     
-    // External Data hooks (if defined in other scripts)
     if (typeof renderBaseRatesAndAddons === "function") renderBaseRatesAndAddons();
     if (typeof renderVaccines === "function") renderVaccines();
     if (typeof renderLabs === "function") renderLabs();
 
-    // Hours Page Logic
     const hourSelector = document.getElementById('clinic-selector');
     if (hourSelector) {
         hourSelector.addEventListener('change', renderHours);
         renderHours(); 
     }
 });
-
