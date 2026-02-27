@@ -40,26 +40,24 @@ function updateTrentonClock() {
 }
 
 function toggleMenu() {
-    document.getElementById("dropdown-content").classList.toggle("show");
+    const menu = document.getElementById("dropdown-content");
+    if (menu) menu.classList.toggle("show");
 }
 
 window.onclick = function(event) {
     if (!event.target.matches('.menu-button')) {
         const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
+        for (let d of dropdowns) {
+            if (d.classList.contains('show')) d.classList.remove('show');
         }
     }
 }
 
 function setActiveNavLink() {
     const navLinks = document.querySelectorAll('.dropdown-content a');
-    const currentPage = window.location.pathname.split('/').pop();
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage || (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+        if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
         }
     });
@@ -76,10 +74,10 @@ function checkPassword() {
     if (input.value === ADMIN_PASSWORD) {
         prompt.style.display = 'none';
         content.style.display = 'block';
-        errorMsg.textContent = ''; 
+        if (errorMsg) errorMsg.textContent = ''; 
         input.value = '';
     } else {
-        errorMsg.textContent = 'Access Denied. Incorrect password.';
+        if (errorMsg) errorMsg.textContent = 'Access Denied. Incorrect password.';
         input.value = ''; 
     }
 }
@@ -108,8 +106,7 @@ function filterDirectory() {
     if (!input) return;
     const query = input.value.toLowerCase().trim();
     const cards = document.getElementsByClassName('clinic-card');
-    for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
+    for (let card of cards) {
         const searchableElements = card.querySelectorAll('h4, li');
         let matchFound = false;
         searchableElements.forEach(el => { if (applyHighlight(el, query)) matchFound = true; });
@@ -146,19 +143,24 @@ function displaySelfPayPrices() {
 
 function renderHours() {
     const selector = document.getElementById('clinic-selector');
-    if (!selector) return;
-    const clinicKey = selector.value;
-    const clinic = clinicData[clinicKey];
     const tableBody = document.getElementById('hours-table-body');
-    const nameHeading = document.getElementById('selected-clinic-name');
     const badge = document.getElementById('current-status-badge');
+    const nameHeading = document.getElementById('selected-clinic-name');
 
-    nameHeading.textContent = clinic.name;
+    if (!selector || !tableBody) return;
+
+    const clinic = clinicData[selector.value];
+    if (nameHeading) nameHeading.textContent = clinic.name;
+
     const now = new Date();
-    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false, weekday: 'numeric' });
-    const parts = formatter.formatToParts(now);
-    const currentDay = parseInt(parts.find(p => p.type === 'weekday').value) % 7;
-    const currentHour = parseInt(parts.find(p => p.type === 'hour').value);
+    // Get numeric Central Time components
+    const centralStr = now.toLocaleString("en-US", {timeZone: "America/Chicago", hour12: false});
+    const centralDate = new Date(centralStr);
+    
+    const currentDay = now.toLocaleDateString("en-US", {timeZone: "America/Chicago", weekday: "numeric"}) % 7;
+    const currentHour = parseInt(now.toLocaleTimeString("en-US", {timeZone: "America/Chicago", hour: "numeric", hour12: false}));
+    const currentMin = parseInt(now.toLocaleTimeString("en-US", {timeZone: "America/Chicago", minute: "numeric"}));
+    const currentTimeDecimal = currentHour + (currentMin / 60);
 
     let html = '';
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -167,12 +169,15 @@ function renderHours() {
     days.forEach((dayName, index) => {
         const timeRange = clinic.hours[index];
         let statusHtml = '-';
-        let rowStyle = (index === currentDay) ? 'style="background-color: #F1F8E9;"' : '';
+        let rowStyle = (index === parseInt(currentDay)) ? 'style="background-color: #F1F8E9; font-weight: bold;"' : '';
         
-        if (index === currentDay) {
+        if (index === parseInt(currentDay)) {
             if (timeRange !== "Closed") {
-                const [open, close] = timeRange.split('-').map(t => parseInt(t.split(':')[0]));
-                if (currentHour >= open && currentHour < close) {
+                const [openStr, closeStr] = timeRange.split('-');
+                const openTime = parseInt(openStr.split(':')[0]);
+                const closeTime = parseInt(closeStr.split(':')[0]);
+
+                if (currentTimeDecimal >= openTime && currentTimeDecimal < closeTime) {
                     statusHtml = '<span class="badge badge-open">Open</span>';
                     isClinicOpenNow = true;
                 } else {
@@ -184,8 +189,11 @@ function renderHours() {
         }
         html += `<tr ${rowStyle}><td>${dayName}</td><td>${timeRange}</td><td>${statusHtml}</td></tr>`;
     });
+
     tableBody.innerHTML = html;
-    badge.innerHTML = isClinicOpenNow ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed</span>';
+    if (badge) {
+        badge.innerHTML = isClinicOpenNow ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed Now</span>';
+    }
 }
 
 // --------------------------------------------------------------------------------
@@ -193,27 +201,29 @@ function renderHours() {
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Common UI
+    // UI Basics
     updateTrentonClock();
     setInterval(updateTrentonClock, 1000);
     setActiveNavLink();
 
-    // 2. Directory Page
+    // Directory Page Logic
     const providerSearch = document.getElementById('provider-search');
     if (providerSearch) providerSearch.addEventListener('input', filterDirectory);
 
-    // 3. Self-Pay Page
+    // Self-Pay Page Logic
     displaySelfPayPrices();
     const priceSearch = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
     if (priceSearch) priceSearch.addEventListener('input', filterTables);
+    
+    // External Data hooks (if defined in other scripts)
     if (typeof renderBaseRatesAndAddons === "function") renderBaseRatesAndAddons();
     if (typeof renderVaccines === "function") renderVaccines();
     if (typeof renderLabs === "function") renderLabs();
 
-    // 4. Hours Page
+    // Hours Page Logic
     const hourSelector = document.getElementById('clinic-selector');
     if (hourSelector) {
         hourSelector.addEventListener('change', renderHours);
-        renderHours();
+        renderHours(); 
     }
 });
