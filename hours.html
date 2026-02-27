@@ -15,11 +15,18 @@
                 <h1 class="site-title">Trenton Medical</h1>
             </div>
             <div id="trenton-clock">00:00:00</div>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="selfPayPrices.html">Self-Pay Prices</a>
-                <a href="hours.html" class="active">Clinic Hours</a>
-            </nav>
+             <nav class="dropdown-nav">
+                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html" class="active">Home</a>
+                        <a href="selfPayPrices.html">Self-Pay</a>
+                        <a href="hours.html">Clinic Hours</a>
+                        <a href="providersTrenton.html">Trenton Internal</a>
+                        <a href="visitTypes.html">Visit Types</a>
+                        <a href="additionalInfo.html">Additional Info</a>
+                        <a href="controlPanel.html">Admin Control</a>
+                    </div>
+                </nav>
         </div>
     </header>
 
