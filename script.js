@@ -1,73 +1,57 @@
 // script.js
 
-// script.js
-
 // --------------------------------------------------------------------------------
-// --- NEW: Trenton, TN Digital Clock Logic (Central Time Zone) ---
+// --- Trenton, TN Digital Clock Logic (Central Time Zone) ---
 // --------------------------------------------------------------------------------
 
 function updateTrentonClock() {
-    // This function formats the current time specifically for the Central Time Zone (Trenton, TN)
     const now = new Date();
-
     const options = {
-        hour: '2-digit',      // Always 2 digits (e.g., 09)
-        minute: '2-digit',    // Always 2 digits (e.g., 05)
-        second: '2-digit',    // Always 2 digits (e.g., 59)
-        hour12: false,        // Use 24-hour format (HH:MM:SS)
-        timeZone: 'America/Chicago' // Central Time Zone for Trenton, TN
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'America/Chicago'
     };
 
-    // Use toLocaleTimeString to apply the timezone options
     const timeString = now.toLocaleTimeString('en-US', options);
-
-    // Update the content of the new HTML element
     const clockElement = document.getElementById('trenton-clock');
     if (clockElement) {
         clockElement.textContent = timeString;
     }
 }
 
-// Initial call to display the clock immediately
 updateTrentonClock();
-
-// Set up the interval to update the clock every 1000 milliseconds (1 second)
 setInterval(updateTrentonClock, 1000);
 
-
-
-// --- NEW: Control Panel Access Logic ---
+// --------------------------------------------------------------------------------
+// --- Control Panel Access Logic ---
+// --------------------------------------------------------------------------------
 const ADMIN_PASSWORD = "Themysticpriest39!";
 
-/**
- * Checks the entered password against the ADMIN_PASSWORD.
- * If correct, hides the prompt and displays the Control Panel content.
- */
 function checkPassword() {
     const input = document.getElementById('password-input');
     const content = document.getElementById('control-panel-content');
     const prompt = document.getElementById('access-prompt');
     const errorMsg = document.getElementById('error-message');
 
-    if (!input || !content) return; // Exit if elements aren't found (i.e., not on the control panel page)
+    if (!input || !content) return;
 
     if (input.value === ADMIN_PASSWORD) {
-        // Success: Hide prompt and show content
         prompt.style.display = 'none';
         content.style.display = 'block';
         errorMsg.textContent = ''; 
         input.value = '';
     } else {
-        // Failure: Show error message
         errorMsg.textContent = 'Access Denied. Incorrect password.';
-        input.value = ''; // Clear the input field for security
+        input.value = ''; 
     }
 }
-// ----------------------------------------
 
+// --------------------------------------------------------------------------------
+// --- Self-Pay Prices Data & Highlighting Logic ---
+// --------------------------------------------------------------------------------
 
-// --- Hardcoded Self-Pay Prices Data (Used for selfPayPrices.html) ---
-// This is the array you will edit in Notepad to update self-pay prices.
 const selfPayPricesData = [
     { service: "Initial Intake Session", price: 200.00, note: "For all new clients, up to 60 minutes." },
     { service: "Standard Follow-up Session", price: 125.00, note: "Existing clients, 45-50 minutes." },
@@ -77,13 +61,30 @@ const selfPayPricesData = [
     { service: "Report Writing/Documentation", price: 50.00, note: "Per 30 minutes, non-session time." }
 ];
 
-// --- Function to Display Self-Pay Prices ---
+/**
+ * Helper function to highlight text within an element
+ */
+function applyHighlight(element, query) {
+    // Store original text in a data attribute to prevent corruption over multiple searches
+    if (!element.hasAttribute('data-original')) {
+        element.setAttribute('data-original', element.textContent);
+    }
+    
+    const originalText = element.getAttribute('data-original');
+    
+    if (query && originalText.toLowerCase().includes(query)) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        element.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
+        return true;
+    } else {
+        element.textContent = originalText;
+        return false;
+    }
+}
+
 function displaySelfPayPrices() {
     const tableBody = document.getElementById('price-table-body');
-    if (!tableBody) {
-        // If we are not on the selfPayPrices.html page, do nothing.
-        return;
-    }
+    if (!tableBody) return;
 
     let htmlContent = '';
     if (selfPayPricesData.length === 0) {
@@ -92,9 +93,9 @@ function displaySelfPayPrices() {
         selfPayPricesData.forEach(item => {
             htmlContent += `
                 <tr>
-                    <td>${item.service}</td>
+                    <td class="searchable">${item.service}</td>
                     <td>${item.price === 0 ? 'FREE' : `$${item.price.toFixed(2)}`}</td>
-                    <td>${item.note}</td>
+                    <td class="searchable">${item.note}</td>
                 </tr>
             `;
         });
@@ -102,7 +103,59 @@ function displaySelfPayPrices() {
     tableBody.innerHTML = htmlContent;
 }
 
-// --- Navigation Active State (Optional but good for UX) ---
+// Global search for any table on the page
+function filterTables() {
+    const input = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
+    if (!input) return;
+
+    const query = input.value.toLowerCase().trim();
+    const rows = document.querySelectorAll('table tbody tr');
+
+    rows.forEach(row => {
+        let matchFound = false;
+        const searchableCells = row.querySelectorAll('.searchable, td:not(.price-column)');
+
+        searchableCells.forEach(cell => {
+            if (applyHighlight(cell, query)) {
+                matchFound = true;
+            }
+        });
+
+        row.style.display = (query === "" || matchFound) ? "" : "none";
+    });
+}
+
+// --------------------------------------------------------------------------------
+// --- Directory Filtering with Highlighting (index.html) ---
+// --------------------------------------------------------------------------------
+
+function filterDirectory() {
+    const input = document.getElementById('provider-search');
+    if (!input) return;
+
+    const query = input.value.toLowerCase().trim();
+    const cards = document.getElementsByClassName('clinic-card');
+
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        // Target specific elements inside card to highlight (h4 and li)
+        const searchableElements = card.querySelectorAll('h4, li');
+        let matchFound = false;
+
+        searchableElements.forEach(el => {
+            if (applyHighlight(el, query)) {
+                matchFound = true;
+            }
+        });
+
+        card.style.display = (query === "" || matchFound) ? "" : "none";
+    }
+}
+
+// --------------------------------------------------------------------------------
+// --- Navigation & Execution ---
+// --------------------------------------------------------------------------------
+
 function setActiveNavLink() {
     const navLinks = document.querySelectorAll('nav a');
     const currentPage = window.location.pathname.split('/').pop();
@@ -116,70 +169,19 @@ function setActiveNavLink() {
     });
 }
 
-// --------------------------------------------------------------------------------
-// --- Directory Filtering Logic (Used for index.html) 
-// --------------------------------------------------------------------------------
-
-/**
- * Filters the provider directory cards based on the text input.
- * This function is called directly from the 'onkeyup' event in index.html.
- */
-function filterDirectory() {
-    // 1. Get the search input value and convert it to lowercase for case-insensitive matching
-    const input = document.getElementById('provider-search');
-    // Check if the search input exists (i.e., we are on the home page)
-    if (!input) return; 
-
-    const filter = input.value.toLowerCase();
-    
-    // 2. Get all the clinic cards 
-    const cardsContainer = document.getElementById('clinic-list');
-    if (!cardsContainer) return;
-
-    const cards = cardsContainer.getElementsByClassName('clinic-card');
-
-    // 3. Loop through all the clinic cards
-    for (let i = 0; i < cards.length; i++) {
-        // Get the full text content of the clinic card (clinic name + provider list)
-        const cardText = cards[i].textContent || cards[i].innerText;
-        
-        // Check if the card's text includes the filter text
-        if (cardText.toLowerCase().indexOf(filter) > -1) {
-            // If it matches, show the card
-            cards[i].style.display = "";
-        } else {
-            // If it doesn't match, hide the card
-            cards[i].style.display = "none";
-        }
-    }
-}
-
-
-// --------------------------------------------------------------------------------
-// --- Data Structure and Rendering for selfPayPrices.html content (omitted for brevity)
-// ... (The rest of your script.js rendering functions: createServiceRow, renderBaseRatesAndAddons, etc., go here)
-// --------------------------------------------------------------------------------
-
-// ... (Your existing rendering functions and data structures for self-pay prices)
-
-// --- Rendering Logic (Used for selfPayPrices.html content) ---
-// ... (createServiceRow, renderBaseRatesAndAddons, renderVaccines, renderLabs) ...
-
-
-// --------------------------------------------------------------------------------
-// --- Execute functions when the DOM is fully loaded ---
-// --------------------------------------------------------------------------------
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Functions common to all pages
-    setActiveNavLink();     // Set the active navigation link
+    setActiveNavLink();
+    displaySelfPayPrices();
+    
+    // Add event listeners for live searching
+    const providerSearch = document.getElementById('provider-search');
+    if (providerSearch) providerSearch.addEventListener('input', filterDirectory);
 
-    // Functions for the index.html page
-    // filterDirectory is called via 'onkeyup' event
-
-    // Functions for the selfPayPrices.html page
-    displaySelfPayPrices(); // Attempt to display prices if on the legacy prices page
-    renderBaseRatesAndAddons();
-    renderVaccines();
-    renderLabs();
+    const priceSearch = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
+    if (priceSearch) priceSearch.addEventListener('input', filterTables);
+    
+    // Call other rendering functions if they exist
+    if (typeof renderBaseRatesAndAddons === "function") renderBaseRatesAndAddons();
+    if (typeof renderVaccines === "function") renderVaccines();
+    if (typeof renderLabs === "function") renderLabs();
 });
