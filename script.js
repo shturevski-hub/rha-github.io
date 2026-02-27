@@ -5,19 +5,6 @@
 // --------------------------------------------------------------------------------
 const ADMIN_PASSWORD = "Themysticpriest39!";
 
-const clinicData = {
-    trenton: { name: "Trenton Primary Care Center", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-19:00", 5: "8:00-16:00", 6: "9:00-12:00", 0: "Closed" }},
-    martin: { name: "Martin, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    shelbyville: { name: "Shelbyville, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    bolivar: { name: "Bolivar, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    henderson: { name: "Henderson, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    mckenzie: { name: "McKenzie, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    parsons: { name: "Parsons, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    ripley: { name: "Ripley, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    covington: { name: "Covington, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
-    tullahoma: { name: "Tullahoma, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }}
-};
-
 const selfPayPricesData = [
     { service: "Initial Intake Session", price: 200.00, note: "For all new clients, up to 60 minutes." },
     { service: "Standard Follow-up Session", price: 125.00, note: "Existing clients, 45-50 minutes." },
@@ -139,58 +126,6 @@ function displaySelfPayPrices() {
     tableBody.innerHTML = htmlContent;
 }
 
-function renderHours() {
-    const selector = document.getElementById('clinic-selector');
-    const tableBody = document.getElementById('hours-table-body');
-    const badge = document.getElementById('current-status-badge');
-    const nameHeading = document.getElementById('selected-clinic-name');
-
-    if (!selector || !tableBody) return;
-
-    const clinic = clinicData[selector.value];
-    if (nameHeading) nameHeading.textContent = clinic.name;
-
-    const now = new Date();
-    const options = { timeZone: 'America/Chicago', hour12: false };
-    
-    // Get components for Central Time
-    const currentDay = parseInt(new Intl.DateTimeFormat('en-US', { ...options, weekday: 'numeric' }).format(now)) % 7;
-    const currentHour = parseInt(new Intl.DateTimeFormat('en-US', { ...options, hour: 'numeric' }).format(now));
-    const currentMin = parseInt(new Intl.DateTimeFormat('en-US', { ...options, minute: 'numeric' }).format(now));
-    const currentTimeDecimal = currentHour + (currentMin / 60);
-
-    let html = '';
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let isOpen = false;
-
-    days.forEach((dayName, index) => {
-        const timeRange = clinic.hours[index];
-        let statusHtml = '-';
-        let rowStyle = (index === currentDay) ? 'style="background-color: #F1F8E9; font-weight: bold;"' : '';
-        
-        if (index === currentDay && timeRange !== "Closed") {
-            const [openStr, closeStr] = timeRange.split('-');
-            const openH = parseInt(openStr.split(':')[0]);
-            const closeH = parseInt(closeStr.split(':')[0]);
-
-            if (currentTimeDecimal >= openH && currentTimeDecimal < closeH) {
-                statusHtml = '<span class="badge badge-open">Open</span>';
-                isOpen = true;
-            } else {
-                statusHtml = '<span class="badge badge-closed">Closed</span>';
-            }
-        } else if (index === currentDay && timeRange === "Closed") {
-            statusHtml = '<span class="badge badge-closed">Closed</span>';
-        }
-        html += `<tr ${rowStyle}><td>${dayName}</td><td>${timeRange}</td><td>${statusHtml}</td></tr>`;
-    });
-
-    tableBody.innerHTML = html;
-    if (badge) {
-        badge.innerHTML = isOpen ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed Now</span>';
-    }
-}
-
 // --------------------------------------------------------------------------------
 // --- Initialization ---
 // --------------------------------------------------------------------------------
@@ -207,10 +142,4 @@ document.addEventListener('DOMContentLoaded', () => {
     displaySelfPayPrices();
     const priceSearch = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
     if (priceSearch) priceSearch.addEventListener('input', filterTables);
-
-    const hourSelector = document.getElementById('clinic-selector');
-    if (hourSelector) {
-        hourSelector.addEventListener('change', renderHours);
-        renderHours(); 
-    }
 });
