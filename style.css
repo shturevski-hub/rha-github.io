@@ -2,11 +2,11 @@
 
 /* --- Define brand colors for easy reference --- */
 :root {
-    --brand-blue: #0D47A1; /* Darker, rich Indigo Blue (Primary Brand Color) */
+    --brand-primary: #2E7D32; /* Darker, rich Forest Green (Primary Brand Color) */
     --brand-white: #ffffff;
-    --accent-light-blue: #1976D2; /* Strong, clear Medium Blue for accents/hover */
+    --accent-primary: #4CAF50; /* Strong, clear Green for accents/hover */
     --text-dark: #263238; /* Very dark charcoal for excellent contrast on light backgrounds */
-    --background-light: #ECEFF1; /* Soft, light grey-blue for a clean but not stark background */
+    --background-light: #F1F8E9; /* Soft, light greenish-grey for a clean background */
 }
 
 /* --- FIX: Header Layout Alignment & Clock Styling --- */
@@ -37,8 +37,8 @@
     right: 20px; /* Position it on the right edge */
     font-size: 1.6em;
     font-weight: 700;
-    color: #BBDEFB; /* Light blue for clock text, clear against accent blue */
-    background-color: var(--accent-light-blue);
+    color: #C8E6C9; /* Light green for clock text, clear against accent green */
+    background-color: var(--accent-primary);
     padding: 5px 10px;
     border-radius: 4px;
     letter-spacing: 1px;
@@ -77,7 +77,7 @@ body {
 
 /* --- Header & Navigation --- */
 header {
-    background-color: var(--brand-blue); /* Darker Blue Header */
+    background-color: var(--brand-primary); /* Green Header */
     color: var(--brand-white);
     padding: 15px 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -136,7 +136,7 @@ nav a {
 
 nav a:hover,
 nav a.active {
-    background-color: var(--accent-light-blue); /* Stronger accent blue on hover/active */
+    background-color: var(--accent-primary); /* Stronger accent green on hover/active */
 }
 
 /* --- Main Content Area --- */
@@ -154,7 +154,7 @@ main {
 }
 
 main h2 {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-size: 2em;
     border-bottom: 2px solid var(--background-light);
     padding-bottom: 10px;
@@ -169,10 +169,10 @@ main h3 {
 
 .note-important {
     font-weight: bold;
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     padding: 10px;
-    border: 1px solid var(--accent-light-blue);
-    background-color: #E3F2FD; /* Very light blue background, complementing the dark blues */
+    border: 1px solid var(--accent-primary);
+    background-color: #E8F5E9; /* Very light green background */
     border-radius: 4px;
     margin-top: 20px;
 }
@@ -189,7 +189,7 @@ main h3 {
     display: block;
     padding: 20px;
     border: 1px solid #ddd;
-    border-top: 5px solid var(--brand-blue); /* Strong brand highlight */
+    border-top: 5px solid var(--brand-primary); /* Strong brand highlight */
     border-radius: 6px;
     text-decoration: none;
     color: var(--text-dark);
@@ -200,11 +200,11 @@ main h3 {
 .quick-link-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    border-color: var(--accent-light-blue);
+    border-color: var(--accent-primary);
 }
 
 .quick-link-card h4 {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     margin-top: 0;
     font-size: 1.2em;
 }
@@ -223,7 +223,7 @@ table {
 
 table thead tr {
     background-color: var(--background-light);
-    border-bottom: 2px solid var(--accent-light-blue);
+    border-bottom: 2px solid var(--accent-primary);
 }
 
 table th, table td {
@@ -234,7 +234,7 @@ table th, table td {
 
 table th {
     font-weight: bold;
-    color: var(--brand-blue);
+    color: var(--brand-primary);
 }
 
 table tbody tr:nth-child(even) {
@@ -247,7 +247,7 @@ table tbody tr:hover {
 
 .price-column {
     font-weight: bold;
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     text-align: right !important;
 }
 
@@ -263,14 +263,14 @@ table tbody tr:hover {
 .info-card {
     background-color: #fdfdfd;
     border: 1px solid #e0e0e0;
-    border-left: 5px solid var(--brand-blue); /* Blue highlight */
+    border-left: 5px solid var(--brand-primary); /* Green highlight */
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
 }
 
 .info-card h3 {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 1.3em;
@@ -283,7 +283,7 @@ table tbody tr:hover {
 
 .info-card ul li:before {
     content: "• ";
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -307,7 +307,7 @@ footer {
     text-align: center;
     padding: 20px 0;
     color: var(--brand-white);
-    background-color: var(--brand-blue);
+    background-color: var(--brand-primary);
     margin-top: 40px;
     border-top: 1px solid #ddd;
 }
@@ -319,7 +319,7 @@ footer {
 }
 
 .directory-title {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     margin-bottom: 20px;
 }
 
@@ -341,11 +341,11 @@ footer {
 
 .clinic-card:hover {
     transform: translateY(-2px);
-    border-color: var(--accent-light-blue);
+    border-color: var(--accent-primary);
 }
 
 .clinic-card h4 {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-size: 1.1em;
     margin-top: 0;
     padding-bottom: 5px;
@@ -370,8 +370,8 @@ footer {
 
 /* Optional: Highlight for a primary location */
 .primary-location {
-    border: 2px solid var(--brand-blue);
-    background-color: #E3F2FD; /* Changed to new vibrant light blue */
+    border: 2px solid var(--brand-primary);
+    background-color: #E8F5E9; /* Vibrant light green */
 }
 
 /* ------------------------------------------------ */
@@ -401,7 +401,7 @@ footer {
     top: 0;
     /* Adjusted from -60px to -30px and changing rotate value to simplify placement */
     left: -30px;
-    background-color: var(--brand-blue);
+    background-color: var(--brand-primary);
     color: var(--brand-white);
     padding: 10px 15px;
     cursor: pointer;
@@ -423,13 +423,13 @@ footer {
     height: auto;
     max-height: 450px; /* Limits the height */
     overflow-y: auto; /* Adds a scrollbar if content overflows */
-    border: 1px solid var(--brand-blue);
+    border: 1px solid var(--brand-primary);
     border-right: none;
     border-radius: 8px 0 0 8px;
 }
 
 .sidebar-content h3 {
-    color: var(--accent-light-blue);
+    color: var(--accent-primary);
     border-bottom: 1px solid #eee;
     padding-bottom: 5px;
     margin-top: 0;
@@ -457,7 +457,7 @@ footer {
 }
 
 .sidebar-content ul li a:hover {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-weight: 600;
 }
 
@@ -582,7 +582,7 @@ footer {
 
 .search-label {
     font-weight: 600;
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-size: 1.1em;
 }
 
@@ -598,9 +598,9 @@ footer {
 }
 
 #provider-search:focus {
-    border-color: var(--accent-light-blue);
+    border-color: var(--accent-primary);
     outline: none;
-    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); /* Accent green shadow */
 }
 
 /* Ensure the HR element above the provider list doesn't cause extra space when search bar is filtered */
@@ -649,7 +649,7 @@ body #main-content-wrapper {
 }
 
 .lock-title {
-    color: var(--brand-blue);
+    color: var(--brand-primary);
     font-size: 1.8em;
     margin-top: 0;
 }
@@ -665,7 +665,7 @@ body #main-content-wrapper {
 }
 
 .lock-box button {
-    background-color: var(--brand-blue);
+    background-color: var(--brand-primary);
     color: var(--brand-white);
     border: none;
     padding: 12px 20px;
@@ -677,7 +677,7 @@ body #main-content-wrapper {
 }
 
 .lock-box button:hover {
-    background-color: var(--accent-light-blue);
+    background-color: var(--accent-primary);
 }
 
 .error-text {
@@ -708,9 +708,9 @@ body #main-content-wrapper {
 }
 
 #visit-type-search:focus {
-    border-color: var(--accent-light-blue);
+    border-color: var(--accent-primary);
     outline: none;
-    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 /* --- Search Input Styling for Visit Types & Self Pay Prices Pages --- */
@@ -737,7 +737,7 @@ body #main-content-wrapper {
 
 #visit-type-search:focus,
 #price-search-filter:focus {
-    border-color: var(--accent-light-blue);
+    border-color: var(--accent-primary);
     outline: none;
-    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); /* Changed box-shadow to new accent color */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
