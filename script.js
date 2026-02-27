@@ -24,6 +24,81 @@ function updateTrentonClock() {
 updateTrentonClock();
 setInterval(updateTrentonClock, 1000);
 
+
+// --- Multiple Clinic Data ---
+const clinicData = {
+    trenton: { name: "Trenton Primary Care Center", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-19:00", 5: "8:00-16:00", 6: "9:00-12:00", 0: "Closed" }},
+    martin: { name: "Martin, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    shelbyville: { name: "Shelbyville, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    bolivar: { name: "Bolivar, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    henderson: { name: "Henderson, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    mckenzie: { name: "McKenzie, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    parsons: { name: "Parsons, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    ripley: { name: "Ripley, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    covington: { name: "Covington, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }},
+    tullahoma: { name: "Tullahoma, TN", hours: { 1: "8:00-17:00", 2: "8:00-17:00", 3: "8:00-17:00", 4: "8:00-17:00", 5: "8:00-17:00", 6: "Closed", 0: "Closed" }}
+};
+
+function renderHours() {
+    const selector = document.getElementById('clinic-selector');
+    if (!selector) return;
+
+    const clinicKey = selector.value;
+    const clinic = clinicData[clinicKey];
+    const tableBody = document.getElementById('hours-table-body');
+    const nameHeading = document.getElementById('selected-clinic-name');
+    const badge = document.getElementById('current-status-badge');
+
+    nameHeading.textContent = clinic.name;
+
+    const now = new Date();
+    // Get current day/hour in Central Time
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false, weekday: 'numeric' });
+    const parts = formatter.formatToParts(now);
+    const currentDay = parseInt(parts.find(p => p.type === 'weekday').value) % 7;
+    const currentHour = parseInt(parts.find(p => p.type === 'hour').value);
+
+    let html = '';
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
+    let isClinicOpenNow = false;
+
+    days.forEach((dayName, index) => {
+        const timeRange = clinic.hours[index];
+        let statusHtml = '-';
+        let rowClass = '';
+
+        if (index === currentDay) {
+            rowClass = 'style="background-color: #F1F8E9;"';
+            if (timeRange === "Closed") {
+                statusHtml = '<span class="badge badge-closed">Closed</span>';
+            } else {
+                const [open, close] = timeRange.split('-').map(t => parseInt(t.split(':')[0]));
+                if (currentHour >= open && currentHour < close) {
+                    statusHtml = '<span class="badge badge-open">Open</span>';
+                    isClinicOpenNow = true;
+                } else {
+                    statusHtml = '<span class="badge badge-closed">Closed</span>';
+                }
+            }
+        }
+
+        html += `<tr ${rowClass}><td>${dayName}</td><td>${timeRange}</td><td>${statusHtml}</td></tr>`;
+    });
+
+    tableBody.innerHTML = html;
+    badge.innerHTML = isClinicOpenNow ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed</span>';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const selector = document.getElementById('clinic-selector');
+    if (selector) {
+        selector.addEventListener('change', renderHours);
+        renderHours(); // Initial render
+    }
+});
+
+
 // --------------------------------------------------------------------------------
 // --- Control Panel Access Logic ---
 // --------------------------------------------------------------------------------
@@ -185,3 +260,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderVaccines === "function") renderVaccines();
     if (typeof renderLabs === "function") renderLabs();
 });
+
