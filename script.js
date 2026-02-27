@@ -34,9 +34,8 @@ const selfPayPricesData = [
 function updateTrentonClock() {
     const now = new Date();
     const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Chicago' };
-    const timeString = now.toLocaleTimeString('en-US', options);
     const clockElement = document.getElementById('trenton-clock');
-    if (clockElement) clockElement.textContent = timeString;
+    if (clockElement) clockElement.textContent = now.toLocaleTimeString('en-US', options);
 }
 
 function toggleMenu() {
@@ -68,7 +67,6 @@ function checkPassword() {
     const content = document.getElementById('control-panel-content');
     const prompt = document.getElementById('access-prompt');
     const errorMsg = document.getElementById('error-message');
-
     if (!input || !content) return;
 
     if (input.value === ADMIN_PASSWORD) {
@@ -149,52 +147,47 @@ function renderHours() {
 
     if (!selector || !tableBody) return;
 
-    const clinicKey = selector.value;
-    const clinic = clinicData[clinicKey];
+    const clinic = clinicData[selector.value];
     if (nameHeading) nameHeading.textContent = clinic.name;
 
     const now = new Date();
-    // Use Intl to get correct Central values independently of system clock
-    const dayFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'numeric' });
-    const hourFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false });
-    const minFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', minute: 'numeric' });
-
-    const currentDay = parseInt(dayFormatter.format(now)) % 7;
-    const currentHour = parseInt(hourFormatter.format(now));
-    const currentMin = parseInt(minFormatter.format(now));
+    const options = { timeZone: 'America/Chicago', hour12: false };
+    
+    // Get components for Central Time
+    const currentDay = parseInt(new Intl.DateTimeFormat('en-US', { ...options, weekday: 'numeric' }).format(now)) % 7;
+    const currentHour = parseInt(new Intl.DateTimeFormat('en-US', { ...options, hour: 'numeric' }).format(now));
+    const currentMin = parseInt(new Intl.DateTimeFormat('en-US', { ...options, minute: 'numeric' }).format(now));
     const currentTimeDecimal = currentHour + (currentMin / 60);
 
     let html = '';
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let isClinicOpenNow = false;
+    let isOpen = false;
 
     days.forEach((dayName, index) => {
         const timeRange = clinic.hours[index];
         let statusHtml = '-';
         let rowStyle = (index === currentDay) ? 'style="background-color: #F1F8E9; font-weight: bold;"' : '';
         
-        if (index === currentDay) {
-            if (timeRange !== "Closed") {
-                const [openStr, closeStr] = timeRange.split('-');
-                const openTime = parseInt(openStr.split(':')[0]);
-                const closeTime = parseInt(closeStr.split(':')[0]);
+        if (index === currentDay && timeRange !== "Closed") {
+            const [openStr, closeStr] = timeRange.split('-');
+            const openH = parseInt(openStr.split(':')[0]);
+            const closeH = parseInt(closeStr.split(':')[0]);
 
-                if (currentTimeDecimal >= openTime && currentTimeDecimal < closeTime) {
-                    statusHtml = '<span class="badge badge-open">Open</span>';
-                    isClinicOpenNow = true;
-                } else {
-                    statusHtml = '<span class="badge badge-closed">Closed</span>';
-                }
+            if (currentTimeDecimal >= openH && currentTimeDecimal < closeH) {
+                statusHtml = '<span class="badge badge-open">Open</span>';
+                isOpen = true;
             } else {
                 statusHtml = '<span class="badge badge-closed">Closed</span>';
             }
+        } else if (index === currentDay && timeRange === "Closed") {
+            statusHtml = '<span class="badge badge-closed">Closed</span>';
         }
         html += `<tr ${rowStyle}><td>${dayName}</td><td>${timeRange}</td><td>${statusHtml}</td></tr>`;
     });
 
     tableBody.innerHTML = html;
     if (badge) {
-        badge.innerHTML = isClinicOpenNow ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed Now</span>';
+        badge.innerHTML = isOpen ? '<span class="badge badge-open">Open Now</span>' : '<span class="badge badge-closed">Closed Now</span>';
     }
 }
 
@@ -207,16 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTrentonClock, 1000);
     setActiveNavLink();
 
-    const providerSearch = document.getElementById('provider-search');
-    if (providerSearch) providerSearch.addEventListener('input', filterDirectory);
+    if (document.getElementById('provider-search')) {
+        document.getElementById('provider-search').addEventListener('input', filterDirectory);
+    }
 
     displaySelfPayPrices();
     const priceSearch = document.getElementById('price-search-filter') || document.getElementById('visit-type-search');
     if (priceSearch) priceSearch.addEventListener('input', filterTables);
-    
-    if (typeof renderBaseRatesAndAddons === "function") renderBaseRatesAndAddons();
-    if (typeof renderVaccines === "function") renderVaccines();
-    if (typeof renderLabs === "function") renderLabs();
 
     const hourSelector = document.getElementById('clinic-selector');
     if (hourSelector) {
