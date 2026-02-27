@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Course Logic Styles */
         .course-section { opacity: 0.5; transition: 0.4s; pointer-events: none; border-left: 6px solid #e2e8f0; }
         .course-section.active { opacity: 1; pointer-events: auto; }
         .completed-badge { display: none; color: #166534; background: #dcfce7; padding: 5px 10px; border-radius: 4px; font-weight: bold; margin-left: 10px; }
@@ -14,16 +15,24 @@
         .is-done { border-left: 6px solid #22c55e !important; }
         .progress-bar-container { width: 100%; background: #e2e8f0; height: 12px; border-radius: 10px; overflow: hidden; margin: 20px 0; }
         #progress-fill { width: 0%; height: 100%; background: #3b82f6; transition: 0.5s; }
-        .quiz-question { margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; text-align: left; }
-        .finish-btn { background: #166534 !important; display: none; margin-top: 20px; }
+        
+        /* Video Wrapper */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000; margin: 15px 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
-        /* Resource Toolbox & FAQ */
-        .toolbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .tool-card { background: #fff; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; text-decoration: none; color: inherit; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
-        .tool-card:hover { border-color: #3b82f6; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .faq-item { margin-bottom: 15px; padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+
+        /* FAQ & Knowledge Base */
+        .faq-search-box { width: 100%; padding: 15px; margin: 20px 0; border-radius: 8px; border: 2px solid #3b82f6; font-size: 1rem; outline: none; }
+        .faq-category { margin-top: 25px; }
+        .faq-category h4 { color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-bottom: 15px; }
+        .faq-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 15px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .faq-question:hover { background: #f1f5f9; }
+        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #fff; color: #475569; border-top: 0 solid #eee; }
+        .faq-item.open .faq-answer { max-height: 200px; padding: 15px; border-top-width: 1px; }
+        .faq-item.open .faq-question { background: #e0f2fe; }
+
+        .quiz-question { margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; text-align: left; }
+        .finish-btn { background: #166534 !important; display: none; margin-top: 20px; }
     </style>
 </head>
 <body class="locked">
@@ -76,20 +85,12 @@
                 <h3>Module 2: Scheduling Logic <span class="completed-badge">✓ COMPLETED</span></h3>
                 <div class="clinic-list-grid">
                     <div class="clinic-card" style="border-top: 4px solid #3b82f6;">
-                        <h4>⏱️ Slot Timing</h4>
-                        <ul>
-                            <li><b>Sick:</b> 15-20 Min</li>
-                            <li><b>Physicals:</b> 30 Min</li>
-                            <li><b>New Patient:</b> 60 Min</li>
-                        </ul>
+                        <h4>🔍 Identity</h4>
+                        <p>Always verify Name + DOB. For billing, verify the current mailing address.</p>
                     </div>
-                    <div class="clinic-card" style="border-top: 4px solid #166534;">
-                        <h4>📞 Call Closure</h4>
-                        <ul>
-                            <li>Repeat Date/Time</li>
-                            <li>Verify Location</li>
-                            <li>Remind: ID/Insurance</li>
-                        </ul>
+                    <div class="clinic-card" style="border-top: 4px solid #ca8a04;">
+                        <h4>⏱️ Slot Types</h4>
+                        <p>Sick: 15m | Physical: 30m | New Pt: 60m. Never skip the reason for visit.</p>
                     </div>
                 </div>
                 <button class="menu-button" style="margin-top:20px;" onclick="completeModule(2)">Mark Module 2 Complete</button>
@@ -99,9 +100,9 @@
                 <h3>Module 3: Knowledge Check <span class="completed-badge">✓ PASSED</span></h3>
                 <div id="quiz-container">
                     <div class="quiz-question">
-                        <p>1. How should you verify a patient's identity?</p>
-                        <label><input type="radio" name="q1" value="a"> Full Name only</label><br>
-                        <label><input type="radio" name="q1" value="b"> DOB and Address</label>
+                        <p>1. How do you handle a patient reporting chest pain?</p>
+                        <label><input type="radio" name="q1" value="a"> Schedule for tomorrow</label><br>
+                        <label><input type="radio" name="q1" value="b"> Instruct to call 911/ER (Correct)</label>
                     </div>
                 </div>
                 <button class="menu-button" onclick="checkQuiz()">Submit Quiz</button>
@@ -109,36 +110,228 @@
             </section>
 
             <section id="mod-4" class="info-card course-section" style="text-align:center;">
-                <h3>🎉 Certification</h3>
-                <p>Enter your name to send your completion record to Stefan.</p>
+                <h3>🎉 Finish Training</h3>
                 <input type="text" id="trainee-name" placeholder="Full Name..." style="padding:15px; width:300px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;"><br>
                 <button class="menu-button finish-btn" id="submit-btn" onclick="submitCourse()">Send Completion Email</button>
             </section>
 
             <section class="info-card">
-                <h3>🔍 Quick-Reference FAQ</h3>
-                <input type="text" id="faq-search" onkeyup="filterFAQ()" placeholder="Search protocols..." style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
-                <div id="faq-list">
-                    <div class="faq-item">
-                        <strong>Q: New pediatric patients in Trenton?</strong>
-                        <p style="color: #64748b;">A: Schedule with <b>Luis Anderson</b>.</p>
-                    </div>
-                    <div class="faq-item">
-                        <strong>Q: Emergency symptoms?</strong>
-                        <p style="color: #64748b;">A: Chest pain/Shortness of breath = Direct to ER.</p>
-                    </div>
-                </div>
-            </section>
+                <h3>📚 Knowledge Base (75+ Guidelines)</h3>
+                <p>Search all protocols instantly while on a call.</p>
+                <input type="text" id="faq-search" class="faq-search-box" onkeyup="filterFAQ()" placeholder="Search keywords (e.g., 'emergency', 'hold', 'billing')...">
 
-            <section class="info-card">
-                <h3>🧰 Resource Toolbox</h3>
-                <div class="toolbox-grid">
-                    <a href="protocols.pdf" target="_blank" class="tool-card">
-                        <span>📄</span><strong>Protocols PDF</strong>
-                    </a>
-                    <a href="https://fastpacehealth.com" target="_blank" class="tool-card">
-                        <span>🔗</span><strong>EMR Portal</strong>
-                    </a>
+                <div id="faq-container">
+                    <div class="faq-category">
+                        <h4>General Conduct & Communication</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How should I greet a patient? <span>+</span></div>
+                            <div class="faq-answer">Use a professional greeting: "Thank you for calling [Clinic Name], this is [Your Name], how may I assist you today?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if I can’t understand the patient? <span>+</span></div>
+                            <div class="faq-answer">Politely ask them to repeat the information or clarify: "I’m sorry, I want to make sure I have this right. Could you please repeat that?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I verify identity? <span>+</span></div>
+                            <div class="faq-answer">Always ask for at least two identifiers, usually full name and date of birth.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I handle a long silence? <span>+</span></div>
+                            <div class="faq-answer">Provide "verbal nods" or check-in: "I am still here, just looking for the best available slot for you."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I put a patient on hold? <span>+</span></div>
+                            <div class="faq-answer">Always ask permission first: "May I place you on a brief hold while I check that schedule?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How long can I leave someone on hold? <span>+</span></div>
+                            <div class="faq-answer">Try not to exceed 60–90 seconds without checking back in.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if the patient is using a speakerphone? <span>+</span></div>
+                            <div class="faq-answer">If the quality is poor, politely ask: "I’m having a little trouble hearing you; would you mind taking me off speakerphone?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Can I use medical jargon? <span>+</span></div>
+                            <div class="faq-answer">No. Use plain language (e.g., "fasting" vs. "not eating before the test").</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What do I do if the line disconnects? <span>+</span></div>
+                            <div class="faq-answer">Call them back immediately if you have their number on file.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I end the call? <span>+</span></div>
+                            <div class="faq-answer">Confirm the appointment details and ask: "Is there anything else I can help you with today?"</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Scheduling Scenarios</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if the requested time is unavailable? <span>+</span></div>
+                            <div class="faq-answer">Offer the two closest alternatives: "That time is taken, but I have 9:00 AM or 1:15 PM available. Which works better?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I handle a "work-in" or urgent request? <span>+</span></div>
+                            <div class="faq-answer">Follow your clinic’s triage protocol or consult a lead/nurse before squeezing them in.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if the patient insists on a specific doctor? <span>+</span></div>
+                            <div class="faq-answer">Offer another provider in the same department or the next available date for their preferred doctor.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I schedule a new patient? <span>+</span></div>
+                            <div class="faq-answer">Collect full demographics, insurance info, and the reason for the visit.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient doesn't know why they are calling? <span>+</span></div>
+                            <div class="faq-answer">Ask: "Are you experiencing new symptoms or is this for a yearly follow-up?"</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I handle multiple family members? <span>+</span></div>
+                            <div class="faq-answer">Schedule them back-to-back if possible, but verify identity for each individual separately.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What do I do for a "No Show"? <span>+</span></div>
+                            <div class="faq-answer">Follow policy—some clinics require a fee or manager approval.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">How do I handle a cancellation? <span>+</span></div>
+                            <div class="faq-answer">Ask if they’d like to reschedule immediately to keep them in the system.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if the patient needs an interpreter? <span>+</span></div>
+                            <div class="faq-answer">Note the language in appointment notes and follow facility interpreter booking process.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Can I schedule for a minor? <span>+</span></div>
+                            <div class="faq-answer">Yes, but you must speak with the legal guardian to confirm details.</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Triage & Emergency</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient says they have chest pain? <span>+</span></div>
+                            <div class="faq-answer">Immediate protocol: "Please hang up and dial 911 or go to the nearest ER."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient sounds very ill? <span>+</span></div>
+                            <div class="faq-answer">Escalate to a nurse or supervisor immediately; do not attempt medical advice.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Can I tell a patient which medication to take? <span>+</span></div>
+                            <div class="faq-answer">No. Refer all medical/dosage questions to clinical staff.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient mentioning self-harm? <span>+</span></div>
+                            <div class="faq-answer">Keep them on the line and follow immediate crisis escalation procedure.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">What if the patient asks for a diagnosis? <span>+</span></div>
+                            <div class="faq-answer">"I am a scheduler and not clinically trained, but the doctor will discuss that with you."</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Insurance & Payments</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Insurance is inactive? <span>+</span></div>
+                            <div class="faq-answer">Inform politely; ask for new card or if they'd like to pay out-of-pocket.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Should I quote exact prices? <span>+</span></div>
+                            <div class="faq-answer">No, give estimated ranges or refer to billing.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient refuses insurance info? <span>+</span></div>
+                            <div class="faq-answer">Explain it is required to verify coverage and prevent unexpected bills.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Referral requirement? <span>+</span></div>
+                            <div class="faq-answer">"Your insurance requires a referral from your primary doctor before this visit."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Complaint about a bill? <span>+</span></div>
+                            <div class="faq-answer">Transfer to billing or provide their direct number.</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Conflict Resolution</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Angry about wait times? <span>+</span></div>
+                            <div class="faq-answer">Acknowledge: "I understand it’s frustrating; I’m looking for the soonest possible opening."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient using profanity? <span>+</span></div>
+                            <div class="faq-answer">"I want to help you, but I must ask you to use professional language so I can do so."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Demands to speak to a manager? <span>+</span></div>
+                            <div class="faq-answer">Try to assist first; if they persist, follow your escalation path.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Mistake blame? <span>+</span></div>
+                            <div class="faq-answer">Don't take it personally. Apologize for inconvenience and focus on solution.</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Compliance & Privacy (HIPAA)</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Voicemail medical details? <span>+</span></div>
+                            <div class="faq-answer">No. Only name, clinic name, and call-back number.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Spouse calls for records? <span>+</span></div>
+                            <div class="faq-answer">Do not release info unless there is a signed HIPAA waiver.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Look up own or friend's records? <span>+</span></div>
+                            <div class="faq-answer">No. This is a HIPAA violation and grounds for termination.</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Specialized Scheduling</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">"Same-day" appointment? <span>+</span></div>
+                            <div class="faq-answer">Check urgent blocks; ask if they want to speak with triage nurse.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Procedure scheduling (MRI/Surgery)? <span>+</span></div>
+                            <div class="faq-answer">Follow pre-auth checklist; confirm "no food/water" rules.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Out of state/country? <span>+</span></div>
+                            <div class="faq-answer">Verify if providers are licensed to provide Telehealth in that location.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Patient crying? <span>+</span></div>
+                            <div class="faq-answer">Slow down. "I can hear you’re going through a lot. Let’s get this scheduled so we can help."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Strong accent? <span>+</span></div>
+                            <div class="faq-answer">Focus on numbers/dates; repeat back slowly for mutual understanding.</div>
+                        </div>
+                    </div>
+
+                    <div class="faq-category">
+                        <h4>Administrative & Quality</h4>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Document "Difficult Call"? <span>+</span></div>
+                            <div class="faq-answer">Use objective language: "Patient used profanity and hung up."</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Scheduling error? <span>+</span></div>
+                            <div class="faq-answer">Call immediately, apologize, and prioritize finding a new slot.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">Double Booking? <span>+</span></div>
+                            <div class="faq-answer">Avoid unless a supervisor or doctor specifically approves for emergency.</div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -175,31 +368,49 @@
         function checkQuiz() {
             const q1 = document.querySelector('input[name="q1"]:checked')?.value;
             if (q1 === 'b') {
-                document.getElementById('quiz-feedback').style.color = "#166534";
                 document.getElementById('quiz-feedback').innerText = "Correct!";
                 completeModule(3);
             } else {
-                document.getElementById('quiz-feedback').style.color = "#dc2626";
-                document.getElementById('quiz-feedback').innerText = "Incorrect. Try again.";
+                document.getElementById('quiz-feedback').innerText = "Try again.";
             }
         }
 
         function submitCourse() {
             const name = document.getElementById('trainee-name').value;
-            if (!name) return alert("Please enter your name");
-            const recipient = "stefan.shturevski@fastpacehealth.com";
-            const subject = encodeURIComponent(`Training Complete: ${name}`);
-            const body = encodeURIComponent(`${name} completed the CFM Training Hub on ${new Date().toLocaleString()}.`);
-            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+            if (!name) return alert("Enter name");
+            window.location.href = `mailto:stefan.shturevski@fastpacehealth.com?subject=Training Complete: ${name}&body=${name} finished on ${new Date().toLocaleString()}`;
             completeModule(4);
         }
 
+        // FAQ Logic
+        function toggleFAQ(element) {
+            const item = element.parentElement;
+            item.classList.toggle('open');
+            element.querySelector('span').innerText = item.classList.contains('open') ? "−" : "+";
+        }
+
         function filterFAQ() {
-            const filter = document.getElementById('faq-search').value.toLowerCase();
-            const items = document.getElementsByClassName('faq-item');
-            for (let item of items) {
-                item.style.display = item.textContent.toLowerCase().includes(filter) ? "" : "none";
-            }
+            const search = document.getElementById('faq-search').value.toLowerCase();
+            const items = document.querySelectorAll('.faq-item');
+            const categories = document.querySelectorAll('.faq-category');
+
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(search)) {
+                    item.style.display = "block";
+                    // Auto-open if searching
+                    if(search.length > 2) item.classList.add('open');
+                } else {
+                    item.style.display = "none";
+                    item.classList.remove('open');
+                }
+            });
+
+            // Hide empty categories
+            categories.forEach(cat => {
+                const hasVisible = Array.from(cat.querySelectorAll('.faq-item')).some(i => i.style.display !== "none");
+                cat.style.display = hasVisible ? "block" : "none";
+            });
         }
 
         document.addEventListener('DOMContentLoaded', updateUI);
