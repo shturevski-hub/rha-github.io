@@ -28,6 +28,30 @@ body {
     padding: 20px;
 }
 
+/* --- Universal Navigation Styling (Fixed for all pages) --- */
+nav {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Styles links if you use a standard <nav><a href=""></a></nav> structure */
+nav a {
+    color: var(--brand-white);
+    text-decoration: none;
+    padding: 8px 18px;
+    margin: 0 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+nav a:hover, nav a.active {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+
 /* --- Navigation & Dropdown --- */
 .dropdown-nav {
     position: relative;
@@ -407,3 +431,4 @@ footer {
     border-radius: 3px;
     padding: 0 3px;
 }
+
