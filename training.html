@@ -43,27 +43,27 @@
 <body>
 
 <nav class="nav-bar">
-    <div class="nav-logo">CFM ENTERPRISE</div>
+    <div class="nav-logo">TRAINING COURSE</div>
     <div class="nav-links">
         <a href="#">Network Status: <span style="color:#22c55e">Stable</span></a>
-        <a href="#" class="active">Certification</a>
-        <a href="#">AthenaOne Docs</a>
-        <a href="#">Compliance</a>
+                        <a href="additionalInfo.html">Additional Info</a>
+                        <a href="index.html" class="active">Home</a>
+                        <a href="visitTypes.html">Visit Types</a>
     </div>
 </nav>
 
 <div class="container">
     <div class="card">
         <div class="status-header">
-            <span style="font-weight:700; color:var(--primary)">OFFICIAL TRACKER</span>
+            <span style="font-weight:700; color:var(--primary)">Progress Bar</span>
             <div class="progress-bar"><div id="progress-fill"></div></div>
             <span id="step-text" style="font-size: 0.8rem; font-weight: 600;">Step 1/4</span>
         </div>
-        <h1 style="margin:0">athenaOne & Professional Ethics</h1>
+        <h1 style="margin:0">athenaOne & Call Ethics</h1>
     </div>
 
     <div id="step-1" class="card">
-        <h3>Module 1: Performance Workflow</h3>
+        <h3>Module 1: Schedule/Re-schedule Workflow</h3>
         <div style="position:relative; padding-bottom:56.25%; height:0; background:#000; border-radius:8px; overflow:hidden;">
             <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" src="https://drive.google.com/file/d/1JcizKHaXQPSWrY5-wICXgQfvQo-4aew_/preview"></iframe>
         </div>
@@ -72,7 +72,7 @@
     </div>
 
     <div id="step-2" class="card" style="display:none;">
-        <h3>Module 2: The Gold Standard of Care</h3>
+        <h3>Module 2: The Standard of Care</h3>
         <p>Before entering the timed exam, acknowledge these ethical non-negotiables:</p>
         <ul style="background: #fdf2f2; padding: 20px 40px; border-radius: 8px; border-left: 5px solid var(--danger);">
             <li><strong>HIPAA:</strong> Never discuss patient data in common areas or with unverified callers.</li>
@@ -84,19 +84,19 @@
 
     <div id="step-3" class="card" style="display:none;">
         <div id="timer-display">10:00</div>
-        <h3>Module 3: Certification Exam</h3>
+        <h3>Module 3: Bar Test</h3>
         <p style="color:var(--danger); font-weight:600;">Warning: You have 10 minutes to complete this exam. If time expires, you must restart.</p>
         
         <div class="quiz-block">
             <span class="quiz-q">1. In athenaOne, what is the 'Quickview' primarily used for?</span>
-            <label class="quiz-option"><input type="radio" name="q1" value="1"> A 360-degree summary of patient demographics, insurance, and balances.</label>
+            <label class="quiz-option"><input type="radio" name="q1" value="1"> A 360-degree summary of patient demographics, history, and balances.</label>
             <label class="quiz-option"><input type="radio" name="q1" value="0"> Entering clinical notes during a live exam.</label>
         </div>
 
         <div class="quiz-block">
-            <span class="quiz-q">2. Which athenaOne status indicates an appointment hasn't been checked in yet?</span>
-            <label class="quiz-option"><input type="radio" name="q2" value="1"> Future / Pending.</label>
-            <label class="quiz-option"><input type="radio" name="q2" value="0"> Checked Out.</label>
+            <span class="quiz-q">2. If a patient wants a medication to be called in, but cannot visit the office we:</span>
+            <label class="quiz-option"><input type="radio" name="q2" value="1"> Create a Patient Case</label>
+            <label class="quiz-option"><input type="radio" name="q2" value="0"> Call the Pharmacy</label>
         </div>
 
         <div class="quiz-block">
@@ -112,9 +112,9 @@
         </div>
 
         <div class="quiz-block">
-            <span class="quiz-q">5. In athenaOne, what does the 'Check Out' process trigger?</span>
-            <label class="quiz-option"><input type="radio" name="q5" value="1"> Finalizes the claim for billing and schedules follow-ups.</label>
-            <label class="quiz-option"><input type="radio" name="q5" value="0"> It simply deletes the patient from the daily view.</label>
+            <span class="quiz-q">5. In athenaOne, how do we check appointment times?</span>
+            <label class="quiz-option"><input type="radio" name="q5" value="1"> In the patients Quickview>Schedule>View Appointments</label>
+            <label class="quiz-option"><input type="radio" name="q5" value="0"> Patients Chart> Register > New Patient</label>
         </div>
 
         <br>
@@ -123,14 +123,14 @@
 
     <div id="step-4" class="card" style="display:none; text-align:center;">
         <h2 style="color:var(--success)">PASSED</h2>
-        <p>Employee Certification Record</p>
+        <p>AthenaOne Certified!</p>
         <input type="text" id="trainee-name" placeholder="Enter Full Name for Certificate" style="width: 80%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px;">
         <br>
-        <button class="btn" onclick="finishTraining()" style="background:var(--success)">Generate Official Email</button>
+        <button class="btn" onclick="finishTraining()" style="background:var(--success)">Send email to employer</button>
     </div>
 
     <div class="card" style="border-top-color: var(--primary);">
-        <h2>📚 Enterprise Knowledge Base</h2>
+        <h2>Basic Knowledge Examination</h2>
         <input type="text" id="search" class="search-box" onkeyup="searchFAQ()" placeholder="Quick search athenaOne codes or ethics scripts...">
         <div id="faq-list" style="margin-top:20px;"></div>
     </div>
