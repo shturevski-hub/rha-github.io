@@ -60,7 +60,7 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
     <div class="login-card">
         <img src="logo.png" alt="Logo" class="logo">
         <h2>Agent <b>Portal</b></h2>
@@ -73,6 +73,30 @@
 
     <script>
 
+function disableShortcuts(e) {
+    // Block Ctrl+U (View Source) and F12 (Dev Tools)
+    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+    }
+}
+
+
+        let idleTime = 0;
+const idleInterval = setInterval(timerIncrement, 60000); // Check every minute
+
+// Reset timer on movement
+window.onmousemove = window.onkeypress = () => { idleTime = 0; };
+
+function timerIncrement() {
+    idleTime++;
+    if (idleTime >= 10) { // 10 minutes
+        sessionStorage.removeItem('clinic_access');
+        window.location.href = "login.html";
+    }
+}
+
+        
         //if someone gains access to this without confirmation of the company, we have an IP tracker, VPN tracker, and internet tracker. You will be caught and sued.
         
         const _v = "Q0ZNMjAyNg==";
