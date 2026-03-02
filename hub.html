@@ -2,17 +2,49 @@
 <html lang="en">
 <head>
 
-    <script>
+   <script>
+    // 1. 8-HOUR PERSISTENT SECURITY CHECK
+    function checkAccess() {
+        const accessStatus = localStorage.getItem('clinic_access');
+        const loginTimestamp = localStorage.getItem('last_login_time');
+        const currentTime = new Date().getTime();
+        const eightHours = 8 * 60 * 60 * 1000; // 8 Hours in milliseconds
 
-function disableShortcuts(e) {
-    // Block Ctrl+U (View Source) and F12 (Dev Tools)
-    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
-        e.preventDefault();
-        return false;
+        // If status isn't granted OR time is up, boot to login
+        if (accessStatus !== 'granted' || !loginTimestamp || (currentTime - loginTimestamp > eightHours)) {
+            localStorage.removeItem('clinic_access');
+            localStorage.removeItem('last_login_time');
+            window.location.href = "login.html";
+        }
     }
-}
-        
-    </script>
+    checkAccess();
+
+    // 2. TRENTON TN CLOCK
+    function updateClock() {
+        const now = new Date();
+        const options = {
+            timeZone: 'America/Chicago',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        const clockEl = document.getElementById('trenton-clock');
+        if (clockEl) {
+            clockEl.innerText = new Intl.DateTimeFormat('en-US', options).format(now);
+        }
+    }
+    setInterval(updateClock, 1000);
+    window.onload = updateClock;
+
+    // 3. DISABLE SHORTCUTS
+    function disableShortcuts(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+    }
+</script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
