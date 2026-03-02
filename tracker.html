@@ -9,7 +9,7 @@
     <style>
         .tracker-container {
             width: 100%;
-            height: 85vh; /* Large view for Excel */
+            height: 85vh;
             background: white;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
@@ -32,7 +32,7 @@
         }
 
         .refresh-notice {
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #64748b;
         }
     </style>
@@ -62,15 +62,15 @@
         <main class="container">
             <div class="tracker-header">
                 <h2>Shared Team Excel</h2>
-                <span class="refresh-notice">Live SharePoint Sync</span>
+                <span class="refresh-notice">Live Editing Enabled</span>
             </div>
 
             <div class="tracker-container">
-                <iframe src="https://fastpacehealth-my.sharepoint.com/personal/sarah_martin_fastpacehealth_com/_layouts/15/Doc.aspx?sourcedoc={006b7670-8943-4088-ace9-c6ac5ef3a07a}&action=embedview&wdAllowInteractivity=True&wdHideGridlines=False&wdHideHeaders=False&wdDownloadButton=True"></iframe>
+                <iframe src="https://fastpacehealth-my.sharepoint.com/personal/sarah_martin_fastpacehealth_com/_layouts/15/Doc.aspx?sourcedoc={006b7670-8943-4088-ace9-c6ac5ef3a07a}&action=embedview&AllowTyping=True&wdHideGridlines=False&wdHideHeaders=False&wdDownloadButton=True&wdInConfigurator=True"></iframe>
             </div>
             
             <p style="margin-top: 15px; font-size: 0.85em; color: #475569;">
-                <b>Note:</b> You must be signed into your Fast Pace Health account for the spreadsheet to load.
+                <b>Note:</b> If the sheet is locked, ensure no one else has a specific cell "hard-locked" in the main Excel app.
             </p>
         </main>
 
