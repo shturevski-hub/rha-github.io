@@ -44,10 +44,50 @@ function applyHighlight(element, query) {
     if (!element.hasAttribute('data-original')) {
         element.setAttribute('data-original', element.textContent);
     }
-    const originalText = element.getAttribute('data-original');
-    if (query && originalText.toLowerCase().includes(query)) {
+    const originalText = element.getAttribute('data-original') || '';
+
+    // Normalize query for matching
+    const normalizedQuery = query ? query.toLowerCase() : '';
+
+    if (normalizedQuery && originalText.toLowerCase().includes(normalizedQuery)) {
         const regex = new RegExp(`(${query})`, 'gi');
-        element.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
+
+        // Clear current content before rebuilding
+        element.textContent = '';
+
+        let lastIndex = 0;
+        const text = originalText;
+        let match;
+
+        // Use regex to find matches and reconstruct the DOM safely
+        while ((match = regex.exec(text)) !== null) {
+            const matchText = match[0];
+            const matchStart = match.index;
+            const matchEnd = matchStart + matchText.length;
+
+            // Append text before the match
+            if (lastIndex < matchStart) {
+                element.appendChild(
+                    document.createTextNode(text.slice(lastIndex, matchStart))
+                );
+            }
+
+            // Append highlighted match as a span, using textContent to avoid HTML interpretation
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            span.textContent = matchText;
+            element.appendChild(span);
+
+            lastIndex = matchEnd;
+        }
+
+        // Append any remaining text after the last match
+        if (lastIndex < text.length) {
+            element.appendChild(
+                document.createTextNode(text.slice(lastIndex))
+            );
+        }
+
         return true;
     } else {
         element.textContent = originalText;
