@@ -6,6 +6,15 @@
         if (sessionStorage.getItem('clinic_access') !== 'granted') {
             window.location.href = "login.html";
         }
+
+function disableShortcuts(e) {
+    // Block Ctrl+U (View Source) and F12 (Dev Tools)
+    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+    }
+}
+        
     </script>
     
     <meta charset="UTF-8">
