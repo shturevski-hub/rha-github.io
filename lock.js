@@ -1,54 +1,55 @@
 // lock.js
+
 const ACCEPTED_PASSWORDS = [
     "jasmina.rha", "marina.rha", "kristina.rha", "stefan.rha",
     "shanuel.rha", "stefanija.rha", "kristen.rha", "hannah.rha",
     "krystal.rha", "anastazija.rha", "ivo.rha", "gjorgji.rha",
 ];
 
-// --- 1. 30-MINUTE INACTIVITY TRACKER (Per Person) ---
-function checkInactivity() {
-    const lastActive = localStorage.getItem('last_activity');
-    const now = new Date().getTime();
-    const thirtyMinutes = 30 * 60 * 1000;
-
-    if (!localStorage.getItem('clinic_login_granted') || (now - lastActive > thirtyMinutes)) {
-        localStorage.removeItem('clinic_login_granted');
-        window.location.href = "login.html";
-    }
-}
-
-// Update "Last Active" whenever they move/type
-window.onmousemove = window.onkeypress = () => {
-    localStorage.setItem('last_activity', new Date().getTime());
-};
-
-// Check every 30 seconds if they've timed out
-setInterval(checkInactivity, 30000);
-
-// --- 2. PER-SESSION LOCK (Name List) ---
 function checkAccessPassword() {
     const input = document.getElementById('access-password-input');
-    if (ACCEPTED_PASSWORDS.includes(input.value.trim())) {
-        sessionStorage.setItem('session_unlocked', 'true');
-        document.getElementById('access-lock-screen').style.display = 'none';
-        document.body.classList.remove('locked');
+    if (input && ACCEPTED_PASSWORDS.includes(input.value.trim())) {
+        // Mark name check as passed for THIS session
+        sessionStorage.setItem('name_lock_passed', 'true');
+        unlockUI();
     } else {
-        alert("Access Denied");
-        input.value = '';
+        alert("Incorrect Code");
+        if(input) input.value = '';
     }
 }
 
-// --- 3. INITIAL LOAD LOGIC ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Run the 30-minute check immediately
-    checkInactivity();
+function unlockUI() {
+    const lockScreen = document.getElementById('access-lock-screen');
+    if (lockScreen) lockScreen.style.display = 'none';
+    document.body.classList.remove('locked');
+}
 
-    // Check if the Per-Session name list is already cleared
-    if (sessionStorage.getItem('session_unlocked') === 'true') {
-        document.getElementById('access-lock-screen').style.display = 'none';
-        document.body.classList.remove('locked');
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. If they haven't passed login.html, boot them back
+    if (sessionStorage.getItem('master_session_access') !== 'granted') {
+        window.location.href = "login.html";
+        return;
+    }
+
+    // 2. If they've already entered their name in this session, hide the lock
+    if (sessionStorage.getItem('name_lock_passed') === 'true') {
+        unlockUI();
     } else {
-        document.getElementById('access-lock-screen').style.display = 'flex';
-        document.body.classList.add('locked');
+        // Show the lock screen overlay
+        const lockScreen = document.getElementById('access-lock-screen');
+        if (lockScreen) {
+            lockScreen.style.display = 'flex';
+            document.body.classList.add('locked');
+            
+            const input = document.getElementById('access-password-input');
+            if (input) {
+                input.focus();
+                input.addEventListener('keyup', (e) => { 
+                    if(e.key === 'Enter') checkAccessPassword(); 
+                });
+            }
+        }
     }
 });
+
+window.checkAccessPassword = checkAccessPassword;
