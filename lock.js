@@ -1,94 +1,54 @@
 // lock.js
-
-// The list of accepted passwords (case-sensitive as per your request)
 const ACCEPTED_PASSWORDS = [
-    "jasmina.rha",
-    "marina.rha",
-    "kristina.rha",
-    "stefan.rha",
-    "shanuel.rha",
-    "stefanija.rha",
-    "kristen.rha",
-    "hannah.rha",
-    "krystal.rha",
-    "anastazija.rha",
-    "ivo.rha",
-    "gjorgji.rha",
+    "jasmina.rha", "marina.rha", "kristina.rha", "stefan.rha",
+    "shanuel.rha", "stefanija.rha", "kristen.rha", "hannah.rha",
+    "krystal.rha", "anastazija.rha", "ivo.rha", "gjorgji.rha",
 ];
 
-const UNLOCK_KEY = 'workbook_unlocked';
+// --- 1. 30-MINUTE INACTIVITY TRACKER (Per Person) ---
+function checkInactivity() {
+    const lastActive = localStorage.getItem('last_activity');
+    const now = new Date().getTime();
+    const thirtyMinutes = 30 * 60 * 1000;
 
-/**
- * Permanently unlocks the page for the current browser session.
- */
-function unlockWorkbook() {
-    const lockScreen = document.getElementById('access-lock-screen');
-    const body = document.body;
-
-    // 1. Set the session storage flag
-    sessionStorage.setItem(UNLOCK_KEY, 'true');
-
-    // 2. Hide the lock screen and remove the 'locked' class from the body
-    if (lockScreen) {
-        lockScreen.style.display = 'none';
+    if (!localStorage.getItem('clinic_login_granted') || (now - lastActive > thirtyMinutes)) {
+        localStorage.removeItem('clinic_login_granted');
+        window.location.href = "login.html";
     }
-    body.classList.remove('locked');
-    console.log("Access granted and session flag set!");
 }
 
+// Update "Last Active" whenever they move/type
+window.onmousemove = window.onkeypress = () => {
+    localStorage.setItem('last_activity', new Date().getTime());
+};
 
-/**
- * Checks the entered password against the list of accepted passwords.
- * This function is called by the button in index.html.
- */
+// Check every 30 seconds if they've timed out
+setInterval(checkInactivity, 30000);
+
+// --- 2. PER-SESSION LOCK (Name List) ---
 function checkAccessPassword() {
     const input = document.getElementById('access-password-input');
-    const errorMsg = document.getElementById('lock-error-message');
-
-    if (!input) return;
-
-    const enteredPassword = input.value.trim();
-
-    // Check if the entered password is in the accepted list
-    if (ACCEPTED_PASSWORDS.includes(enteredPassword)) {
-        unlockWorkbook();
+    if (ACCEPTED_PASSWORDS.includes(input.value.trim())) {
+        sessionStorage.setItem('session_unlocked', 'true');
+        document.getElementById('access-lock-screen').style.display = 'none';
+        document.body.classList.remove('locked');
     } else {
-        // Failure: Show error message
-        errorMsg.textContent = 'Access Denied. Incorrect code.';
-        input.value = ''; // Clear the input field
-        input.focus(); // Keep focus on the input for a quick retry
+        alert("Access Denied");
+        input.value = '';
     }
 }
 
-// Attach the function to the global window object so it can be called from index.html's 'onclick'
-window.checkAccessPassword = checkAccessPassword;
-
-
-// --- Initial Page Load Logic ---
-
+// --- 3. INITIAL LOAD LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
-    const isUnlocked = sessionStorage.getItem(UNLOCK_KEY);
+    // Run the 30-minute check immediately
+    checkInactivity();
 
-    if (isUnlocked === 'true') {
-        // If the flag is set in session storage, unlock immediately
-        unlockWorkbook();
+    // Check if the Per-Session name list is already cleared
+    if (sessionStorage.getItem('session_unlocked') === 'true') {
+        document.getElementById('access-lock-screen').style.display = 'none';
+        document.body.classList.remove('locked');
     } else {
-        // If no flag is found, ensure the lock is active and display the lock screen
+        document.getElementById('access-lock-screen').style.display = 'flex';
         document.body.classList.add('locked');
-
-        // Optional: Pre-focus the input field if the lock screen is visible
-        const input = document.getElementById('access-password-input');
-        if (input) {
-            input.focus();
-            // Allow pressing 'Enter' to submit the password
-            input.addEventListener('keyup', (event) => {
-                if (event.key === 'Enter') {
-                    checkAccessPassword();
-                }
-            });
-        }
     }
-
 });
-
-
