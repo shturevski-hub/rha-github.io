@@ -7,6 +7,70 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Side Navigation Tool (Left) */
+        .side-nav-tool {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1e293b;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            overflow: hidden;
+            width: 50px;
+            transition: width 0.3s ease;
+        }
+        .side-nav-tool:hover { width: 180px; }
+        .side-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .side-nav-item:hover { background: rgba(255,255,255,0.1); }
+        .nav-icon { font-size: 1.2em; margin-right: 15px; min-width: 20px; text-align: center; }
+
+        /* Clinic Directory Sidebar (Right) */
+        #directory-sidebar { 
+            position: fixed; 
+            right: -320px; 
+            top: 0; 
+            width: 300px; 
+            height: 100%; 
+            background: white; 
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
+            transition: 0.3s; 
+            z-index: 1000; 
+            padding: 20px; 
+            overflow-y: auto; 
+        }
+        #directory-sidebar.open { right: 0; }
+        .dir-toggle { 
+            position: fixed; 
+            right: 20px; 
+            bottom: 20px; 
+            background: var(--accent-red); 
+            color: white; 
+            border: none; 
+            padding: 15px 20px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            z-index: 999; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .dir-entry { border-bottom: 1px solid #eee; padding: 15px 0; cursor: pointer; transition: background 0.2s; }
+        .dir-entry:hover { background: #f1f5f9; }
+        .dir-entry b { display: block; color: var(--brand-primary); font-size: 1.1em; }
+        .dir-entry p { margin: 5px 0; font-size: 0.85em; color: #475569; }
+
+        /* SMS Styles */
         .sms-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 30px auto; }
         .sms-row { display: flex; flex-direction: column; align-items: flex-start; }
         .sms-label { font-size: 0.85em; font-weight: 700; color: var(--brand-primary); margin-bottom: 5px; margin-left: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -18,20 +82,39 @@
         .copy-hint { display: block; font-size: 0.7em; margin-top: 5px; color: #8e8e93; text-align: right; opacity: 0.6; }
         .sms-bubble.copied + .copy-hint { color: var(--accent-red); opacity: 1; font-weight: bold; }
 
+        /* Drafting Tool */
         .draft-tool { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 25px; margin-top: 50px; }
         #draft-area { width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid var(--border-subtle); font-family: inherit; font-size: 1em; resize: vertical; margin-bottom: 15px; box-sizing: border-box; }
         .btn-group { display: flex; gap: 10px; align-items: center; }
         .draft-btn { background: var(--grad-blue); color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .clear-btn { background: #64748b; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .draft-btn:hover, .clear-btn:hover { opacity: 0.9; }
-
-        /* Shortcut Grid Styling */
+        
+        /* Shortcut Grid */
         .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
         .shortcut-item { background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
         .key-code { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.9em; border-bottom: 2px solid #cbd5e1; }
     </style>
 </head>
 <body>
+
+    <nav class="side-nav-tool">
+        <a href="tracker.html" class="side-nav-item"><span class="nav-icon">📊</span><span>Excel Tracker</span></a>
+        <a href="hub.html" class="side-nav-item"><span class="nav-icon">📝</span><span>Notepad</span></a>
+        <a href="index.html" class="side-nav-item"><span class="nav-icon">🏠</span><span>Home</span></a>
+        <a href="#" class="side-nav-item" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"><span class="nav-icon">⬆️</span><span>Back to Top</span></a>
+    </nav>
+
+    <button class="dir-toggle" onclick="toggleSidebar()">📍 Clinic Directory</button>
+    <div id="directory-sidebar">
+        <h3>Clinic Directory</h3>
+        <p style="font-size: 0.75em; color: #64748b; margin-bottom: 20px;">Click to insert address into draft.</p>
+        <div class="dir-entry" onclick="insertAtCursor('2017 S Main St, Trenton, TN 38382')"><b>Trenton</b><p>2017 S Main St, Trenton, TN 38382</p><p>Phone: (731) 855-1212</p></div>
+        <div class="dir-entry" onclick="insertAtCursor('15027 S First St, Milan, TN 38358')"><b>Milan</b><p>15027 S First St, Milan, TN 38358</p><p>Phone: (731) 686-7001</p></div>
+        <div class="dir-entry" onclick="insertAtCursor('3514 Chere Carol Rd, Humboldt, TN 38343')"><b>Humboldt</b><p>3514 Chere Carol Rd, Humboldt, TN 38343</p><p>Phone: (731) 784-7773</p></div>
+        <div class="dir-entry" onclick="insertAtCursor('2106 Hwy 45 Bypass, Jackson, TN 38305')"><b>Jackson</b><p>2106 Hwy 45 Bypass, Jackson, TN 38305</p><p>Phone: (731) 660-6911</p></div>
+        <button onclick="toggleSidebar()" style="width:100%; padding:10px; margin-top:20px; cursor:pointer;">Close</button>
+    </div>
+
     <div id="main-content-wrapper">
         <header>
             <div class="header-content">
@@ -46,6 +129,7 @@
                         <a href="index.html">Home</a>
                         <a href="manual.html">Manual</a> 
                         <a href="webforms.html" class="active">Webforms</a>
+                        <a href="tracker.html">Tracker</a>
                         <a href="hub.html">Notepad</a>
                     </div>
                 </nav>
@@ -69,10 +153,8 @@
             <section style="margin-top: 30px;">
                 <h3>Birdeye & Browser Shortcuts</h3>
                 <div class="shortcut-grid">
-                    <div class="shortcut-item"><span>Search/Find in Page</span> <span class="key-code">Ctrl + F</span></div>
+                    <div class="shortcut-item"><span>Find in Page</span> <span class="key-code">Ctrl + F</span></div>
                     <div class="shortcut-item"><span>Refresh Inbox</span> <span class="key-code">F5</span></div>
-                    <div class="shortcut-item"><span>Switch Tabs</span> <span class="key-code">Ctrl + Tab</span></div>
-                    <div class="shortcut-item"><span>Reopen Closed Tab</span> <span class="key-code">Ctrl+Shift+T</span></div>
                     <div class="shortcut-item"><span>Internal Note</span> <span class="key-code">Alt + N</span></div>
                     <div class="shortcut-item"><span>Close Thread</span> <span class="key-code">Alt + C</span></div>
                 </div>
@@ -94,25 +176,7 @@
                     </div>
 
                     <div class="sms-row">
-                        <span class="sms-label">Provider Reschedule</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hello, this is [AGENT]. Due to unforeseen circumstances, we need to reschedule your upcoming appointment. Please message back or call (731) 222-5000.</div>
-                        <span class="copy-hint">Click to copy & edit</span>
-                    </div>
-
-                    <div class="sms-row" style="align-items: flex-end;">
-                        <span class="sms-label" style="margin-right: 15px;">General Thank You</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Thank you for informing us! Let us know if we can assist further. You can reach scheduling at (731) 222-5000. Thanks!</div>
-                        <span class="copy-hint">Click to copy & edit</span>
-                    </div>
-
-                    <div class="sms-row">
-                        <span class="sms-label">Urgent Care Advice</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hello! This is [AGENT]. Regarding your request, we advise you to visit our Urgent Care center as a walk-in to be seen sooner.</div>
-                        <span class="copy-hint">Click to copy & edit</span>
-                    </div>
-
-                    <div class="sms-row" style="align-items: flex-end;">
-                        <span class="sms-label" style="margin-right: 15px;">Info Verification</span>
+                        <span class="sms-label">Info Verification</span>
                         <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hi, this is [AGENT]. To complete your request, please verify the patient's full name, DOB, home address, and zip code?</div>
                         <span class="copy-hint">Click to copy & edit</span>
                     </div>
@@ -121,7 +185,7 @@
 
             <section class="draft-tool">
                 <h3>Quick Draft & Replace</h3>
-                <textarea id="draft-area" placeholder="Click a message above or paste here to edit..."></textarea>
+                <textarea id="draft-area" placeholder="Click a message above or clinic in directory to edit..."></textarea>
                 <div class="btn-group">
                     <button class="draft-btn" onclick="copyDraft()">Copy Final Message</button>
                     <button class="clear-btn" onclick="clearDraft()">Clear</button>
@@ -135,6 +199,7 @@
 
     <script>
         function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
+        function toggleSidebar() { document.getElementById('directory-sidebar').classList.toggle('open'); }
         function updateClock() { document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false }); }
         setInterval(updateClock, 1000); updateClock();
 
@@ -142,11 +207,17 @@
             const text = bubble.innerText;
             navigator.clipboard.writeText(text).then(() => {
                 bubble.classList.add('copied');
-                const hint = bubble.nextElementSibling;
-                hint.innerText = "COPIED & READY TO EDIT!";
                 document.getElementById('draft-area').value = text;
-                setTimeout(() => { bubble.classList.remove('copied'); hint.innerText = "Click to copy & edit"; }, 2000);
+                setTimeout(() => bubble.classList.remove('copied'), 2000);
             });
+        }
+
+        function insertAtCursor(text) {
+            const draftArea = document.getElementById('draft-area');
+            const start = draftArea.selectionStart;
+            const content = draftArea.value;
+            draftArea.value = content.substring(0, start) + text + content.substring(draftArea.selectionEnd);
+            draftArea.focus();
         }
 
         function copyDraft() {
@@ -155,7 +226,7 @@
             navigator.clipboard.writeText(draftText).then(() => {
                 const status = document.getElementById('draft-status');
                 status.innerText = "COPIED TO CLIPBOARD!";
-                setTimeout(() => { status.innerText = ""; }, 3000);
+                setTimeout(() => status.innerText = "", 3000);
             });
         }
 
