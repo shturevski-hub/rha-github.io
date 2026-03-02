@@ -17,14 +17,14 @@
         }
         checkAccess();
 
-        // 2. IDLE TIMEOUT (10 Minutes)
+        // 2. IDLE TIMEOUT 
         let idleTime = 0;
         const idleInterval = setInterval(timerIncrement, 60000); 
         window.onmousemove = window.onkeypress = () => { idleTime = 0; };
 
         function timerIncrement() {
             idleTime++;
-            if (idleTime >= 480) {
+            if (idleTime >= 30) {
                 // Return to login but don't necessarily wipe the 8-hour token unless you want full lockout
                 window.location.href = "login.html";
             }
@@ -407,3 +407,4 @@
     </script>
 </body>
 </html>
+
