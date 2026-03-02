@@ -20,6 +20,15 @@ function timerIncrement() {
     }
 }
 
+
+        function disableShortcuts(e) {
+    // Block Ctrl+U (View Source) and F12 (Dev Tools)
+    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+    }
+}
+
         
     </script>
 
@@ -32,7 +41,7 @@ function timerIncrement() {
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="locked">
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)" class="locked">
 
 <canvas id="particle-canvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
  
@@ -289,6 +298,7 @@ function timerIncrement() {
     
 </body>
 </html>
+
 
 
 
