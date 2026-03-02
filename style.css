@@ -1,4 +1,4 @@
-/* style.css - PROFESSIONAL REBOOT (INTENSE BACKGROUND COLOR) */
+/* style.css - PROFESSIONAL REBOOT WITH PARTICLE BACKGROUND SUPPORT */
 
 /* --- Brand Configuration --- */
 :root {
@@ -9,30 +9,37 @@
     --accent-red: #ef4444;      /* Vibrant Red */
     --accent-red-dark: #b91c1c; /* Crimson */
     --text-dark: #0f172a;        /* Midnight */
-    
-    /* NEW: INTENSE BACKGROUNDS */
-    --background-intense-blue: #eff6ff; /* Very light azure tint for main sections */
-    
+    --background-light: #f1f5f9; /* Slate Tint */
     --highlight-color: #fef08a;  /* Search Highlight */
     --border-subtle: #e2e8f0;
     
     /* Gradients */
     --grad-blue: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
     --grad-red: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-    --grad-intense: linear-gradient(135deg, #1e40af 0%, #ef4444 100%); /* Intense Blue to Red */
 }
 
-/* --- Base Styling (UPDATED BACKGROUND) --- */
+/* --- Base Styling --- */
 body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
-    /* UPDATE: Intense Royal Blue to Red Gradient Background */
-    background: linear-gradient(160deg, #1e3a8a 0%, #b91c1c 100%);
-    background-attachment: fixed; /* Keeps background stationary on scroll */
+    /* Updated to semi-transparent to let particles show through from the canvas below */
+    background-color: rgba(241, 245, 249, 0.85); 
     color: var(--text-dark);
     line-height: 1.6;
     min-width: 1200px;
+}
+
+/* New: Canvas positioning to ensure it stays behind all content */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--background-light); /* The solid color behind the particles */
+    pointer-events: none;
 }
 
 .container {
@@ -178,15 +185,13 @@ nav a:hover, nav a.active {
 
 .show { display: block; }
 
-/* --- Main Content Area (Colorized Background) --- */
+/* --- Main Content Area --- */
 main {
-    /* UPDATE: Subtle Blue Tinted Background */
-    background-color: var(--background-intense-blue);
+    background-color: var(--brand-white);
     margin: 30px auto;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border: 1px solid #dbeafe; /* Subtle blue border */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .centered-heading { text-align: center; }
@@ -206,7 +211,7 @@ main h3 {
     margin-top: 35px;
 }
 
-/* --- Tables (Colorized Header) --- */
+/* --- Tables --- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -215,14 +220,8 @@ table {
 }
 
 table thead tr {
-    /* UPDATE: Blue to Red Gradient Header */
-    background: var(--grad-intense);
-    color: white;
-    border-bottom: 2px solid var(--accent-red-dark);
-}
-
-table thead th {
-    color: white; /* Ensure visibility on intense gradient */
+    background-color: #f8fafc;
+    border-bottom: 2px solid var(--accent-red);
 }
 
 table th, table td {
@@ -232,18 +231,15 @@ table th, table td {
 
 /* --- Info Cards & Note Boxes --- */
 .info-card {
-    /* UPDATE: Stark white to pop against blue tinted background */
-    background-color: var(--brand-white);
+    background-color: #ffffff;
     border: 1px solid var(--border-subtle);
     border-left: 6px solid var(--accent-primary);
     padding: 25px;
     margin-bottom: 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .note-important {
-    /* UPDATE: Subtle Red Background Tint */
     background: #fef2f2;
     padding: 20px;
     border: 1px solid #fee2e2;
@@ -254,7 +250,7 @@ table th, table td {
     font-weight: 600;
 }
 
-/* --- Clinic Cards (Colorized Background) --- */
+/* --- Clinic Cards (Colorized) --- */
 .clinic-list-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -266,17 +262,15 @@ table th, table td {
     padding: 20px;
     border: 1px solid var(--border-subtle);
     border-radius: 10px;
-    /* UPDATE: Clear to Stark White with modern hover */
-    background-color: var(--brand-white);
+    background: linear-gradient(to bottom right, #ffffff, #f8fafc);
     transition: all 0.3s ease;
     border-top: 4px solid var(--accent-primary);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .clinic-card:hover {
     transform: translateY(-5px);
     border-top-color: var(--accent-red);
-    box-shadow: 0 8px 20px rgba(185, 28, 28, 0.15); /* Tinted Shadow */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 .clinic-card h4 {
@@ -289,7 +283,7 @@ table th, table td {
 .clinic-card ul { list-style: none; padding: 0; }
 .clinic-card ul li { padding: 5px 0; border-bottom: 1px dotted var(--border-subtle); font-size: 0.95em; }
 
-/* --- Sidebar (Colorized Trigger) --- */
+/* --- Sidebar --- */
 .sidebar-container {
     position: fixed;
     top: 50%;
@@ -305,8 +299,7 @@ table th, table td {
 .sidebar-trigger {
     position: absolute;
     left: -45px;
-    /* UPDATE: Intense Blue to Red Gradient Trigger */
-    background: var(--grad-intense);
+    background: var(--grad-red);
     color: white;
     padding: 20px 12px;
     cursor: pointer;
@@ -318,14 +311,13 @@ table th, table td {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: -4px 0 10px rgba(0,0,0,0.2);
 }
 
 .sidebar-content {
     background-color: white;
     padding: 30px;
     border-radius: 15px 0 0 15px;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
     border: 1px solid var(--border-subtle);
 }
 
@@ -346,18 +338,16 @@ table th, table td {
     border-radius: 8px;
     font-size: 1.1em;
     transition: 0.3s;
-    background-color: var(--brand-white);
 }
 
 #provider-search:focus { border-color: var(--accent-red); outline: none; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1); }
 
-/* --- Lock Screen (UPDATED BACKGROUND) --- */
+/* --- Lock Screen --- */
 #access-lock-screen {
     display: none; 
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* UPDATE: Intense Royal Blue to Red Gradient Background */
-    background: linear-gradient(160deg, #1e3a8a 0%, #b91c1c 100%);
+    background-color: var(--background-light);
     z-index: 9999;
     justify-content: center;
     align-items: center;
@@ -370,7 +360,7 @@ body.locked #access-lock-screen { display: flex; }
     background-color: white;
     padding: 50px;
     border-radius: 15px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
     width: 450px;
     text-align: center;
     border-top: 8px solid var(--accent-red);
