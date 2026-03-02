@@ -90,7 +90,7 @@ window.onmousemove = window.onkeypress = () => { idleTime = 0; };
 
 function timerIncrement() {
     idleTime++;
-    if (idleTime >= 480) { // 10 minutes (Note: 480 used in your original script is actually 8 hours, 10 minutes is 10)
+    if (idleTime >= 30) { 
         sessionStorage.removeItem('clinic_access');
         window.location.href = "login.html";
     }
