@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <script>
-        // 1. SECURITY & SESSION LOCK
-        if (sessionStorage.getItem('clinic_access') !== 'granted') {
-            window.location.href = "login.html";
+        // 1. SECURITY & SESSION LOCK (8-Hour Persistence Addition)
+        function checkAccess() {
+            const accessStatus = localStorage.getItem('clinic_access');
+            const loginTimestamp = localStorage.getItem('last_login_time');
+            const currentTime = new Date().getTime();
+            const eightHours = 8 * 60 * 60 * 1000;
+
+            if (accessStatus !== 'granted' || !loginTimestamp || (currentTime - loginTimestamp > eightHours)) {
+                localStorage.removeItem('clinic_access');
+                localStorage.removeItem('last_login_time');
+                window.location.href = "login.html";
+            }
         }
+        checkAccess();
 
         // 2. IDLE TIMEOUT (10 Minutes)
         let idleTime = 0;
@@ -14,8 +24,8 @@
 
         function timerIncrement() {
             idleTime++;
-            if (idleTime >= 10) {
-                sessionStorage.removeItem('clinic_access');
+            if (idleTime >= 480) {
+                // Return to login but don't necessarily wipe the 8-hour token unless you want full lockout
                 window.location.href = "login.html";
             }
         }
@@ -36,7 +46,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Intro Video Overlay (720x1280 Vertical) */
+        /* Intro Video Overlay Updated for Split Screen */
         #video-overlay {
             position: fixed;
             top: 0;
@@ -45,18 +55,39 @@
             height: 100%;
             background: #0f172a; 
             z-index: 99999;
+            display: none; /* Controlled by JS session check */
+            flex-direction: row; /* Horizontal split */
+            transition: opacity 0.8s ease-out;
+        }
+
+        /* Video on Left */
+        .video-side {
+            flex: 0 0 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease-out;
+            background: black;
         }
+
         #intro-video {
             height: 90vh;
             aspect-ratio: 720 / 1280;
             border-radius: 12px;
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            background: black;
         }
+
+        /* Text on Right */
+        .text-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .text-side h1 { font-size: 3rem; margin-bottom: 20px; color: #3b82f6; }
+        .text-side p { font-size: 1.2rem; line-height: 1.6; color: #cbd5e1; }
 
         /* Hide main content until video ends */
         #main-content-wrapper { 
@@ -75,15 +106,25 @@
             left: 0;
             z-index: -1;
         }
+
+        #trenton-clock {
+            font-weight: bold;
+            color: #3b82f6;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
 
     <div id="video-overlay">
-        <video id="intro-video" autoplay muted playsinline>
-            <source src="intro.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <div class="video-side">
+            <video id="intro-video" muted playsinline>
+                <source src="intro.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="text-side">
+            <h1>Welcome Back</h1>
+            <p>Accessing Trenton Internal Workbook. <br>Please review today's updates on the left while the session initializes.</p>
+        </div>
     </div>
 
     <canvas id="particle-canvas"></canvas>
@@ -267,24 +308,41 @@
     </div>
     
     <script>
-        // 1. INTRO VIDEO HANDLER
+        // 1. INTRO VIDEO HANDLER (Added Session Check)
         const video = document.getElementById('intro-video');
         const overlay = document.getElementById('video-overlay');
         const content = document.getElementById('main-content-wrapper');
 
-        video.onended = function() {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                content.classList.add('visible');
-            }, 800);
-        };
+        if (!sessionStorage.getItem('intro_played')) {
+            overlay.style.display = 'flex';
+            video.play();
+            video.onended = function() {
+                overlay.style.opacity = '0';
+                sessionStorage.setItem('intro_played', 'true');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    content.classList.add('visible');
+                }, 800);
+            };
+        } else {
+            overlay.style.display = 'none';
+            content.classList.add('visible');
+        }
 
         // 2. MENU & UI
         function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
         
+        // TRENTON TN CLOCK CONFIGURATION
         function updateClock() {
-            document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+            const now = new Date();
+            const options = {
+                timeZone: 'America/Chicago',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            document.getElementById('trenton-clock').innerText = new Intl.DateTimeFormat('en-US', options).format(now);
         }
         setInterval(updateClock, 1000); 
         updateClock();
