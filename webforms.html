@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webform Agent Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .clinic-card { cursor: pointer; position: relative; transition: all 0.2s ease; }
+        .clinic-card:active { transform: scale(0.98); }
+        .clinic-card.copied { border-color: var(--accent-red) !important; background-color: #fef2f2; }
+        .copy-badge { position: absolute; top: 10px; right: 10px; font-size: 0.7em; color: var(--accent-red); font-weight: bold; opacity: 0; }
+        .clinic-card.copied .copy-badge { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div id="main-content-wrapper">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Logo" class="logo">
+                    <h1 class="site-title">Webform <b>Quick Ref</b></h1>
+                </div>
+                <div id="trenton-clock">00:00:00</div>
+                <nav class="dropdown-nav">
+                    <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="index.html">Home</a>
+                        <a href="manual.html">Manual</a> 
+                        <a href="webforms.html" class="active">Webforms</a>
+                        <a href="hub.html">Notepad</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            <section>
+                <h3>Standard Workflow</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>1. Assignment</b></td>
+                            <td>Open Birdeye > Saved Filters > Assign to yourself.</td>
+                        </tr>
+                        <tr>
+                            <td><b>2. Evaluation</b></td>
+                            <td>Review request > Check EMR schedule > Offer time to patient.</td>
+                        </tr>
+                        <tr>
+                            <td><b>3. Execution</b></td>
+                            <td>Patient agrees > Schedule in EMR > Send confirmation.</td>
+                        </tr>
+                        <tr>
+                            <td><b>4. Closure</b></td>
+                            <td>Final patient confirmation received > Close/Archive message.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section style="margin-top: 40px;">
+                <h3>Response Templates (Click to Copy)</h3>
+                <div class="clinic-list-grid">
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 1</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi! This is [AGENT] with Christian Family Medicine & Pediatrics. We have one availability at XX:XX. Would that time work for you?</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 2</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi! This is [AGENT]. You have an appointment scheduled for 0/00/00 at 00:00. Please arrive by 00:00 to fill out the necessary paperwork. Your appointment is with the provider, PROVIDER.
+                          If you would like to confirm this appointment, please respond with a "Y". If you need to cancel or reschedule, please respond to this message or call us at (731) 222-5000. Thank you!</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 3</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hello, this is [AGENT] with Christian Family Medicine & Pediatrics. We are trying to reach you regarding your upcoming appointment.
+                          Due to unforseen circumstances, we are needing to reschedule. Please call us at (731) 222-5000, Monday to Friday or message back to get this rescheduled. Thanks! 
+ </p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 4</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Thank you for informing us! Please let us know if we can be of any further assistance, you can reach the scheduling line at (731) 222-5000 or text this number. Thanks! </p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 5</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hello! This is [AGENT] with Christian Family Medicine & Pediatrics! We are contacting you regarding your request for an appointment. We would advise you to do a walk-in in the Urgent center to be seen.</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 6</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi, this is [AGENT] with Christian Family Medicine & Pediatrics. We would be more than happy to assist you.
+                          To complete your appointment request, we would need to confirm your personal information before scheduling. Do you mind verifying the patient's full name, date of birth, valid home address and zip code, please? </p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 7</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Pellentesque dignissim enim sit amet venenatis.</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 8</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Odio tempor orci dapibus ultrices in iaculis.</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 9</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Aliquet lectus proin nibh nisl condimentum id venenatis. Volutpat maecenas volutpat blandit aliquam etiam erat.</p>
+                    </div>
+                    <div class="clinic-card" onclick="copyTemplate(this)">
+                        <span class="copy-badge">COPIED!</span>
+                        <h4>Template 10</h4>
+                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Urna et pharetra pharetra massa massa.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Christian Family Medicine & Pediatrics</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
+        
+        function updateClock() {
+            document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+        }
+        setInterval(updateClock, 1000); 
+        updateClock();
+
+        function copyTemplate(card) {
+            const text = card.querySelector('.t-text').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                card.classList.add('copied');
+                setTimeout(() => card.classList.remove('copied'), 1500);
+            });
+        }
+    </script>
+</body>
+</html>
