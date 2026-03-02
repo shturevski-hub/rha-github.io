@@ -7,11 +7,82 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .clinic-card { cursor: pointer; position: relative; transition: all 0.2s ease; }
-        .clinic-card:active { transform: scale(0.98); }
-        .clinic-card.copied { border-color: var(--accent-red) !important; background-color: #fef2f2; }
-        .copy-badge { position: absolute; top: 10px; right: 10px; font-size: 0.7em; color: var(--accent-red); font-weight: bold; opacity: 0; }
-        .clinic-card.copied .copy-badge { opacity: 1; }
+        /* SMS Style Layout */
+        .sms-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .sms-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sms-label {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-bottom: 5px;
+            margin-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sms-bubble {
+            background: #e9e9eb;
+            color: #000;
+            padding: 12px 18px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 80%;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+            font-size: 0.95em;
+            border: 1px solid transparent;
+        }
+
+        .sms-bubble:hover {
+            background: #d1d1d6;
+        }
+
+        /* Blue bubble variant for "Agent" feel */
+        .sms-bubble.agent-blue {
+            background: #007aff;
+            color: white;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+
+        .sms-bubble.agent-blue:hover {
+            background: #0063d1;
+        }
+
+        .sms-bubble.copied {
+            border-color: var(--accent-red);
+            transform: scale(0.98);
+        }
+
+        .copy-hint {
+            display: block;
+            font-size: 0.7em;
+            margin-top: 5px;
+            color: #8e8e93;
+            text-align: right;
+            opacity: 0.6;
+        }
+
+        .sms-bubble.copied + .copy-hint {
+            color: var(--accent-red);
+            opacity: 1;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -46,83 +117,99 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><b>1. Assignment</b></td>
-                            <td>Open Birdeye > Saved Filters > Assign to yourself.</td>
-                        </tr>
-                        <tr>
-                            <td><b>2. Evaluation</b></td>
-                            <td>Review request > Check EMR schedule > Offer time to patient.</td>
-                        </tr>
-                        <tr>
-                            <td><b>3. Execution</b></td>
-                            <td>Patient agrees > Schedule in EMR > Send confirmation.</td>
-                        </tr>
-                        <tr>
-                            <td><b>4. Closure</b></td>
-                            <td>Final patient confirmation received > Close/Archive message.</td>
-                        </tr>
+                        <tr><td><b>1. Assignment</b></td><td>Open Birdeye > Filters > Assign to yourself.</td></tr>
+                        <tr><td><b>2. Evaluation</b></td><td>Check EMR schedule > Offer time to patient.</td></tr>
+                        <tr><td><b>3. Execution</b></td><td>Schedule in EMR > Send confirmation.</td></tr>
+                        <tr><td><b>4. Closure</b></td><td>Final confirmation received > Close conversation.</td></tr>
                     </tbody>
                 </table>
             </section>
 
             <section style="margin-top: 40px;">
-                <h3>Response Templates (Click to Copy)</h3>
-                <div class="clinic-list-grid">
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 1</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi! This is [AGENT] with Christian Family Medicine & Pediatrics. We have one availability at XX:XX. Would that time work for you?</p>
+                <h3 style="text-align: center;">Message Templates (Click Bubble to Copy)</h3>
+                
+                <div class="sms-container">
+                    
+                    <div class="sms-row">
+                        <span class="sms-label">Initial Availability</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Hi! This is [AGENT] with Christian Family Medicine & Pediatrics. We have one availability at XX:XX. Would that time work for you?
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 2</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi! This is [AGENT]. You have an appointment scheduled for 0/00/00 at 00:00. Please arrive by 00:00 to fill out the necessary paperwork. Your appointment is with the provider, PROVIDER.
-                          If you would like to confirm this appointment, please respond with a "Y". If you need to cancel or reschedule, please respond to this message or call us at (731) 222-5000. Thank you!</p>
+
+                    <div class="sms-row" style="align-items: flex-end;">
+                        <span class="sms-label" style="margin-right: 15px;">Booking Confirmation</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Hi! This is [AGENT]. You have an appointment scheduled for 0/00/00 at 00:00. Please arrive by 00:00 to fill out the necessary paperwork. Your appointment is with PROVIDER. Reply "Y" to confirm.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 3</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hello, this is [AGENT] with Christian Family Medicine & Pediatrics. We are trying to reach you regarding your upcoming appointment.
-                          Due to unforseen circumstances, we are needing to reschedule. Please call us at (731) 222-5000, Monday to Friday or message back to get this rescheduled. Thanks! 
- </p>
+
+                    <div class="sms-row">
+                        <span class="sms-label">Provider Reschedule</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Hello, this is [AGENT]. Due to unforeseen circumstances, we need to reschedule your upcoming appointment. Please message back or call (731) 222-5000.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 4</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Thank you for informing us! Please let us know if we can be of any further assistance, you can reach the scheduling line at (731) 222-5000 or text this number. Thanks! </p>
+
+                    <div class="sms-row" style="align-items: flex-end;">
+                        <span class="sms-label" style="margin-right: 15px;">General Thank You</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Thank you for informing us! Let us know if we can assist further. You can reach scheduling at (731) 222-5000. Thanks!
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 5</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hello! This is [AGENT] with Christian Family Medicine & Pediatrics! We are contacting you regarding your request for an appointment. We would advise you to do a walk-in in the Urgent center to be seen.</p>
+
+                    <div class="sms-row">
+                        <span class="sms-label">Urgent Care Advice</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Hello! This is [AGENT]. Regarding your request, we advise you to visit our Urgent Care center as a walk-in to be seen sooner.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 6</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Hi, this is [AGENT] with Christian Family Medicine & Pediatrics. We would be more than happy to assist you.
-                          To complete your appointment request, we would need to confirm your personal information before scheduling. Do you mind verifying the patient's full name, date of birth, valid home address and zip code, please? </p>
+
+                    <div class="sms-row" style="align-items: flex-end;">
+                        <span class="sms-label" style="margin-right: 15px;">Info Verification</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Hi, this is [AGENT]. To complete your request, please verify the patient's full name, DOB, home address, and zip code?
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 7</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Pellentesque dignissim enim sit amet venenatis.</p>
+
+                    <div class="sms-row">
+                        <span class="sms-label">Placeholder 7</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 8</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Odio tempor orci dapibus ultrices in iaculis.</p>
+
+                    <div class="sms-row" style="align-items: flex-end;">
+                        <span class="sms-label" style="margin-right: 15px;">Placeholder 8</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 9</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Aliquet lectus proin nibh nisl condimentum id venenatis. Volutpat maecenas volutpat blandit aliquam etiam erat.</p>
+
+                    <div class="sms-row">
+                        <span class="sms-label">Placeholder 9</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
-                    <div class="clinic-card" onclick="copyTemplate(this)">
-                        <span class="copy-badge">COPIED!</span>
-                        <h4>Template 10</h4>
-                        <p class="t-text" style="font-size: 0.85em; color: #64748b;">Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Urna et pharetra pharetra massa massa.</p>
+
+                    <div class="sms-row" style="align-items: flex-end;">
+                        <span class="sms-label" style="margin-right: 15px;">Placeholder 10</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.
+                        </div>
+                        <span class="copy-hint">Click to copy</span>
                     </div>
+
                 </div>
             </section>
         </main>
@@ -138,14 +225,19 @@
         function updateClock() {
             document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
         }
-        setInterval(updateClock, 1000); 
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        function copyTemplate(card) {
-            const text = card.querySelector('.t-text').innerText;
+        function copyTemplate(bubble) {
+            const text = bubble.innerText;
             navigator.clipboard.writeText(text).then(() => {
-                card.classList.add('copied');
-                setTimeout(() => card.classList.remove('copied'), 1500);
+                bubble.classList.add('copied');
+                const hint = bubble.nextElementSibling;
+                hint.innerText = "COPIED TO CLIPBOARD!";
+                
+                setTimeout(() => {
+                    bubble.classList.remove('copied');
+                    hint.innerText = "Click to copy";
+                }, 2000);
             });
         }
     </script>
