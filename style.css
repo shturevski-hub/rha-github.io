@@ -389,3 +389,9 @@ footer {
     margin-top: 60px;
     border-top: 5px solid var(--accent-red);
 }
+
+
+body.inactive {
+    filter: blur(8px);
+    pointer-events: none;
+}
