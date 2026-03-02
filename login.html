@@ -74,7 +74,7 @@
     <script>
 
 function disableShortcuts(e) {
-    // Block Ctrl+U (View Source) and F12 (Dev Tools)
+ 
     if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
         e.preventDefault();
         return false;
@@ -90,7 +90,7 @@ window.onmousemove = window.onkeypress = () => { idleTime = 0; };
 
 function timerIncrement() {
     idleTime++;
-    if (idleTime >= 10) { // 10 minutes
+    if (idleTime >= 480) { // 10 minutes (Note: 480 used in your original script is actually 8 hours, 10 minutes is 10)
         sessionStorage.removeItem('clinic_access');
         window.location.href = "login.html";
     }
@@ -106,7 +106,15 @@ function timerIncrement() {
             const error = document.getElementById('error');
             
             if (btoa(input) === _v) { 
-                sessionStorage.setItem('clinic_access', 'granted');
+                // 1. Grant Access
+                localStorage.setItem('clinic_access', 'granted');
+                
+                // 2. Set 8-Hour Timestamp
+                localStorage.setItem('last_login_time', new Date().getTime());
+
+                // 3. Reset Intro for new session
+                sessionStorage.removeItem('intro_played');
+
                 window.location.href = "index.html";
             } else {
                 error.style.display = 'block';
