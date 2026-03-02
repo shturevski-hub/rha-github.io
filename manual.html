@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHA Workbook | Agent Manual</title>
+    <style>
+        /* Base Styling */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            background: #f8f9fa;
+        }
+
+        /* Nav Bar */
+        .dropdown-nav {
+            width: 100%;
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .menu-button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .show { display: block; }
+
+        /* Manual Layout */
+        .manual-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            border-right: 1px solid #dee2e6;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 { font-size: 1.1rem; color: #2c3e50; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin-bottom: 10px; }
+        .sidebar a { text-decoration: none; color: #3498db; font-size: 0.95rem; }
+        .sidebar a:hover { text-decoration: underline; }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: white;
+            line-height: 1.6;
+        }
+
+        .content h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        .content h2 { color: #2980b9; margin-top: 30px; }
+        .section { margin-bottom: 40px; padding: 20px; border-radius: 8px; background: #fdfdfd; border-left: 5px solid #3498db; }
+        
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <nav class="dropdown-nav">
+        <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="index.html">Home</a>
+            <a href="selfPayPrices.html">Self-Pay</a>
+            <a href="hours.html">Clinic Hours</a>
+            <a href="providersTrenton.html">Trenton Internal</a>
+            <a href="visitTypes.html">Visit Types</a>
+            <a href="additionalInfo.html">Additional Info</a>
+            <a href="controlPanel.html">Admin Control</a>
+            <a href="training.html">Training</a>
+            <a href="hub.html">Notepad</a>
+            <a href="manual.html" style="background:#eee;">Manual</a>
+        </div>
+    </nav>
+
+    <div class="manual-container">
+        <aside class="sidebar">
+            <h3>Chapters</h3>
+            <ul>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#navigation">How to Navigate</a></li>
+                <li><a href="#notepad">Using the Notepad</a></li>
+                <li><a href="#admin">Admin & Support</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section id="intro">
+                <h1>RHA Workbook Manual</h1>
+                <p>This manual provides agents with the necessary guidelines to use the RHA Workbook effectively. Our goal is to maintain a centralized, real-time knowledge base for the entire team.</p>
+            </section>
+
+            <section id="navigation" class="section">
+                <h2>1. How to Navigate</h2>
+                <p>The <strong>Menu ☰</strong> button at the top left is your primary tool for switching between modules:</p>
+                <ul>
+                    <li><strong>Self-Pay:</strong> Access current pricing for patients without insurance.</li>
+                    <li><strong>Clinic Hours:</strong> Real-time updates on provider availability.</li>
+                    <li><strong>Visit Types:</strong> Descriptions of appointment categories.</li>
+                </ul>
+            </section>
+
+            <section id="notepad" class="section">
+                <h2>2. Using the Live Notepad (Hub)</h2>
+                <p>The Notepad is a <strong>live Google Document</strong>. Multiple agents can type at once.</p>
+                <ul>
+                    <li><strong>Auto-Save:</strong> You do not need to click save; changes sync instantly.</li>
+                    <li><strong>Formatting:</strong> Use the built-in toolbar for bolding or highlighting urgent updates.</li>
+                    <li><strong>Etiquette:</strong> Avoid overwriting notes from other agents without prior discussion.</li>
+                </ul>
+            </section>
+
+            <section id="admin" class="section">
+                <h2>3. Admin & Support</h2>
+                <p>If you encounter broken links or "Access Denied" errors, please head to the <strong>Admin Control</strong> page to submit a ticket or contact your supervisor directly.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("dropdown-content").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
