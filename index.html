@@ -2,58 +2,91 @@
 <html lang="en">
 <head>
     <script>
+        // 1. SECURITY & SESSION LOCK
         if (sessionStorage.getItem('clinic_access') !== 'granted') {
             window.location.href = "login.html";
         }
 
-let idleTime = 0;
-const idleInterval = setInterval(timerIncrement, 60000); // Check every minute
+        // 2. IDLE TIMEOUT (10 Minutes)
+        let idleTime = 0;
+        const idleInterval = setInterval(timerIncrement, 60000); 
+        window.onmousemove = window.onkeypress = () => { idleTime = 0; };
 
-// Reset timer on movement
-window.onmousemove = window.onkeypress = () => { idleTime = 0; };
+        function timerIncrement() {
+            idleTime++;
+            if (idleTime >= 10) {
+                sessionStorage.removeItem('clinic_access');
+                window.location.href = "login.html";
+            }
+        }
 
-function timerIncrement() {
-    idleTime++;
-    if (idleTime >= 10) { // 10 minutes
-        sessionStorage.removeItem('clinic_access');
-        window.location.href = "login.html";
-    }
-}
-
-
+        // 3. DISABLE SHORTCUTS
         function disableShortcuts(e) {
-    // Block Ctrl+U (View Source) and F12 (Dev Tools)
-    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
-        e.preventDefault();
-        return false;
-    }
-}
-
-        
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+        }
     </script>
 
-
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CFM Internal Workbook | Home</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)" class="locked">
 
-<canvas id="particle-canvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
- 
-    <div id="access-lock-screen">
-        <div class="lock-box">
-            <h2 class="lock-title">🔒 Access Restricted</h2>
-            <p>Please enter your Fastpace work code to view the <b>Workbook</b> content.</p>
-            <input type="password" id="access-password-input" placeholder="Enter work code..." autofocus>
-            <button onclick="checkAccessPassword()">Access Workbook</button>
-            <p id="lock-error-message"></p>
-        </div>
+    <style>
+        /* Intro Video Overlay (720x1280 Vertical) */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a; 
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-out;
+        }
+        #intro-video {
+            height: 90vh;
+            aspect-ratio: 720 / 1280;
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            background: black;
+        }
+
+        /* Hide main content until video ends */
+        #main-content-wrapper { 
+            visibility: hidden; 
+            opacity: 0; 
+            transition: opacity 0.8s ease-in; 
+        }
+        #main-content-wrapper.visible { 
+            visibility: visible; 
+            opacity: 1; 
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
+
+    <div id="video-overlay">
+        <video id="intro-video" autoplay muted playsinline>
+            <source src="intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
+
+    <canvas id="particle-canvas"></canvas>
     
     <div id="main-content-wrapper">
         <header>
@@ -79,7 +112,6 @@ function timerIncrement() {
                         <a href="controlPanel.html">Admin Control</a>
                         <a href="training.html">Training</a>
                         <a href="hub.html"> Notepad </a>
-                        
                     </div>
                 </nav>
             </div>
@@ -227,83 +259,93 @@ function timerIncrement() {
                     <li><a href="https://fastpacehealth-my.sharepoint.com/..." target="_blank">RHA PDF</a></li>
                     <li><a href="mailto:stefan.shturevski@fastpacehealth.com">IT Support Email</a></li>
                 </ul>
-
                 <h3 style="margin-top:20px;">Current Status</h3>
-                <p class="note-important" style="font-size: 0.85em;">⚠️ Demo Protocol: Workbook under review. Consult with leadership.</p>
+                <p class="note-important" style="font-size: 0.85em;">⚠️ Demo Protocol: Workbook under review.</p>
                 <div class="status-ok">✅ Price List: 2026-2-25</div>
             </div>
         </div>
     </div>
     
-    <script src="script.js"></script>
-    <script src="lock.js"></script> 
+    <script>
+        // 1. INTRO VIDEO HANDLER
+        const video = document.getElementById('intro-video');
+        const overlay = document.getElementById('video-overlay');
+        const content = document.getElementById('main-content-wrapper');
 
-<script>
-    // --- PARTICLE ENGINE ---
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+        video.onended = function() {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                content.classList.add('visible');
+            }, 800);
+        };
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 3 + 1;
-            this.speedX = Math.random() * 0.5 - 0.25;
-            this.speedY = Math.random() * 0.5 - 0.25;
-            // Uses brand blue or red randomly
-            this.color = Math.random() > 0.5 ? '#3b82f622' : '#ef444422'; 
+        // 2. MENU & UI
+        function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
+        
+        function updateClock() {
+            document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
         }
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x > canvas.width) this.x = 0;
-            if (this.x < 0) this.x = canvas.width;
-            if (this.y > canvas.height) this.y = 0;
-            if (this.y < 0) this.y = canvas.height;
-        }
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
+        setInterval(updateClock, 1000); 
+        updateClock();
 
-    function init() {
-        for (let i = 0; i < 80; i++) {
-            particles.push(new Particle());
+        // 3. PARTICLE ENGINE
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    }
+        window.addEventListener('resize', resize);
+        resize();
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = Math.random() > 0.5 ? '#3b82f622' : '#ef444422'; 
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-    init();
-    animate();
-    
+        function init() {
+            for (let i = 0; i < 80; i++) { particles.push(new Particle()); }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        init(); animate();
+
+        // 4. SEARCH FILTER
+        function filterDirectory() {
+            let input = document.getElementById('provider-search').value.toLowerCase();
+            let cards = document.getElementsByClassName('clinic-card');
+            for (let card of cards) {
+                let text = card.textContent.toLowerCase();
+                card.style.display = text.includes(input) ? "" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
