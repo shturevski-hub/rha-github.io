@@ -6,6 +6,22 @@
         if (sessionStorage.getItem('clinic_access') !== 'granted') {
             window.location.href = "login.html";
         }
+
+let idleTime = 0;
+const idleInterval = setInterval(timerIncrement, 60000); // Check every minute
+
+// Reset timer on movement
+window.onmousemove = window.onkeypress = () => { idleTime = 0; };
+
+function timerIncrement() {
+    idleTime++;
+    if (idleTime >= 10) { // 10 minutes
+        sessionStorage.removeItem('clinic_access');
+        window.location.href = "login.html";
+    }
+}
+
+        
     </script>
     
     <meta charset="UTF-8">
