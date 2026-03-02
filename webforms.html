@@ -7,82 +7,28 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* SMS Style Layout */
-        .sms-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 800px;
-            margin: 30px auto;
-        }
+        .sms-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 30px auto; }
+        .sms-row { display: flex; flex-direction: column; align-items: flex-start; }
+        .sms-label { font-size: 0.85em; font-weight: 700; color: var(--brand-primary); margin-bottom: 5px; margin-left: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sms-bubble { background: #e9e9eb; color: #000; padding: 12px 18px; border-radius: 18px; border-bottom-left-radius: 4px; max-width: 80%; position: relative; cursor: pointer; transition: all 0.2s ease; line-height: 1.4; font-size: 0.95em; border: 1px solid transparent; }
+        .sms-bubble:hover { background: #d1d1d6; }
+        .sms-bubble.agent-blue { background: #007aff; color: white; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; align-self: flex-end; }
+        .sms-bubble.agent-blue:hover { background: #0063d1; }
+        .sms-bubble.copied { border-color: var(--accent-red); transform: scale(0.98); }
+        .copy-hint { display: block; font-size: 0.7em; margin-top: 5px; color: #8e8e93; text-align: right; opacity: 0.6; }
+        .sms-bubble.copied + .copy-hint { color: var(--accent-red); opacity: 1; font-weight: bold; }
 
-        .sms-row {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+        .draft-tool { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 25px; margin-top: 50px; }
+        #draft-area { width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid var(--border-subtle); font-family: inherit; font-size: 1em; resize: vertical; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-group { display: flex; gap: 10px; align-items: center; }
+        .draft-btn { background: var(--grad-blue); color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .clear-btn { background: #64748b; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .draft-btn:hover, .clear-btn:hover { opacity: 0.9; }
 
-        .sms-label {
-            font-size: 0.85em;
-            font-weight: 700;
-            color: var(--brand-primary);
-            margin-bottom: 5px;
-            margin-left: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sms-bubble {
-            background: #e9e9eb;
-            color: #000;
-            padding: 12px 18px;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-            max-width: 80%;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            line-height: 1.4;
-            font-size: 0.95em;
-            border: 1px solid transparent;
-        }
-
-        .sms-bubble:hover {
-            background: #d1d1d6;
-        }
-
-        /* Blue bubble variant for "Agent" feel */
-        .sms-bubble.agent-blue {
-            background: #007aff;
-            color: white;
-            border-bottom-left-radius: 18px;
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-
-        .sms-bubble.agent-blue:hover {
-            background: #0063d1;
-        }
-
-        .sms-bubble.copied {
-            border-color: var(--accent-red);
-            transform: scale(0.98);
-        }
-
-        .copy-hint {
-            display: block;
-            font-size: 0.7em;
-            margin-top: 5px;
-            color: #8e8e93;
-            text-align: right;
-            opacity: 0.6;
-        }
-
-        .sms-bubble.copied + .copy-hint {
-            color: var(--accent-red);
-            opacity: 1;
-            font-weight: bold;
-        }
+        /* Shortcut Grid Styling */
+        .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .shortcut-item { background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .key-code { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 0.9em; border-bottom: 2px solid #cbd5e1; }
     </style>
 </head>
 <body>
@@ -110,12 +56,7 @@
             <section>
                 <h3>Standard Workflow</h3>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Phase</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Phase</th><th>Action</th></tr></thead>
                     <tbody>
                         <tr><td><b>1. Assignment</b></td><td>Open Birdeye > Filters > Assign to yourself.</td></tr>
                         <tr><td><b>2. Evaluation</b></td><td>Check EMR schedule > Offer time to patient.</td></tr>
@@ -125,106 +66,76 @@
                 </table>
             </section>
 
+            <section style="margin-top: 30px;">
+                <h3>Birdeye & Browser Shortcuts</h3>
+                <div class="shortcut-grid">
+                    <div class="shortcut-item"><span>Search/Find in Page</span> <span class="key-code">Ctrl + F</span></div>
+                    <div class="shortcut-item"><span>Refresh Inbox</span> <span class="key-code">F5</span></div>
+                    <div class="shortcut-item"><span>Switch Tabs</span> <span class="key-code">Ctrl + Tab</span></div>
+                    <div class="shortcut-item"><span>Reopen Closed Tab</span> <span class="key-code">Ctrl+Shift+T</span></div>
+                    <div class="shortcut-item"><span>Internal Note</span> <span class="key-code">Alt + N</span></div>
+                    <div class="shortcut-item"><span>Close Thread</span> <span class="key-code">Alt + C</span></div>
+                </div>
+            </section>
+
             <section style="margin-top: 40px;">
-                <h3 style="text-align: center;">Message Templates (Click Bubble to Copy)</h3>
-                
+                <h3 style="text-align: center;">Message Templates</h3>
                 <div class="sms-container">
-                    
                     <div class="sms-row">
                         <span class="sms-label">Initial Availability</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Hi! This is [AGENT] with Christian Family Medicine & Pediatrics. We have one availability at XX:XX. Would that time work for you?
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hi! This is [AGENT] with Christian Family Medicine & Pediatrics. We have one availability at XX:XX. Would that time work for you?</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
 
                     <div class="sms-row" style="align-items: flex-end;">
                         <span class="sms-label" style="margin-right: 15px;">Booking Confirmation</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Hi! This is [AGENT]. You have an appointment scheduled for 0/00/00 at 00:00. Please arrive by 00:00 to fill out the necessary paperwork. Your appointment is with PROVIDER. Reply "Y" to confirm.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hi! This is [AGENT]. You have an appointment scheduled for 0/00/00 at 00:00. Please arrive by 00:00 to fill out the paperwork. Your appointment is with PROVIDER. Reply "Y" to confirm.</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
 
                     <div class="sms-row">
                         <span class="sms-label">Provider Reschedule</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Hello, this is [AGENT]. Due to unforeseen circumstances, we need to reschedule your upcoming appointment. Please message back or call (731) 222-5000.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hello, this is [AGENT]. Due to unforeseen circumstances, we need to reschedule your upcoming appointment. Please message back or call (731) 222-5000.</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
 
                     <div class="sms-row" style="align-items: flex-end;">
                         <span class="sms-label" style="margin-right: 15px;">General Thank You</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Thank you for informing us! Let us know if we can assist further. You can reach scheduling at (731) 222-5000. Thanks!
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Thank you for informing us! Let us know if we can assist further. You can reach scheduling at (731) 222-5000. Thanks!</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
 
                     <div class="sms-row">
                         <span class="sms-label">Urgent Care Advice</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Hello! This is [AGENT]. Regarding your request, we advise you to visit our Urgent Care center as a walk-in to be seen sooner.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hello! This is [AGENT]. Regarding your request, we advise you to visit our Urgent Care center as a walk-in to be seen sooner.</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
 
                     <div class="sms-row" style="align-items: flex-end;">
                         <span class="sms-label" style="margin-right: 15px;">Info Verification</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Hi, this is [AGENT]. To complete your request, please verify the patient's full name, DOB, home address, and zip code?
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
+                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">Hi, this is [AGENT]. To complete your request, please verify the patient's full name, DOB, home address, and zip code?</div>
+                        <span class="copy-hint">Click to copy & edit</span>
                     </div>
+                </div>
+            </section>
 
-                    <div class="sms-row">
-                        <span class="sms-label">Placeholder 7</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
-                    </div>
-
-                    <div class="sms-row" style="align-items: flex-end;">
-                        <span class="sms-label" style="margin-right: 15px;">Placeholder 8</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
-                    </div>
-
-                    <div class="sms-row">
-                        <span class="sms-label">Placeholder 9</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
-                    </div>
-
-                    <div class="sms-row" style="align-items: flex-end;">
-                        <span class="sms-label" style="margin-right: 15px;">Placeholder 10</span>
-                        <div class="sms-bubble agent-blue" onclick="copyTemplate(this)">
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.
-                        </div>
-                        <span class="copy-hint">Click to copy</span>
-                    </div>
-
+            <section class="draft-tool">
+                <h3>Quick Draft & Replace</h3>
+                <textarea id="draft-area" placeholder="Click a message above or paste here to edit..."></textarea>
+                <div class="btn-group">
+                    <button class="draft-btn" onclick="copyDraft()">Copy Final Message</button>
+                    <button class="clear-btn" onclick="clearDraft()">Clear</button>
+                    <span id="draft-status" style="font-size: 0.8em; font-weight: bold; color: var(--accent-red);"></span>
                 </div>
             </section>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Christian Family Medicine & Pediatrics</p>
-        </footer>
+        <footer><p>&copy; 2026 Christian Family Medicine & Pediatrics</p></footer>
     </div>
 
     <script>
         function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
-        
-        function updateClock() {
-            document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
-        }
+        function updateClock() { document.getElementById('trenton-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false }); }
         setInterval(updateClock, 1000); updateClock();
 
         function copyTemplate(bubble) {
@@ -232,13 +143,25 @@
             navigator.clipboard.writeText(text).then(() => {
                 bubble.classList.add('copied');
                 const hint = bubble.nextElementSibling;
-                hint.innerText = "COPIED TO CLIPBOARD!";
-                
-                setTimeout(() => {
-                    bubble.classList.remove('copied');
-                    hint.innerText = "Click to copy";
-                }, 2000);
+                hint.innerText = "COPIED & READY TO EDIT!";
+                document.getElementById('draft-area').value = text;
+                setTimeout(() => { bubble.classList.remove('copied'); hint.innerText = "Click to copy & edit"; }, 2000);
             });
+        }
+
+        function copyDraft() {
+            const draftText = document.getElementById('draft-area').value;
+            if(!draftText) return;
+            navigator.clipboard.writeText(draftText).then(() => {
+                const status = document.getElementById('draft-status');
+                status.innerText = "COPIED TO CLIPBOARD!";
+                setTimeout(() => { status.innerText = ""; }, 3000);
+            });
+        }
+
+        function clearDraft() {
+            document.getElementById('draft-area').value = "";
+            document.getElementById('draft-status').innerText = "";
         }
     </script>
 </body>
