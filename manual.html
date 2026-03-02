@@ -114,7 +114,7 @@ function timerIncrement() {
         code { background: #eee; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
 
     <nav class="dropdown-nav">
         <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
