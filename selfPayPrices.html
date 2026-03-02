@@ -3,6 +3,17 @@
 <head>
 
 <script>
+
+function disableShortcuts(e) {
+    // Block Ctrl+U (View Source) and F12 (Dev Tools)
+    if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+    }
+}
+
+
+        
         if (sessionStorage.getItem('clinic_access') !== 'granted') {
             window.location.href = "login.html";
         }
@@ -28,7 +39,7 @@ function timerIncrement() {
     <title>Self Pay Prices</title>
     <link rel="stylesheet" href="style.css">
     </head>
-<body>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
     <header>
         <div class="container">
             <h1>Self Pay Prices</h1>
@@ -355,6 +366,7 @@ function timerIncrement() {
     </body>
 
 </html>
+
 
 
 
