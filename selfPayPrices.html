@@ -3,21 +3,9 @@
 <head>
 
 <script>
-    // 1. 8-HOUR PERSISTENT SECURITY CHECK
-    function checkAccess() {
-        const accessStatus = localStorage.getItem('clinic_access');
-        const loginTimestamp = localStorage.getItem('last_login_time');
-        const currentTime = new Date().getTime();
-        const eightHours = 8 * 60 * 60 * 1000; // 8 Hours in milliseconds
-
-        // If status isn't granted OR time is up, boot to login
-        if (accessStatus !== 'granted' || !loginTimestamp || (currentTime - loginTimestamp > eightHours)) {
-            localStorage.removeItem('clinic_access');
-            localStorage.removeItem('last_login_time');
-            window.location.href = "login.html";
-        }
+    if (sessionStorage.getItem('gate1') !== 'passed' || sessionStorage.getItem('gate2') !== 'passed') {
+        window.location.href = "login.html";
     }
-    checkAccess();
 
     // 2. TRENTON TN CLOCK
     function updateClock() {
@@ -378,6 +366,7 @@
     </body>
 
 </html>
+
 
 
 
