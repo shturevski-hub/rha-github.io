@@ -2,35 +2,13 @@
 <html lang="en">
 <head>
     <script>
-        // 1. SECURITY & SESSION LOCK (8-Hour Persistence Addition)
-        function checkAccess() {
-            const accessStatus = localStorage.getItem('clinic_access');
-            const loginTimestamp = localStorage.getItem('last_login_time');
-            const currentTime = new Date().getTime();
-            const eightHours = 8 * 60 * 60 * 1000;
-
-            if (accessStatus !== 'granted' || !loginTimestamp || (currentTime - loginTimestamp > eightHours)) {
-                localStorage.removeItem('clinic_access');
-                localStorage.removeItem('last_login_time');
-                window.location.href = "login.html";
-            }
-        }
-        checkAccess();
-
-        // 2. IDLE TIMEOUT 
-        let idleTime = 0;
-        const idleInterval = setInterval(timerIncrement, 60000); 
-        window.onmousemove = window.onkeypress = () => { idleTime = 0; };
-
-        function timerIncrement() {
-            idleTime++;
-            if (idleTime >= 30) {
-                // Return to login but don't necessarily wipe the 8-hour token unless you want full lockout
-                window.location.href = "login.html";
-            }
+        // 1. SIMPLE SESSION SECURITY CHECK
+        // If they haven't passed BOTH gates, kick them to login.html
+        if (sessionStorage.getItem('gate1') !== 'passed' || sessionStorage.getItem('gate2') !== 'passed') {
+            window.location.href = "login.html";
         }
 
-        // 3. DISABLE SHORTCUTS
+        // 2. DISABLE SHORTCUTS
         function disableShortcuts(e) {
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U') || e.keyCode === 123) {
                 e.preventDefault();
@@ -297,7 +275,7 @@
                     <li><a href="controlPanel.html">Admin Instructions</a></li>
                     <li style="border-bottom: 1px solid #e2e8f0; margin: 10px 0;"></li>
                     <li><strong>External Resources</strong></li>
-                    <li><a href="https://fastpacehealth-my.sharepoint.com/..." target="_blank">RHA PDF</a></li>
+                    <li><a href="#" target="_blank">RHA PDF</a></li>
                     <li><a href="mailto:stefan.shturevski@fastpacehealth.com">IT Support Email</a></li>
                 </ul>
                 <h3 style="margin-top:20px;">Current Status</h3>
@@ -308,14 +286,17 @@
     </div>
     
     <script>
-        // 1. INTRO VIDEO HANDLER (Added Session Check)
+        // 1. INTRO VIDEO HANDLER (Simplified Session Only)
         const video = document.getElementById('intro-video');
         const overlay = document.getElementById('video-overlay');
         const content = document.getElementById('main-content-wrapper');
 
+        // Check if video was already played this session
         if (!sessionStorage.getItem('intro_played')) {
             overlay.style.display = 'flex';
-            video.play();
+            video.muted = false; // Unmute for the intro
+            video.play().catch(e => console.log("Auto-play blocked, waiting for interaction"));
+            
             video.onended = function() {
                 overlay.style.opacity = '0';
                 sessionStorage.setItem('intro_played', 'true');
@@ -332,7 +313,6 @@
         // 2. MENU & UI
         function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
         
-        // TRENTON TN CLOCK CONFIGURATION
         function updateClock() {
             const now = new Date();
             const options = {
@@ -385,6 +365,7 @@
         }
 
         function init() {
+            particles = [];
             for (let i = 0; i < 80; i++) { particles.push(new Particle()); }
         }
 
@@ -407,4 +388,3 @@
     </script>
 </body>
 </html>
-
