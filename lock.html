@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 2: Agent Verification</title>
+    <style>
+        body { background: #1e293b; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 12px; text-align: center; width: 320px; }
+        input { width: 100%; padding: 12px; margin: 20px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; text-align: center; }
+        button { width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Verify Identity</h2>
+        <input type="password" id="id" placeholder="name.rha" onkeypress="if(event.key==='Enter') verify()">
+        <button onclick="verify()">Unlock Toolkit</button>
+    </div>
+
+    <script>
+        // Redirect back if they skipped gate 1
+        if (sessionStorage.getItem('gate1') !== 'passed') { window.location.href = "login.html"; }
+
+        const NAMES = ["jasmina.rha", "marina.rha", "kristina.rha", "stefan.rha", "shanuel.rha", "stefanija.rha", "kristen.rha", "hannah.rha", "krystal.rha", "anastazija.rha", "ivo.rha", "gjorgji.rha"];
+
+        function verify() {
+            const input = document.getElementById('id').value.trim();
+            if (NAMES.includes(input)) {
+                sessionStorage.setItem('gate2', 'passed');
+                window.location.href = "index.html";
+            } else {
+                alert("ID Not Recognized");
+            }
+        }
+    </script>
+</body>
+</html>
