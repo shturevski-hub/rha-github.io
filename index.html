@@ -294,7 +294,7 @@
         // Check if video was already played this session
         if (!sessionStorage.getItem('intro_played')) {
             overlay.style.display = 'flex';
-            video.muted = false; // Unmute for the intro
+            video.muted = true; // Unmute for the intro
             video.play().catch(e => console.log("Auto-play blocked, waiting for interaction"));
             
             video.onended = function() {
@@ -388,3 +388,4 @@
     </script>
 </body>
 </html>
+
