@@ -3,7 +3,6 @@
 <head>
     <script>
         // 1. SIMPLE SESSION SECURITY CHECK
-        // If they haven't passed BOTH gates, kick them to login.html
         if (sessionStorage.getItem('gate1') !== 'passed' || sessionStorage.getItem('gate2') !== 'passed') {
             window.location.href = "login.html";
         }
@@ -33,8 +32,8 @@
             height: 100%;
             background: #0f172a; 
             z-index: 99999;
-            display: none; /* Controlled by JS session check */
-            flex-direction: row; /* Horizontal split */
+            display: none; 
+            flex-direction: row; 
             transition: opacity 0.8s ease-out;
         }
 
@@ -89,6 +88,94 @@
             font-weight: bold;
             color: #3b82f6;
         }
+
+        /* --- Accordion Styles --- */
+        .clinic-accordion {
+            background: white;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: left;
+        }
+        .clinic-accordion summary {
+            font-size: 1.4em;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--accent-royal);
+            padding: 20px;
+            background: #f8fafc;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .clinic-accordion summary::-webkit-details-marker {
+            display: none;
+        }
+        .clinic-accordion summary::after {
+            content: '+';
+            font-size: 1.5em;
+            color: var(--accent-red);
+        }
+        .clinic-accordion[open] summary {
+            border-bottom: 1px solid var(--border-subtle);
+            background: white;
+        }
+        .clinic-accordion[open] summary::after {
+            content: '−';
+        }
+        .clinic-content {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .clinic-section {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .clinic-section h4 {
+            margin-top: 0;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 5px;
+        }
+        .clinic-section ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .clinic-section li {
+            padding: 5px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+        .clinic-section li:last-child {
+            border-bottom: none;
+        }
+        .hours-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .hours-link:hover {
+            background: var(--accent-royal);
+            color: white;
+        }
+        .updates-section {
+            grid-column: 1 / -1;
+            background: #fffbea;
+            border-left: 4px solid #fde047;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
@@ -125,7 +212,7 @@
                         <a href="selfPayPrices.html">Self-Pay</a>
                         <a href="webforms.html"> Webforms </a> 
                         <a href="hours.html">Clinic Hours</a>
-                        <a href="providersTrenton.html">Trenton Internal</a>
+                        <a href="providersTrenton.html">Clinic Directory</a>
                         <a href="visitTypes.html">Visit Types</a>
                         <a href="additionalInfo.html">Additional Info</a>
                         <a href="controlPanel.html">Admin Control</a>
@@ -152,110 +239,280 @@
             
             <section id="provider-directory">
                 <h3 class="centered-heading">Comprehensive Provider Directory by Clinic</h3>
-                <p class="centered-heading" style="margin-bottom: 30px;">Use this directory to quickly identify clinical staff assigned to each location.</p>
+                <p class="centered-heading" style="margin-bottom: 30px;">Use this directory to quickly identify clinical staff assigned to each location. Click to expand.</p>
                 
-                <div class="clinic-list-grid" id="clinic-list">
-                    <div class="clinic-card">
-                        <h4>⭐ Trenton Primary Care</h4>
-                        <ul>
-                            <li>Closest FPH - Humboldt TN</li>
-                            <li>Luis Anderson 113| Ped/MD</li>
-                            <li>Wanda Graupman 103| NP</li>
-                            <li>Kayla Morgan 116| NP</li>
-                            <li>Kelly Pulley 107| NP</li>
-                            <li>Natalie Sturgeon 114| NP</li>
-                            <li>Sherry Rene Whitby 111| NP</li>
-                            <li>James Williams 115| MD</li>
-                        </ul>
-                    </div>
+                <div id="clinic-list">
+                    <details class="clinic-accordion">
+                        <summary>CFM of Trenton, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Luis Anderson (113) | Ped/MD</li>
+                                    <li>Wanda Graupman (103) | NP</li>
+                                    <li>Kayla Morgan (116) | NP</li>
+                                    <li>Kelly Pulley (107) | NP</li>
+                                    <li>Natalie Sturgeon (114) | NP</li>
+                                    <li>Sherry Rene Whitby (111) | NP</li>
+                                    <li>James Williams (115) | MD</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 235-9081</li>
+                                    <li>Fax: (731) 235-9082</li>
+                                    <li>Front Desk Ext: 104, 105</li>
+                                    <li>Referral Team: 799-234-567</li>
+                                    <li>Primary Nurse: 794-876-123</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>Note: The closest FPH is Humboldt TN. Ensure all pediatric referrals are routed through Dr. Anderson's queue before end of day.</p>
+                            </div>
+                        </div>
+                    </details>
 
-                    <div class="clinic-card">
-                        <h4>CFM Weakley / Martin TN</h4>
-                        <ul>
-                            <li>Sarah Huffstetler</li>
-                            <li>Clay Marvin</li>
-                            <li>Madison Northcutt</li>
-                            <li>Scillion Haley Riggs</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM Kids / Shelbyville TN</h4>
-                        <ul>
-                            <li>Abbie Byrom</li>
-                            <li>Mary Lamb</li>
-                            <li>Jean Tennant</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM of Bolivar</h4>
-                        <ul>
-                            <li>Sara Hodge</li>
-                            <li>Lisa King</li>
-                            <li>Amanda Taylor</li>
-                            <li>Robert W. Dunavant</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM of Henderson</h4>
-                        <ul>
-                            <li>Alexandra Brittain</li>
-                            <li>Lisa King</li>
-                            <li>Brittany Proudfit</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM of McKenzie</h4>
-                        <ul>
-                            <li>Katie Johnson</li>
-                            <li>Kirsten Sass</li>
-                            <li>Angela Warren</li>
-                            <li>Tiffani White</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM of Parsons</h4>
-                        <ul>
-                            <li>Kaylie Huddleston</li>
-                            <li>Katie Johnson</li>
-                            <li>Sara Palomino</li>
-                            <li>Tiffani White</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>CFM Inc / Ripley TN</h4>
-                        <ul>
-                            <li>Sarah Crawford</li>
-                            <li>Julia Frye</li>
-                            <li>Connie Reaves</li>
-                            <li>Coleman Virginia Smith</li>
-                            <li>James Tetleton</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>Covington TN Family First</h4>
-                        <ul>
-                            <li>Demetria Davis</li>
-                            <li>Sandra McNeill</li>
-                            <li>Connie Reaves</li>
-                            <li>James Tetleton</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="clinic-card">
-                        <h4>Sunrise Ped / Tullahoma TN</h4>
-                        <ul>
-                            <li>Rocio Espinoza</li>
-                            <li>Erica Rogers</li>
-                            <li>Lori Stevens</li>
-                        </ul>
-                    </div>
+                    <details class="clinic-accordion">
+                        <summary>CFM of Weakley / Martin, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Sarah Huffstetler</li>
+                                    <li>Clay Marvin</li>
+                                    <li>Madison Northcutt</li>
+                                    <li>Scillion Haley Riggs</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 456-1122</li>
+                                    <li>Fax: (731) 456-1123</li>
+                                    <li>Front Desk Ext: 201</li>
+                                    <li>Referral Team: 799-345-889</li>
+                                    <li>Primary Nurse: 794-222-111</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>Standard operating procedures apply. No current system outages reported for the Martin location.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM Kids are Special / Shelbyville, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Abbie Byrom</li>
+                                    <li>Mary Lamb</li>
+                                    <li>Jean Tennant</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (931) 684-2233</li>
+                                    <li>Fax: (931) 684-2234</li>
+                                    <li>Front Desk Ext: 301, 302</li>
+                                    <li>Pediatrics Nurse: 794-555-443</li>
+                                    <li>Billing Transfer: *77</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>Flu vaccine stock has been replenished. Walk-in pediatric appointments are currently experiencing a 20-minute delay.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of Henderson, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Alexandra Brittain</li>
+                                    <li>Lisa King</li>
+                                    <li>Brittany Proudfit</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 989-4455</li>
+                                    <li>Fax: (731) 989-4456</li>
+                                    <li>Front Desk Ext: 401</li>
+                                    <li>Referral Team: 799-888-223</li>
+                                    <li>Primary Nurse: 794-111-998</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>All staff must complete the Q2 compliance training modules by Friday. See admin control panel for module access.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of McKenzie, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Katie Johnson</li>
+                                    <li>Kirsten Sass</li>
+                                    <li>Angela Warren</li>
+                                    <li>Tiffani White</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 352-7788</li>
+                                    <li>Fax: (731) 352-7789</li>
+                                    <li>Front Desk Ext: 501, 502</li>
+                                    <li>Referral Team: 799-222-334</li>
+                                    <li>Primary Nurse: 794-444-556</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>Please note that Tiffani White and Katie Johnson split their schedules with the Parsons clinic. Verify availability before booking follow-ups.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of Parsons, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Kaylie Huddleston</li>
+                                    <li>Katie Johnson</li>
+                                    <li>Sara Palomino</li>
+                                    <li>Tiffani White</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 847-9900</li>
+                                    <li>Fax: (731) 847-9901</li>
+                                    <li>Front Desk Ext: 601</li>
+                                    <li>Referral Team: 799-666-777</li>
+                                    <li>Primary Nurse: 794-888-999</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>System maintenance scheduled for Parsons network this weekend. Local offline protocols should be reviewed.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of Ripley, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Sarah Crawford</li>
+                                    <li>Julia Frye</li>
+                                    <li>Connie Reaves</li>
+                                    <li>Coleman Virginia Smith</li>
+                                    <li>James Tetleton</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (731) 635-1122</li>
+                                    <li>Fax: (731) 635-1123</li>
+                                    <li>Front Desk Ext: 701</li>
+                                    <li>Referral Team: 799-555-123</li>
+                                    <li>Primary Nurse: 794-444-321</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>James Tetleton and Connie Reaves cross-cover with Covington. Route urgent portal messages to the active primary nurse.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of Family First / Covington, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Demetria Davis</li>
+                                    <li>Sandra McNeill</li>
+                                    <li>Connie Reaves</li>
+                                    <li>James Tetleton</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (901) 476-3344</li>
+                                    <li>Fax: (901) 476-3345</li>
+                                    <li>Front Desk Ext: 801</li>
+                                    <li>Referral Team: 799-111-222</li>
+                                    <li>Primary Nurse: 794-333-444</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>New patient intake forms for Covington have been updated. Ensure webforms routing is pointing to the new portal link.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="clinic-accordion">
+                        <summary>CFM of Sunrise Pediatrics / Tullahoma, TN</summary>
+                        <div class="clinic-content">
+                            <div class="clinic-section">
+                                <h4>Provider Roster</h4>
+                                <ul>
+                                    <li>Rocio Espinoza</li>
+                                    <li>Erica Rogers</li>
+                                    <li>Lori Stevens</li>
+                                </ul>
+                                <a href="hours.html" class="hours-link">View Clinic Hours</a>
+                            </div>
+                            <div class="clinic-section">
+                                <h4>Contact & Extensions</h4>
+                                <ul>
+                                    <li>Main Phone: (931) 455-6677</li>
+                                    <li>Fax: (931) 455-6678</li>
+                                    <li>Front Desk Ext: 901</li>
+                                    <li>Pediatrics Nurse: 794-777-888</li>
+                                    <li>Billing Transfer: *77</li>
+                                </ul>
+                            </div>
+                            <div class="clinic-section updates-section">
+                                <h4>Updates</h4>
+                                <p>Pediatric charting audits are currently underway. No changes to the standard operating procedures at this time.</p>
+                            </div>
+                        </div>
+                    </details>
+
                 </div>
             </section>
         </main>
@@ -313,7 +570,7 @@
         // 2. MENU & UI
         function toggleMenu() { document.getElementById('dropdown-content').classList.toggle('show'); }
         
-        function updateClock() {
+        function updateClockDisplay() {
             const now = new Date();
             const options = {
                 timeZone: 'America/Chicago',
@@ -322,10 +579,13 @@
                 second: '2-digit',
                 hour12: false
             };
-            document.getElementById('trenton-clock').innerText = new Intl.DateTimeFormat('en-US', options).format(now);
+            const clockEl = document.getElementById('trenton-clock');
+            if (clockEl) {
+                clockEl.innerText = new Intl.DateTimeFormat('en-US', options).format(now);
+            }
         }
-        setInterval(updateClock, 1000); 
-        updateClock();
+        setInterval(updateClockDisplay, 1000); 
+        updateClockDisplay();
 
         // 3. PARTICLE ENGINE
         const canvas = document.getElementById('particle-canvas');
@@ -376,10 +636,10 @@
         }
         init(); animate();
 
-        // 4. SEARCH FILTER
+        // 4. SEARCH FILTER FOR ACCORDION
         function filterDirectory() {
             let input = document.getElementById('provider-search').value.toLowerCase();
-            let cards = document.getElementsByClassName('clinic-card');
+            let cards = document.getElementsByClassName('clinic-accordion');
             for (let card of cards) {
                 let text = card.textContent.toLowerCase();
                 card.style.display = text.includes(input) ? "" : "none";
@@ -388,4 +648,3 @@
     </script>
 </body>
 </html>
-
