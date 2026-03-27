@@ -176,6 +176,30 @@
             background: #fffbea;
             border-left: 4px solid #fde047;
         }
+
+        /* --- Awards Button Style --- */
+        .awards-link-btn {
+            display: block;
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #002366 0%, #001540 100%);
+            color: #AF9500 !important;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            border: 1px solid #AF9500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(175, 149, 0, 0.2);
+        }
+        .awards-link-btn:hover {
+            background: #AF9500;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(175, 149, 0, 0.4);
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" onkeydown="return disableShortcuts(event)">
@@ -208,6 +232,7 @@
                     <button class="menu-button" onclick="toggleMenu()">Menu ☰</button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="index.html" class="active">Home</a>
+                        <a href="awards.html" style="color: #AF9500; font-weight: bold;">🏆 Awards 2026</a>
                         <a href="manual.html"> Manual </a> 
                         <a href="selfPayPrices.html">Self-Pay</a>
                         <a href="webforms.html"> Webforms </a> 
@@ -450,8 +475,7 @@
                             </div>
                             <div class="clinic-section updates-section">
                                 <h4>Updates</h4>
-                                <p>79 Highway 51 South
-Ripley, Tennessee 38063. Standard operating procedures apply. No current system outages reported for the Ripley location.</p>
+                                <p>79 Highway 51 South Ripley, Tennessee 38063. Standard operating procedures apply. No current system outages reported for the Ripley location.</p>
                             </div>
                         </div>
                     </details>
@@ -532,6 +556,13 @@ Ripley, Tennessee 38063. Standard operating procedures apply. No current system 
                 <ul>
                     <li><a href="#provider-directory">Provider Directory</a></li>
                     <li><a href="controlPanel.html">Admin Instructions</a></li>
+                    
+                    <li style="margin-top: 15px;">
+                        <a href="awards.html" class="awards-link-btn">
+                            🏆 Excellence Awards
+                        </a>
+                    </li>
+
                     <li style="border-bottom: 1px solid #e2e8f0; margin: 10px 0;"></li>
                     <li><strong>External Resources</strong></li>
                     <li><a href="#" target="_blank">RHA PDF</a></li>
@@ -539,7 +570,7 @@ Ripley, Tennessee 38063. Standard operating procedures apply. No current system 
                 </ul>
                 <h3 style="margin-top:20px;">Current Status</h3>
                 <p class="note-important" style="font-size: 0.85em;">⚠️ Demo Protocol: Workbook under review.</p>
-                <div class="status-ok">✅ Price List: 2026-2-25</div>
+                <div class="status-ok">✅ Price List: 2026-3-27</div>
             </div>
         </div>
     </div>
