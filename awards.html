@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Excellence Horizon | 2026 Awards</title>
+    <style>
+        :root {
+            --navy-blue: #002366;
+            --dental-white: #FFFFFF;
+            --hot-red: #D90429;
+            --gold-leaf: #AF9500;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        /* The Global Blur */
+        body.active-blur .container {
+            filter: blur(25px); /* Increased blur for total privacy */
+            pointer-events: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--dental-white);
+            color: var(--navy-blue);
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            transition: filter 0.5s ease;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .container {
+            width: 100%;
+            padding: 60px 0;
+            transition: filter 0.8s ease;
+        }
+
+        header { text-align: center; margin-bottom: 80px; }
+        header h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            margin: 0;
+            color: var(--navy-blue);
+            text-shadow: 2px 2px 0px rgba(175, 149, 0, 0.1);
+        }
+
+        .category-section {
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(175, 149, 0, 0.2);
+            border-bottom: 1px solid rgba(175, 149, 0, 0.2);
+        }
+
+        .category-header {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--gold-leaf);
+            margin-bottom: 30px;
+            text-align: left;
+            padding-left: 20px;
+            border-left: 5px solid var(--hot-red);
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold-leaf) transparent;
+        }
+
+        .employee-card {
+            flex: 0 0 200px;
+            background: #ffffff;
+            border: 1px solid rgba(175, 149, 0, 0.1);
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold-leaf);
+            margin-bottom: 15px;
+        }
+
+        .employee-name { font-size: 1rem; margin-bottom: 5px; font-weight: 700; }
+        .employee-title {
+            color: var(--navy-blue);
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        .appreciation-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            width: 100%;
+        }
+
+        .employee-card.active {
+            flex: 0 0 300px;
+            background: #fffdf5;
+            border-color: var(--gold-leaf);
+        }
+
+        .employee-card.active .appreciation-container {
+            max-height: 150px;
+            opacity: 1;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(175, 149, 0, 0.2);
+        }
+
+        .bio-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 0.9rem; line-height: 1.4; }
+
+        footer { text-align: center; padding: 60px; letter-spacing: 8px; font-size: 0.7rem; color: var(--navy-blue); opacity: 0.6; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=EB+Garamond:ital@1&display=swap" rel="stylesheet">
+</head>
+<body class="active-blur" oncontextmenu="return false;"> <canvas id="confetti-canvas"></canvas>
+
+<div class="container">
+    <header>
+        <h1>The Excellence Horizon</h1>
+    </header>
+
+    <div class="category-section">
+        <div class="category-header">Executive Leadership</div>
+        <div class="scroll-container" id="execRow"></div>
+    </div>
+    <div class="category-section">
+        <div class="category-header">Team Player Award</div>
+        <div class="scroll-container" id="teamRow"></div>
+    </div>
+    <div class="category-section">
+        <div class="category-header">Client Relations Award</div>
+        <div class="scroll-container" id="clientRow"></div>
+    </div>
+    <div class="category-section">
+        <div class="category-header">Rapid Responder Award</div>
+        <div class="scroll-container" id="rapidRow"></div>
+    </div>
+    <div class="category-section">
+        <div class="category-header">Honourable Mentions</div>
+        <div class="scroll-container" id="honorRow"></div>
+    </div>
+
+    <footer>BPO GLOBAL • CUSTOMER CARE EXCELLENCE 2026</footer>
+</div>
+
+<script>
+    // DISABLE SHORTCUTS
+    document.onkeydown = function(e) {
+        if (event.keyCode == 123) { return false; } // F12
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } // Ctrl+Shift+C
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+    };
+
+    const employeeData = [
+        { name: "Gjorgji Vasilevski", title: "Team Leader", cat: "exec", image: "1712507564831.jpg", bio: "Leading with visionary strategy and operational integrity." },
+        { name: "Jasmina Parevska", title: "Assistant Leader", cat: "exec", image: "2134-3-3 (1).jpg", bio: "Defining excellence through high-level support." },
+        { name: "Stefanija Betovska", title: "Customer Care Rep", cat: "team", image: "2892-1-3.jpg", bio: "Workflow efficiency and unmatched team harmony." },
+        { name: "Anastazija Joleva", title: "Customer Care Rep", cat: "team", image: "2881-0-3.jpg", bio: "Gold-standard service through empathy and skill." },
+        { name: "Angela Manasieva", title: "Customer Care Rep", cat: "team", image: "4761-0-3 (1).jpg", bio: "Vital contributions to backend service delivery." },
+        { name: "Nikola Angelevski", title: "Customer Care Rep", cat: "client", image: "3022-1-3.jpg", bio: "Precision in execution and total reliability." },
+        { name: "Aleksandar Pechijarevski", title: "Customer Care Rep", cat: "client", image: "2885-13-3 (1).jpg", bio: "Building sustainable partnerships through communication." },
+        { name: "Medina Shate", title: "Customer Care Rep", cat: "client", image: "2874-7-3.jpg", bio: "Exceptional foresight and project viability." },
+        { name: "Ivo Kraguevski", title: "Customer Care Rep", cat: "rapid", image: "2933-1-3.jpg", bio: "Pioneer in performance metrics and response times." },
+        { name: "Stefan Shturevski", title: "Customer Care Rep", cat: "rapid", image: "4616-0-3.jpg", bio: "Security and privacy protocols champion." },
+        { name: "Mihael Kostadinovski", title: "Customer Care Rep", cat: "rapid", image: "4691-0-3.jpg", bio: "Architecting resolutions for complex challenges." },
+        { name: "Jovana Petrova", title: "Customer Care Rep", cat: "honor", image: "4691-0-3 (1).jpg", bio: "Superior adherence to quality protocols." },
+        { name: "Atanasko Karakulevski", title: "Customer Care Rep", cat: "honor", image: "4689-0-3.jpg", bio: "Strong alignment with corporate mission and values." },
+        { name: "Marina Ristevska", title: "Customer Care Rep", cat: "honor", image: "4607-0-3.jpg", bio: "Upholding ethical standards in every interaction." },
+        { name: "Andrej Stevovski", title: "Customer Care Rep", cat: "honor", image: "3338-1-3.jpg", bio: "Driving cost-effective solutions without compromise." }
+    ];
+
+    function renderBoard() {
+        const rows = {
+            exec: document.getElementById('execRow'),
+            team: document.getElementById('teamRow'),
+            client: document.getElementById('clientRow'),
+            rapid: document.getElementById('rapidRow'),
+            honor: document.getElementById('honorRow')
+        };
+        employeeData.forEach((emp) => {
+            const cardHTML = `
+                <div class="employee-card" onclick="cardInteraction(event, this)">
+                    <img src="${emp.image}" alt="${emp.name}" class="profile-img">
+                    <div class="employee-name">${emp.name}</div>
+                    <div class="employee-title">${emp.title}</div>
+                    <div class="appreciation-container"><div class="bio-text">"${emp.bio}"</div></div>
+                </div>`;
+            rows[emp.cat].innerHTML += cardHTML;
+        });
+    }
+
+    function cardInteraction(event, clickedCard) {
+        const isActive = clickedCard.classList.contains('active');
+        document.querySelectorAll('.employee-card').forEach(card => card.classList.remove('active'));
+        if (!isActive) { clickedCard.classList.add('active'); fireConfetti(clickedCard); }
+    }
+
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const colors = ['#AF9500', '#D90429', '#002366', '#FFFFFF'];
+
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function fireConfetti(card) {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        for (let i = 0; i < 75; i++) {
+            particles.push({
+                x: centerX, y: centerY, size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speedX: (Math.random() - 0.5) * 12, speedY: (Math.random() - 0.6) * 15,
+                rotation: Math.random() * 360, rotationSpeed: Math.random() * 10 - 5,
+                gravity: 0.25, decay: 0.98
+            });
+        }
+    }
+
+    function updateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, index) => {
+            p.speedY += p.gravity; p.speedY *= p.decay; p.speedX *= p.decay;
+            p.x += p.speedX; p.y += p.speedY; p.rotation += p.rotationSpeed;
+            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size); ctx.restore();
+            if (p.y > canvas.height + 50) particles.splice(index, 1);
+        });
+        requestAnimationFrame(updateParticles);
+    }
+
+    renderBoard();
+    updateParticles();
+</script>
+</body>
+</html>
